@@ -1,0 +1,40 @@
+/*
+There are four core pairings that we use with typography.
+
+1. Blurple on Black
+2. Blurple on Light Blurple
+3. Light Blurple on Blurple
+4. Black on Blurple
+5
+There are four secondary pairings that we use with typography. Avoid using any pairings outside of this approved set.  
+
+1. Green on Black
+2. Pink on Black
+3. Black on Green
+4. Black on Pink
+
+To the right are examples of pairings to avoid when using our secondary colors:
+
+1. Dark Color on Light Color
+2. Light color on Dark Color
+3. Light Color on Color
+4. Dark Color on Color
+*/
+
+$BLURPLE: #5865F2;
+$GREEN: #35ed7e;
+$PINK: #ff4CD2;
+$DARK: #1F1F1F;
+
+$DARK_BLURPLE: #19175c;
+$DARK_GREEN: #002920;
+$DARK_PINK: #381f2c;
+$BLACK: #000000;
+
+$LIGHT_BLURPLE: #E0E3FF;
+$LIGHT_GREEN: #c8ffef;
+$LIGHT_PINK: #f5c9ff;
+$WHITE: #ffffff;
+
+// GRADIENTS
+$RADICAL_GRADIENT: radial-gradient(circle at center, $DARK_BLURPLE, $BLURPLE);
