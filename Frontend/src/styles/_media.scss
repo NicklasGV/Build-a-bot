@@ -1,0 +1,80 @@
+/* stylelint-disable */
+$min-tablet-width: 554px; /* this is an old value. careful when deleted */
+
+/*
+ new landing page breaking measures
+*/
+$min-desktop-width: 1024px;
+$max-tablet-vertical-width: 768px;
+$max-mobile-width: 480px;
+
+/* used in landing ci only */
+$mobile-lg: 600px;
+$mobile-md: 481px;
+$mobile-sm: 375px;
+
+@mixin mobile() {
+  @media screen and (max-width: $max-mobile-width) {
+    @content;
+  }
+}
+
+@mixin not-mobile() {
+  @media screen and (min-width: #{ $max-mobile-width + 1px }) {
+    @content;
+  }
+}
+
+@mixin tabletV() {
+  @media screen and (min-width: #{ $max-mobile-width + 1px}) and (max-width: $max-tablet-vertical-width) {
+    @content;
+  }
+}
+
+@mixin tabletH() {
+  @media screen and (min-width: #{$max-tablet-vertical-width + 1px}) and (max-width: $min-desktop-width) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media screen and (min-width: #{$max-mobile-width + 1px}) and (max-width: $min-desktop-width) {
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media screen and (min-width: $min-desktop-width) {
+    @content;
+  }
+}
+
+@mixin not-desktop() {
+  @media screen and (max-width: #{$min-desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin mobileAndTabletV() {
+  @media screen and (max-width: $max-tablet-vertical-width) {
+    @content;
+  }
+}
+
+@mixin desktopAndTabletH() {
+  @media screen and (min-width: #{$max-tablet-vertical-width + 1}) {
+    @content;
+  }
+}
+
+/*
+  not touch devices
+ */
+@mixin hoverDevice() {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
+
+

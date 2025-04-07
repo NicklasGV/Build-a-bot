@@ -1,2 +1,9 @@
 @use "../../../styles/colors.scss" as *;
 
+.bab-hero {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+    color: $LIGHT_BLURPLE;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}

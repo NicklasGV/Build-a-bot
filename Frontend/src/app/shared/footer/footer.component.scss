@@ -1,0 +1,35 @@
+@use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
+
+.footer {
+    background: $DARK_BLURPLE_GRADIENT;
+    color: $LIGHT_BLURPLE;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include mobileAndTabletV() {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer-copyright {
+    font-size: 18px;
+    color: $WHITE;
+    text-align: center;
+    padding: 8px
+}
