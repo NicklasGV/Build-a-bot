@@ -1,0 +1,61 @@
+//Medium Font
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../assets/fonts/Medium/Discord-Medium.woff2') format('woff2'),
+         url('../assets/fonts/Medium/Discord-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Medium';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../assets/fonts/Medium/Discord-MediumItalic.woff2') format('woff2'),
+         url('../assets/fonts/Medium/Discord-MediumItalic.ttf') format('truetype');
+}
+
+//Regular Font
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../assets/fonts/Regular/Discord-Regular.woff2') format('woff2'),
+         url('../assets/fonts/Regular/Discord-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Regular';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../assets/fonts/Regular/Discord-RegularItalic.woff2') format('woff2'),
+         url('../assets/fonts/Regular/Discord-RegularItalic.ttf') format('truetype');
+}
+
+//Nord/bold Font
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Nord';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../assets/fonts/Nord/DiscordNord-Bold.woff2') format('woff2'),
+         url('../assets/fonts/Nord/DiscordNord-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Nord';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../assets/fonts/Nord/DiscordNord-BlackItalic.woff2') format('woff2'),
+         url('../assets/fonts/Nord/DiscordNord-BlackItalic.ttf') format('truetype');
+}
+@font-face {
+    font-display: swap;
+    font-family: 'Discord Nord';
+    font-style: italic;
+    font-weight: bold;
+    src: url('../assets/fonts/Nord/DiscordNord-BoldItalic.woff2') format('woff2'),
+         url('../assets/fonts/Nord/DiscordNord-BoldItalic.ttf') format('truetype');
+}
