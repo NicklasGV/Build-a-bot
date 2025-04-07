@@ -37,4 +37,4 @@ $LIGHT_PINK: #f5c9ff;
 $WHITE: #ffffff;
 
 // GRADIENTS
-$RADICAL_GRADIENT: radial-gradient(circle at center, $DARK_BLURPLE, $BLURPLE);
+$RADICAL_GRADIENT: linear-gradient(0deg, $BLURPLE 0%, $DARK_BLURPLE 100%);
