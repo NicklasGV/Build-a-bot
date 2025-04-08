@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "BuildAbot.Controllers.UserController",
+    "Method": "FindByIdAsync",
+    "RelativePath": "api/User/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
