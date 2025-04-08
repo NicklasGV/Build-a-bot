@@ -3,3 +3,5 @@
 *.vscode
 *.idea
 Backend/.vs/Backend/FileContentIndex/
+*.editorconfig
+*.cache
