@@ -54,10 +54,10 @@
             }
             return MapUserToUserResponse(user);
         }
+
         public async Task<UserResponse> UpdateByIdAsync(int userId, UserRequest updateUser)
         {
-            var user = MapUserRequestToUser(updateUser);
-            var insertedUser = await _userRepository.UpdateByIdAsync(userId, user);
+            var insertedUser = await _userRepository.UpdateByIdAsync(userId, MapUserRequestToUser(updateUser));
 
             if (insertedUser != null)
             {
@@ -66,6 +66,7 @@
 
             return null;
         }
+
         public async Task<UserResponse> DeleteByIdAsync(int userId)
         {
             var user = await _userRepository.DeleteByIdAsync(userId);

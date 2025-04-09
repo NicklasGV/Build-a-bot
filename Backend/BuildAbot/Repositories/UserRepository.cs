@@ -22,6 +22,7 @@
             await _databaseContext.SaveChangesAsync();
             return newUser;
         }
+
         public async Task<User> UpdateByIdAsync(int userId, User updateUser)
         {
             User user = await FindByIdAsync(userId);
@@ -37,6 +38,7 @@
             }
             return user;
         }
+
         public async Task<User> DeleteByIdAsync(int userId)
         {
             var user = await FindByIdAsync(userId);
