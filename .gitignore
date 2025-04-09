@@ -3,6 +3,4 @@
 *.vscode
 *.idea
 Backend/.vs
-*.editorconfig
-*.cache
-/Backend/BuildAbot
+/Backend/BuildAbot/obj
