@@ -2,6 +2,7 @@
 *.env
 *.vscode
 *.idea
-Backend/.vs/Backend/FileContentIndex/
+Backend/.vs
 *.editorconfig
 *.cache
+/Backend/BuildAbot
