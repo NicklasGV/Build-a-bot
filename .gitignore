@@ -7,3 +7,5 @@
 Backend/.vs/Backend/FileContentIndex/
 Backend/.vs/
 Backend/BuildAbot/obj/
+Backend/BuildAbot/bin/
+Backend/BuildAbot/Migrations/
