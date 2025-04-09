@@ -16,5 +16,6 @@ namespace BuildAbot.Database.Entities
         [Column(TypeName = "nvarchar(500)")]
         public string Password { get; set; }
 
+        public List<Script> Scripts { get; set; } = new List<Script>();
     }
 }
