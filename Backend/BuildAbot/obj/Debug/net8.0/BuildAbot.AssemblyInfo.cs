@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BuildAbot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62fd8451fdfc9d0d55244976d9ba6c1a699cdbc9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec71768eed038717b52d4931d26879f74ff47bf3")]
 [assembly: System.Reflection.AssemblyProductAttribute("BuildAbot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BuildAbot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
