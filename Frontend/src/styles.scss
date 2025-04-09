@@ -5,6 +5,10 @@ body {
     margin: 0;
 }
 
+.bi::before {
+    margin-right: 8px;
+}
+
 h1 {
     font-family: "Discord Nord";
     font-size: 48px;

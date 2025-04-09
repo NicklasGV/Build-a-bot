@@ -4,9 +4,21 @@
 .navbar {
     display: flex;
     align-items: center;
-    padding: 1rem 2rem;
+    justify-content: start;
+    padding: 8px 16px 8px 16px;
     background: $DARK;
     color: $WHITE;
+
+    @include mobileAndTabletV {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      position: fixed;   // Make the navbar fixed to the viewport
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;     // Ensure it's on top of other content
+    }
+
     .logo a {
       text-decoration: none;
       color: $WHITE;
@@ -15,19 +27,37 @@
         height: 50px;
       }
     }
-    .nav-links {
-      list-style: none;
+    .nav-links.mobile-active {
       display: flex;
+
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
       margin: 0;
       padding: 0;
+
+      @include mobileAndTabletV {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        gap: 16px;
+        top: 60px;
+        left: 5px;
+        width: 50%;
+        background-color: $LIGHT_BLURPLE;
+        padding: 16px 0;
+        border-radius: 16px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
   
       li {
-        margin-left: 1.5rem;
+        margin-left: 24px;
   
         a {
           text-decoration: none;
           color: $BLURPLE;
-          font-size: 1rem;
+          font-size: 16px;
           transition: color 0.3s ease;
   
           &:hover {
@@ -35,5 +65,70 @@
           }
         }
       }
+    }
+  }
+
+  .mobile-menu-button {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: $LIGHT_BLURPLE;
+
+    @include mobileAndTabletV {
+      display: flex;
+    }
+  }
+
+  .side-nav {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: $LIGHT_BLURPLE;
+    color: $DARK_BLURPLE;
+    padding: 8px;
+    border-radius: 0 16px 16px 0;
+    border: 1px solid $DARK;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+  }
+  
+  .side-nav.active {
+    display: flex;
+
+    @include mobileAndTabletV {
+      display: none;
+    }
+  }
+  
+  .side-nav .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .side-nav .nav-links li {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .side-nav .nav-links li a {
+    color: $DARK_BLURPLE;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  
+    &:hover {
+      color: $BLURPLE;
+    }
+    &::before {
+      padding: 8px;
     }
   }
