@@ -54,6 +54,39 @@
             }
             return MapUserToUserResponse(user);
         }
+        public async Task<UserResponse> UpdateByIdAsync(int userId, UserRequest updateUser)
+        {
+            var user = MapUserRequestToUser(updateUser);
+            var insertedUser = await _userRepository.UpdateByIdAsync(userId, user);
+
+            if (insertedUser != null)
+            {
+                return MapUserToUserResponse(insertedUser);
+            }
+
+            return null;
+        }
+        public async Task<UserResponse> DeleteByIdAsync(int userId)
+        {
+            var user = await _userRepository.DeleteByIdAsync(userId);
+
+            if (user != null)
+            {
+                return MapUserToUserResponse(user);
+            }
+            return null;
+        }
+
+        public async Task<List<UserResponse>> GetAllAsync()
+        {
+            List<User> users = await _userRepository.GetAllAsync();
+
+            if (users == null)
+            {
+                throw new ArgumentException();
+            }
+            return users.Select(MapUserToUserResponse).ToList();
+        }
 
     }
 }
