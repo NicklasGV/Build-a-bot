@@ -45,5 +45,15 @@
             return null;
         }
 
+        public async Task<UserResponse> CreateAsync(UserRequest newUser)
+        {
+            var user = await _userRepository.CreateAsync(MapUserRequestToUser(newUser));
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return MapUserToUserResponse(user);
+        }
+
     }
 }

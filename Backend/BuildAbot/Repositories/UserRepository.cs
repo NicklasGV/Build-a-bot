@@ -15,5 +15,12 @@
             return await _databaseContext.User
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
+
+        public async Task<User> CreateAsync(User newUser)
+        {
+            _databaseContext.User.Add(newUser);
+            await _databaseContext.SaveChangesAsync();
+            return newUser;
+        }
     }
 }

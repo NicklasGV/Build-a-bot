@@ -33,5 +33,21 @@
                 return Problem(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> CreateAsync([FromForm] UserRequest newUser)
+        {
+            try
+            {
+                UserResponse userResponse = await _userService.CreateAsync(newUser);
+
+                return Ok(userResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }
