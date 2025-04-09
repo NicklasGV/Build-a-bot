@@ -2,4 +2,5 @@
 *.env
 *.vscode
 *.idea
-Backend/.vs/Backend/
+Backend/.vs/
+Backend/BuildAbot/obj/
