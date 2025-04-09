@@ -3,36 +3,52 @@
   "WorkspaceRootPath": "D:\\Github\\Build-a-bot\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\database\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\database\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408085232_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BuildAbot\\Migrations\\20250408085232_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\global using.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\global using.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408084931_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BuildAbot\\Migrations\\20250408084931_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\helper\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\helper\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\database\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\database\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\helper\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\helper\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\global using.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\global using.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\interfaces\\iuser\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,10 +67,6 @@
       "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\dto\\userdto\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\database\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\database\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|d:\\github\\build-a-bot\\backend\\buildabot\\buildabot.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{CCBD3D78-83DA-4121-9004-8F6BFD1D4162}|BuildAbot\\BuildAbot.csproj|solutionrelative:buildabot\\buildabot.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
@@ -70,63 +82,72 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AppSettings.cs",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Helper\\AppSettings.cs",
-              "RelativeDocumentMoniker": "BuildAbot\\Helper\\AppSettings.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Helper\\AppSettings.cs",
-              "RelativeToolTip": "BuildAbot\\Helper\\AppSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "20250408085232_initial.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408085232_initial.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Migrations\\20250408085232_initial.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408085232_initial.cs",
+              "RelativeToolTip": "BuildAbot\\Migrations\\20250408085232_initial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:56:29.082Z",
+              "WhenOpened": "2025-04-08T08:52:32.625Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "20250408084931_initial.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408084931_initial.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Migrations\\20250408084931_initial.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Migrations\\20250408084931_initial.cs",
+              "RelativeToolTip": "BuildAbot\\Migrations\\20250408084931_initial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T08:49:31.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "DatabaseContext.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\DatabaseContext.cs",
               "RelativeDocumentMoniker": "BuildAbot\\Database\\DatabaseContext.cs",
               "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\DatabaseContext.cs",
               "RelativeToolTip": "BuildAbot\\Database\\DatabaseContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T07:53:46.626Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Program.cs",
               "RelativeDocumentMoniker": "BuildAbot\\Program.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Program.cs*",
-              "RelativeToolTip": "BuildAbot\\Program.cs*",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAIwDUAAAAAAAAAAAAAAA==",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Program.cs",
+              "RelativeToolTip": "BuildAbot\\Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwDUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T07:26:35.931Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "BuildAbot\\Database\\Entities\\User.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\Entities\\User.cs",
-              "RelativeToolTip": "BuildAbot\\Database\\Entities\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAADwvwwAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:51:08.58Z",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.json",
+              "RelativeDocumentMoniker": "BuildAbot\\appsettings.json",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.json",
+              "RelativeToolTip": "BuildAbot\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T07:26:47.024Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "Global Using.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Global Using.cs",
               "RelativeDocumentMoniker": "BuildAbot\\Global Using.cs",
@@ -139,20 +160,50 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.json",
-              "RelativeDocumentMoniker": "BuildAbot\\appsettings.json",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.json",
-              "RelativeToolTip": "BuildAbot\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-08T07:26:47.024Z",
+              "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Database\\Entities\\User.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Database\\Entities\\User.cs",
+              "RelativeToolTip": "BuildAbot\\Database\\Entities\\User.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAADwvwwAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T07:51:08.58Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "BuildAbot\\appsettings.Development.json",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\appsettings.Development.json",
+              "RelativeToolTip": "BuildAbot\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T08:15:59.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Controllers\\UserController.cs",
+              "RelativeToolTip": "BuildAbot\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwB4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T07:23:09.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Interfaces\\IUser\\IUserRepository.cs",
               "RelativeDocumentMoniker": "BuildAbot\\Interfaces\\IUser\\IUserRepository.cs",
@@ -164,8 +215,59 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
+              "Title": "AppSettings.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Helper\\AppSettings.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Helper\\AppSettings.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Helper\\AppSettings.cs",
+              "RelativeToolTip": "BuildAbot\\Helper\\AppSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T07:56:29.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Services\\UserService.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Services\\UserService.cs",
+              "RelativeToolTip": "BuildAbot\\Services\\UserService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAADwvyUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T07:24:00.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "BuildAbot\\Repositories\\UserRepository.cs",
+              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "BuildAbot\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T07:23:50.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "IUserService.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Interfaces\\IUser\\IUserService.cs",
               "RelativeDocumentMoniker": "BuildAbot\\Interfaces\\IUser\\IUserService.cs",
@@ -178,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "UserRequest.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\DTO\\UserDTO\\UserRequest.cs",
               "RelativeDocumentMoniker": "BuildAbot\\DTO\\UserDTO\\UserRequest.cs",
@@ -191,46 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "BuildAbot\\Services\\UserService.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Services\\UserService.cs",
-              "RelativeToolTip": "BuildAbot\\Services\\UserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:24:00.311Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Repositories\\UserRepository.cs",
-              "RelativeDocumentMoniker": "BuildAbot\\Repositories\\UserRepository.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "BuildAbot\\Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:23:50.952Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "BuildAbot\\Controllers\\UserController.cs",
-              "ToolTip": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\Controllers\\UserController.cs",
-              "RelativeToolTip": "BuildAbot\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA1wBkAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:23:09.76Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "UserResponse.cs",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\DTO\\UserDTO\\UserResponse.cs",
               "RelativeDocumentMoniker": "BuildAbot\\DTO\\UserDTO\\UserResponse.cs",
@@ -243,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "BuildAbot.csproj",
               "DocumentMoniker": "D:\\Github\\Build-a-bot\\Backend\\BuildAbot\\BuildAbot.csproj",
               "RelativeDocumentMoniker": "BuildAbot\\BuildAbot.csproj",
