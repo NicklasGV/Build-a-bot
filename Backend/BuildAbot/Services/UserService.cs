@@ -17,8 +17,19 @@
                 Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email.ToLower(),
-
             };
+        if (user.Scripts.Count > 0)
+            {      
+                response.Scripts = user.Scripts.Select(x => new ScriptUserResponse
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    CodeLocationId = x.CodeLocationId,
+                    GuideLocationId = x.GuideLocationId,
+                }).ToList();
+            }
+        
             return response;
         }
 

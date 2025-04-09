@@ -13,6 +13,7 @@
         public async Task<User> FindByIdAsync(int userId)
         {
             return await _databaseContext.User
+                .Include(u => u.Scripts)
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
@@ -54,6 +55,7 @@
         public async Task<List<User>> GetAllAsync()
         {
             return await _databaseContext.User
+                .Include(u => u.Scripts)
                 .ToListAsync();
         }
     }
