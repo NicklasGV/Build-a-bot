@@ -19,7 +19,7 @@
                 Description = script.Description,
                 CodeLocationId = script.CodeLocationId,
                 GuideLocationId = script.GuideLocationId,
-                User = new UserScriptResponse
+                User = script.User == null ? null : new UserScriptResponse
                 {
                     Id = script.User.Id,
                     UserName = script.User.UserName,
@@ -63,6 +63,40 @@
                 throw new ArgumentNullException();
             }
             return MapScriptToScriptResponse(script);
+        }
+
+        public async Task<ScriptResponse> UpdateByIdAsync(int scriptId, ScriptRequest updateScript)
+        {
+            var insertedScript = await _scriptRepository.UpdateByIdAsync(scriptId, MapScriptRequestToScript(updateScript));
+
+            if (insertedScript != null)
+            {
+                return MapScriptToScriptResponse(insertedScript);
+            }
+
+            return null;
+        }
+
+        public async Task<ScriptResponse> DeleteByIdAsync(int scriptId)
+        {
+            var script = await _scriptRepository.DeleteByIdAsync(scriptId);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+            return null;
+        }
+
+        public async Task<List<ScriptResponse>> GetAllAsync()
+        {
+            List<Script> scripts = await _scriptRepository.GetAllAsync();
+
+            if (scripts == null)
+            {
+                throw new ArgumentException();
+            }
+            return scripts.Select(MapScriptToScriptResponse).ToList();
         }
     }
 }

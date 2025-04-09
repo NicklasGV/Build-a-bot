@@ -21,7 +21,45 @@
         {
             _databaseContext.Script.Add(newScript);
             await _databaseContext.SaveChangesAsync();
+            newScript = await FindByIdAsync(newScript.Id);
             return newScript;
+        }
+
+        public async Task<Script> UpdateByIdAsync(int scriptId, Script updateScript)
+        {
+            Script script = await FindByIdAsync(scriptId);
+            if (script != null)
+            {
+                script.UserId = updateScript.UserId;
+                script.Title = updateScript.Title;
+                script.Description = updateScript.Description;
+                script.CodeLocationId = updateScript.CodeLocationId;
+                script.GuideLocationId = updateScript.GuideLocationId;
+
+                await _databaseContext.SaveChangesAsync();
+
+                script = await FindByIdAsync(script.Id);
+            }
+            return script;
+        }
+
+        public async Task<Script> DeleteByIdAsync(int scriptId)
+        {
+            var script = await FindByIdAsync(scriptId);
+
+            if (script != null)
+            {
+                _databaseContext.Remove(script);
+                await _databaseContext.SaveChangesAsync();
+            }
+            return script;
+        }
+
+        public async Task<List<Script>> GetAllAsync()
+        {
+            return await _databaseContext.Script
+                .Include(s => s.User)
+                .ToListAsync();
         }
     }
 }

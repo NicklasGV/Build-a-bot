@@ -14,6 +14,10 @@
                 .WithOne(s => s.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Script>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Scripts);
+
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
