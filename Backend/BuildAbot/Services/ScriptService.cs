@@ -27,6 +27,15 @@
                 }
 
             };
+            if (script.FavoriteScripts != null && script.FavoriteScripts.Count > 0)
+            {
+                response.Favorites = script.FavoriteScripts.Select(x => new FavoriteScriptResponse
+                {
+                    Id = x.User.Id,
+                    Username = x.User.UserName
+                }).ToList();
+            }
+
             return response;
         }
 
@@ -39,8 +48,23 @@
                 Description = scriptRequest.Description,
                 CodeLocationId = scriptRequest.CodeLocationId ?? string.Empty,
                 GuideLocationId = scriptRequest.GuideLocationId ?? string.Empty,
+                FavoriteScripts = scriptRequest.UserIds?.Select(x => new FavoriteScript
+                {
+                    UserId = x
+                }).ToList() ?? new List<FavoriteScript>()
             };
             return script;
+        }
+
+        public async Task<List<ScriptResponse>> GetAllAsync()
+        {
+            List<Script> scripts = await _scriptRepository.GetAllAsync();
+
+            if (scripts == null)
+            {
+                throw new ArgumentException();
+            }
+            return scripts.Select(MapScriptToScriptResponse).ToList();
         }
 
         public async Task<ScriptResponse> FindByIdAsync(int scriptId)
@@ -88,15 +112,5 @@
             return null;
         }
 
-        public async Task<List<ScriptResponse>> GetAllAsync()
-        {
-            List<Script> scripts = await _scriptRepository.GetAllAsync();
-
-            if (scripts == null)
-            {
-                throw new ArgumentException();
-            }
-            return scripts.Select(MapScriptToScriptResponse).ToList();
-        }
     }
 }

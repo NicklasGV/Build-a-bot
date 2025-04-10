@@ -17,5 +17,7 @@ namespace BuildAbot.Database.Entities
         public string Password { get; set; }
 
         public List<Script> Scripts { get; set; } = new List<Script>();
+
+        public List<FavoriteScript> FavoriteScripts { get; set; } = new List<FavoriteScript>();
     }
 }

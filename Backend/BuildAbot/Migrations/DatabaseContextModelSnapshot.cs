@@ -21,6 +21,37 @@ namespace BuildAbot.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BuildAbot.Database.Entities.FavoriteScript", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ScriptId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScriptId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteScript");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ScriptId = 1,
+                            UserId = 2
+                        });
+                });
+
             modelBuilder.Entity("BuildAbot.Database.Entities.Script", b =>
                 {
                     b.Property<int>("Id")
@@ -107,6 +138,25 @@ namespace BuildAbot.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BuildAbot.Database.Entities.FavoriteScript", b =>
+                {
+                    b.HasOne("BuildAbot.Database.Entities.Script", "Script")
+                        .WithMany("FavoriteScripts")
+                        .HasForeignKey("ScriptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuildAbot.Database.Entities.User", "User")
+                        .WithMany("FavoriteScripts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Script");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BuildAbot.Database.Entities.Script", b =>
                 {
                     b.HasOne("BuildAbot.Database.Entities.User", "User")
@@ -118,8 +168,15 @@ namespace BuildAbot.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("BuildAbot.Database.Entities.Script", b =>
+                {
+                    b.Navigation("FavoriteScripts");
+                });
+
             modelBuilder.Entity("BuildAbot.Database.Entities.User", b =>
                 {
+                    b.Navigation("FavoriteScripts");
+
                     b.Navigation("Scripts");
                 });
 #pragma warning restore 612, 618

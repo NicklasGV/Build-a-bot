@@ -18,7 +18,8 @@
                 UserName = user.UserName,
                 Email = user.Email.ToLower(),
             };
-        if (user.Scripts.Count > 0)
+            
+            if (user.Scripts.Count > 0)
             {      
                 response.Scripts = user.Scripts.Select(x => new ScriptUserResponse
                 {
@@ -29,7 +30,16 @@
                     GuideLocationId = x.GuideLocationId,
                 }).ToList();
             }
-        
+
+            if (user.FavoriteScripts.Count > 0)
+            {
+                response.Favorites = user.FavoriteScripts.Select(x => new FavoriteScriptUserResponse
+                {
+                    Id = x.Script.Id,
+                    Title = x.Script.Title,
+                }).ToList();
+            }
+
             return response;
         }
 
@@ -42,6 +52,17 @@
                 Password = BCrypt.Net.BCrypt.HashPassword(userRequest.Password) ?? string.Empty,
             };
             return user;
+        }
+
+        public async Task<List<UserResponse>> GetAllAsync()
+        {
+            List<User> users = await _userRepository.GetAllAsync();
+
+            if (users == null)
+            {
+                throw new ArgumentException();
+            }
+            return users.Select(MapUserToUserResponse).ToList();
         }
 
         public async Task<UserResponse> FindByIdAsync(int userId)
@@ -87,17 +108,6 @@
                 return MapUserToUserResponse(user);
             }
             return null;
-        }
-
-        public async Task<List<UserResponse>> GetAllAsync()
-        {
-            List<User> users = await _userRepository.GetAllAsync();
-
-            if (users == null)
-            {
-                throw new ArgumentException();
-            }
-            return users.Select(MapUserToUserResponse).ToList();
         }
 
     }

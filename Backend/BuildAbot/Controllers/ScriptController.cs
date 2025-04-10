@@ -15,6 +15,30 @@
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                List<ScriptResponse> scripts = await _scriptService.GetAllAsync();
+
+                if (scripts == null)
+                {
+                    return Problem("A problem occured the team is fixing it as we speak");
+                }
+
+                if (scripts.Count == 0)
+                {
+                    return NoContent();
+                }
+                return Ok(scripts);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("{scriptId}")]
         public async Task<IActionResult> FindByIdAsync([FromRoute] int scriptId)
         {
@@ -87,30 +111,6 @@
             catch (Exception ex)
             {
 
-                return Problem(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-        {
-            try
-            {
-                List<ScriptResponse> scripts = await _scriptService.GetAllAsync();
-
-                if (scripts == null)
-                {
-                    return Problem("A problem occured the team is fixing it as we speak");
-                }
-
-                if (scripts.Count == 0)
-                {
-                    return NoContent();
-                }
-                return Ok(scripts);
-            }
-            catch (Exception ex)
-            {
                 return Problem(ex.Message);
             }
         }
