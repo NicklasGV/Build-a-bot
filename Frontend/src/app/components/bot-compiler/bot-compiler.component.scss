@@ -46,14 +46,27 @@
     width: 100%;
     height: fit-content;
   }
+
+  .script-filter {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
   
   .script-search-input {
-    width: 100%;
-    max-width: 230px;
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+
+  .script-filter-btn {
+    padding: 8px;
+    background-color: $WHITE;
+    border: 1px solid #ccc;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
   }
   
   .script-card-list {

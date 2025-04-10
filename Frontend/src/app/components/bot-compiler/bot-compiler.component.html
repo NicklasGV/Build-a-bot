@@ -39,13 +39,16 @@
     <div class="bot-filter-container">
         <div class="script-filter-container">
             <!-- Search Input -->
-            <input
-              type="text"
-              placeholder="Search Scripts"
-              [(ngModel)]="searchTerm"
-              (input)="filterScripts()"
-              class="script-search-input"
-            />
+            <div class="script-filter">
+                <input
+                  type="text"
+                  placeholder="Search Scripts"
+                  [(ngModel)]="searchTerm"
+                  (input)="filterScripts()"
+                  class="script-search-input"
+                />
+                <button class="bi bi-gear script-filter-btn"></button>
+            </div>
     
             <!-- Card List for Available Scripts -->
             <div class="script-card-list">
