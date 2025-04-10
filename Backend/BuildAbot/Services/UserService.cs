@@ -31,6 +31,15 @@
                 }).ToList();
             }
 
+            if (user.Bots.Count > 0)
+            {
+                response.Bots = user.Bots.Select(x => new BotUserResponse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToList();
+            }
+
             if (user.FavoriteScripts.Count > 0)
             {
                 response.Favorites = user.FavoriteScripts.Select(x => new FavoriteScriptUserResponse

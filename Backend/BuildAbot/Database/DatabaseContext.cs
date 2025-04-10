@@ -1,4 +1,6 @@
-﻿namespace BuildAbot.Database
+﻿using BuildAbot.Database.Entities;
+
+namespace BuildAbot.Database
 {
     public class DatabaseContext : DbContext
     {
@@ -6,6 +8,8 @@
         public DbSet<User> User { get; set; }
         public DbSet<Script> Script { get; set; }
         public DbSet<FavoriteScript> FavoriteScript { get; set; }
+        public DbSet<Bot> Bot { get; set; }
+        public DbSet<BotScript> BotScript { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -13,12 +17,22 @@
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Scripts)
                 .WithOne(s => s.User)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Script>()
                 .HasOne(s => s.User)
                 .WithMany(u => u.Scripts)
                 .HasForeignKey(s => s.UserId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Bots)
+                .WithOne(b => b.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Bot>()
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bots)
+                .HasForeignKey(b => b.UserId);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.FavoriteScripts)
@@ -40,6 +54,28 @@
                 .WithMany(s => s.FavoriteScripts)
                 .HasForeignKey(f => f.ScriptId);
 
+            modelBuilder.Entity<Bot>()
+                .HasMany(b => b.BotScripts)
+                .WithOne(bs => bs.Bot)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Script>()
+                .HasMany(s => s.BotScripts)
+                .WithOne(bs => bs.Script)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<BotScript>()
+                .HasOne(bs => bs.Bot)
+                .WithMany(b => b.BotScripts)
+                .HasForeignKey(bs => bs.BotId);
+
+            modelBuilder.Entity<BotScript>()
+                .HasOne(bs => bs.Script)
+                .WithMany(s => s.BotScripts)
+                .HasForeignKey(bs => bs.ScriptId);
+
+
+            // Dummy data for testing
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
@@ -75,6 +111,24 @@
                     Id = 1,
                     UserId = 2,
                     ScriptId = 1,
+                }
+                );
+
+            modelBuilder.Entity<Bot>().HasData(
+                new Bot
+                {
+                    Id = 1,
+                    Name = "TestBot",
+                    UserId = 1
+                }
+                );
+
+            modelBuilder.Entity<BotScript>().HasData(
+                new BotScript
+                {
+                    Id = 1,
+                    BotId = 1,
+                    ScriptId = 1
                 }
                 );
         }

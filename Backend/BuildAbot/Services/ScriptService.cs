@@ -35,6 +35,14 @@
                     Username = x.User.UserName
                 }).ToList();
             }
+            if (script.BotScripts != null && script.BotScripts.Count > 0)
+            {
+                response.BotScripts = script.BotScripts.Select(x => new BotScriptScriptsResponse
+                {
+                    Id = x.Bot.Id,
+                    Name = x.Bot.Name
+                }).ToList();
+            }
 
             return response;
         }

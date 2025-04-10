@@ -20,5 +20,6 @@
         public string GuideLocationId { get; set; }
 
         public List<int> UserIds { get; set; } = new();
+        public List<int> BotIds { get; set; } = new();
     }
 }

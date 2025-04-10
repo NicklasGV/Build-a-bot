@@ -16,6 +16,8 @@
                 .Include(s => s.User)
                 .Include(s => s.FavoriteScripts)
                 .ThenInclude(f => f.User)
+                .Include(s => s.BotScripts)
+                .ThenInclude(bs => bs.Bot)
                 .ToListAsync();
         }
 
@@ -25,6 +27,8 @@
                 .Include(s => s.User)
                 .Include(s => s.FavoriteScripts)
                 .ThenInclude(f => f.User)
+                .Include(s => s.BotScripts)
+                .ThenInclude(bs => bs.Bot)
                 .FirstOrDefaultAsync(s => s.Id == scriptId);
         }
 

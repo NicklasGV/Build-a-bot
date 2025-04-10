@@ -14,6 +14,7 @@
         {
             return await _databaseContext.User
                 .Include(u => u.Scripts)
+                .Include(u => u.Bots)
                 .Include(u => u.FavoriteScripts)
                 .ThenInclude(f => f.Script)
                 .ToListAsync();
@@ -23,6 +24,7 @@
         {
             return await _databaseContext.User
                 .Include(u => u.Scripts)
+                .Include(u => u.Bots)
                 .Include(u => u.FavoriteScripts)
                 .ThenInclude(f => f.Script)
                 .FirstOrDefaultAsync(u => u.Id == userId);
