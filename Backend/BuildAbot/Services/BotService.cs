@@ -74,5 +74,37 @@
 
             return null;
         }
+
+        public async Task<BotResponse> CreateAsync(BotRequest botRequest)
+        {
+            Bot bot = MapBotRequestToBot(botRequest);
+            bot = await _botRepository.CreateAsync(bot);
+            if (bot != null)
+            {
+                return MapBotToBotResponse(bot);
+            }
+            return null;
+        }
+
+        public async Task<BotResponse> UpdateByIdAsync(int botId, BotRequest botRequest)
+        {
+            Bot bot = MapBotRequestToBot(botRequest);
+            bot = await _botRepository.UpdateByIdAsync(botId, bot);
+            if (bot != null)
+            {
+                return MapBotToBotResponse(bot);
+            }
+            return null;
+        }
+
+        public async Task<BotResponse> DeleteByIdAsync(int botId)
+        {
+            var bot = await _botRepository.DeleteByIdAsync(botId);
+            if (bot != null)
+            {
+                return MapBotToBotResponse(bot);
+            }
+            return null;
+        }
     }
 }

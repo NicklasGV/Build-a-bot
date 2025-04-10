@@ -62,7 +62,7 @@ namespace BuildAbot.Database
             modelBuilder.Entity<Script>()
                 .HasMany(s => s.BotScripts)
                 .WithOne(bs => bs.Script)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<BotScript>()
                 .HasOne(bs => bs.Bot)

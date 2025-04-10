@@ -215,7 +215,7 @@ namespace BuildAbot.Migrations
                     b.HasOne("BuildAbot.Database.Entities.Bot", "Bot")
                         .WithMany("BotScripts")
                         .HasForeignKey("BotId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BuildAbot.Database.Entities.Script", "Script")

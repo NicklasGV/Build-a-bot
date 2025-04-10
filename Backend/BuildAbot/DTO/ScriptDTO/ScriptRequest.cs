@@ -19,7 +19,7 @@
         [StringLength(500, ErrorMessage = "Guide locations path cannot be longer than 500 chars")]
         public string GuideLocationId { get; set; }
 
-        public List<int> UserIds { get; set; } = new();
-        public List<int> BotIds { get; set; } = new();
+        public List<int>? UserIds { get; set; } = null;
+        public List<int>? BotIds { get; set; } = null;
     }
 }

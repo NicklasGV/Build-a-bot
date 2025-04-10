@@ -59,5 +59,66 @@ namespace BuildAbot.Controllers
                 return Problem(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromForm] BotRequest botRequest)
+        {
+            try
+            {
+                BotResponse botResponse = await _botService.CreateAsync(botRequest);
+                if (botResponse == null)
+                {
+                    return Problem("A problem occured the team is fixing it as we speak");
+                }
+                return Ok(botResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("{botId}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int botId, [FromForm] BotRequest botRequest)
+        {
+            try
+            {
+                if (botRequest == null)
+                {
+                    return BadRequest();
+                }
+                BotResponse botResponse = await _botService.UpdateByIdAsync(botId, botRequest);
+                if (botResponse == null)
+                {
+                    return Problem("A problem occured the team is fixing it as we speak");
+                }
+                return Ok(botResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{botId}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int botId)
+        {
+            try
+            {
+                var botResponse = await _botRepository.FindByIdAsync(botId);
+                if (botResponse == null)
+                {
+                    return NotFound();
+                }
+                await _botService.DeleteByIdAsync(botId);
+                return Ok(botResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

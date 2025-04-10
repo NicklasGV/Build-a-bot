@@ -56,10 +56,14 @@
                 Description = scriptRequest.Description,
                 CodeLocationId = scriptRequest.CodeLocationId ?? string.Empty,
                 GuideLocationId = scriptRequest.GuideLocationId ?? string.Empty,
-                FavoriteScripts = scriptRequest.UserIds?.Select(x => new FavoriteScript
-                {
-                    UserId = x
-                }).ToList() ?? new List<FavoriteScript>()
+                FavoriteScripts = scriptRequest.UserIds
+                    .Where(x => x != 0)
+                    .Select(x => new FavoriteScript { UserId = x })
+                    .ToList(),
+                BotScripts = scriptRequest.BotIds
+                    .Where(x => x != 0)
+                    .Select(x => new BotScript { BotId = x })
+                    .ToList()
             };
             return script;
         }

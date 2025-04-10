@@ -27,5 +27,38 @@
                 .ThenInclude(bs => bs.Script)
                 .FirstOrDefaultAsync(s => s.Id == botId);
         }
+
+        public async Task<Bot> CreateAsync(Bot newBot)
+        {
+            _databaseContext.Bot.Add(newBot);
+            await _databaseContext.SaveChangesAsync();
+            newBot = await FindByIdAsync(newBot.Id);
+            return newBot;
+        }
+
+        public async Task<Bot> UpdateByIdAsync(int botId, Bot updateBot)
+        {
+            Bot bot = await FindByIdAsync(botId);
+            if (bot != null)
+            {
+                bot.UserId = updateBot.UserId;
+                bot.Name = updateBot.Name;
+                bot.BotScripts = updateBot.BotScripts;
+                await _databaseContext.SaveChangesAsync();
+                bot = await FindByIdAsync(bot.Id);
+            }
+            return bot;
+        }
+
+        public async Task<Bot> DeleteByIdAsync(int botId)
+        {
+            var bot = await FindByIdAsync(botId);
+            if (bot != null)
+            {
+                _databaseContext.Bot.Remove(bot);
+                await _databaseContext.SaveChangesAsync();
+            }
+            return bot;
+        }
     }
 }
