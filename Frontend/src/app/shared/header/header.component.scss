@@ -132,3 +132,51 @@
       padding: 8px;
     }
   }
+
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropbtn {
+    text-decoration: none;
+    cursor: pointer;
+    color: $BLURPLE;
+    margin-left: 8px;
+    &:hover {
+      color: $BLURPLE;
+    }
+    @include mobileAndTabletV {
+      &:hover {
+        color: $BLURPLE;
+      }
+    }
+  }
+
+  .dropbtn-side-nav {
+    color: $DARK_BLURPLE;
+
+    &:hover {
+      color: $BLURPLE;
+    }
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    background-color: $LIGHT_BLURPLE;
+    min-width: 160px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    li a {
+      display: block;
+      padding: 12px 16px;
+      text-decoration: none;
+    }
+  }
+  
+  .dropdown.active .dropdown-content {
+    display: block;
+  }

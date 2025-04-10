@@ -11,7 +11,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class HeaderComponent {
   constructor(@Inject(PLATFORM_ID) private platformId: any) {}
   
-  isMobileMenuActive: boolean = false;
+  isMobileMenuActive = false;
+  isDropdownOpen = false;
+  isSideDropdownOpen = false;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -38,5 +40,15 @@ export class HeaderComponent {
 
   toggleMobileMenu(): void {
     this.isMobileMenuActive = !this.isMobileMenuActive;
+  }
+
+  toggleDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleSideDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isSideDropdownOpen = !this.isSideDropdownOpen;
   }
 }

@@ -1,21 +1,22 @@
-<div class="home-container">
+<div class="bab-container">
     <!-- Hero Section -->
-    <div class="bab-hero">
-        <div class="bab-hero-content">
-            <div class="bab-hero-content-left">
-                <div class="bab-hero-content-left-header">
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-content-left">
+                <div class="hero-content-left-header">
                     <h1>Build a Bot</h1>
                     <p>Build your own bot with our easy-to-use platform.</p>
                 </div>
         
                 <div class="hero-buttons">
-                    <button routerLink="/bots" class="hero-button"><h4>View Bots</h4></button>
-                    <button routerLink="/create" class="hero-button"><h4>Create Bot</h4></button>
-                    <button routerLink="/dashboard" class="hero-button"><h4>Dashboard</h4></button>
+                    <button [routerLink]="['/script-library']" class="hero-button"><h4>Script Library</h4></button>
+                    <button [routerLink]="['/bot-library']" class="hero-button"><h4>Bot Library</h4></button>
+                    <button [routerLink]="['/bot-compiler']" class="hero-button"><h4>Create Bot</h4></button>
+                    <button [routerLink]="['/script-library']" class="hero-button"><h4>Dashboard</h4></button>
                 </div>
             </div>
-            <div class="bab-hero-content-right">
-                <img src="../../../assets/images/Build-a-bot.svg" alt="Hero Image" class="hero-image">
+            <div class="hero-content-right">
+                <img src="../../../assets/images/Build-a-bot.svg" alt="Hero Image" class="hero-image" width="500px" height="500px">
             </div>
         </div>
         <div class="vector-pattern">

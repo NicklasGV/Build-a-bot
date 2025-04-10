@@ -127,3 +127,12 @@
         text-decoration: none;
     }
 }
+
+.footer-terms-and-conditions {
+    font-size: 14px;
+    text-align: center;
+    & a {
+        color: $LIGHT_BLURPLE;
+        text-decoration: none;
+    }
+}
