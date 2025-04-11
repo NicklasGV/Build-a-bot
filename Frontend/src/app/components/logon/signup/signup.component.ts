@@ -45,6 +45,7 @@ export class SignupComponent {
   //   }
   // }
 
+  
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
