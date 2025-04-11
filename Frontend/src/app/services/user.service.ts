@@ -24,4 +24,14 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + '/' + userId);
   }
 
+  create(user: User): Observable<User> {
+    const formData = new FormData();
+
+    formData.append('email', user.email);
+    formData.append('password', user.password);
+    formData.append('userName', user.userName);
+
+    return this.http.post<User>(this.apiUrl + 'register', formData);
+  }
+
 }
