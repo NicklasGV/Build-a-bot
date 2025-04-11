@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "build-a-bot",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:Frontend": "node dist/frontend/server/server.mjs",
-    "install": "npm install"
+    "install-force": "npm install --force"
   },
   "private": true,
   "dependencies": {
