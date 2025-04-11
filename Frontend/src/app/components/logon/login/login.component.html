@@ -1,1 +1,37 @@
-<p>login works!</p>
+<div class="bab-container" id="login-container">
+    <div class="login-container">
+        <div class="card">
+          <h2>Login</h2>
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <div class="login-form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                [(ngModel)]="email"
+                #emailInput="ngModel"
+              />
+            </div>
+            <div class="login-form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                [(ngModel)]="password"
+                #passwordInput="ngModel"
+              />
+            </div>
+            <div class="not-signed-up">
+              <p>Not signed up yet?</p>
+              <a [routerLink]="['/signup']">Create an account</a>
+            </div>
+            <button class="login-button" type="submit" [disabled]="!loginForm.form.valid">Login</button>
+          </form>
+        </div>
+    </div>
+</div>
+  

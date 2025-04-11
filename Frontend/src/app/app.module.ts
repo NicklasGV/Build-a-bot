@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -16,10 +18,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FooterComponent,
     HeaderComponent,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

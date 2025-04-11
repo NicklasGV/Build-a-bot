@@ -22,12 +22,12 @@ jobs:
 
       # 3. Install project dependencies
       - name: Install dependencies
-        working-directory: Frontend/Build-a-bot
+        working-directory: Frontend
         run: npm run install-force
 
       # 4. Build the Angular app in production mode
       - name: Build Angular app
-        working-directory: Frontend/Build-a-bot
+        working-directory: Frontend
         run: npm run prod
 
       # 5. Deploy via FTP (Example: using Sam Kirkland's FTP Deploy Action)
@@ -38,4 +38,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/
-          local-dir: Frontend/Build-a-bot/dist/build-a-bot/browser/
+          local-dir: Frontend/dist/build-a-bot/browser/
