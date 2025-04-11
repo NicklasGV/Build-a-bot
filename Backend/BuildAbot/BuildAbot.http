@@ -1,0 +1,6 @@
+@BuildAbot_HostAddress = http://localhost:5132
+
+GET {{BuildAbot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,122 @@
+@use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
+
+#hero {
+    min-height: 20vw;
+}
+
+.bot-compiler-header {
+    display: flex;
+    background: $DARK;
+    color: $BLURPLE;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 0;
+}
+
+.bot-filter-container {
+    display: flex;
+    background: $DARK;
+    width: 100%;
+    justify-content: center;
+    min-height: 500px;
+}
+
+.bot-compiler-section {
+    display: flex;
+    color: $BLURPLE;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 0;
+}
+
+.script-filter-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    max-width: 250px;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .script-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .script-search-input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .script-filter-btn {
+    padding: 8px;
+    background-color: $WHITE;
+    border: 1px solid #ccc;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+  }
+  
+  .script-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .script-card {
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .chosen-script-card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .chosen-script-card-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+
+    & h4 {
+      margin-block: 16px;
+    }
+  }
+
+  .remove-script-btn {
+    padding: 8px;
+    background-color: $WHITE;
+    border: 0px solid #ccc;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+
+    &:hover {
+      color: $RED;
+    }
+  }
+  
+  .chosen-script-card {
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }

@@ -1,0 +1,17 @@
+<div class="snack-container d-flex">
+    <div *ngIf="data.snackType === 'success'">
+        <mat-icon class="success-icon text-success">check_circle</mat-icon>
+      </div>
+      <div *ngIf="data.snackType === 'error'">
+        <mat-icon class="error-icon text-danger">error</mat-icon>
+      </div>
+      <div *ngIf="data.snackType === 'warning'">
+        <mat-icon class="warning-icon text-warning">warning</mat-icon>
+      </div>
+      <div *ngIf="data.snackType === 'info'">
+        <mat-icon class="info-icon text-info">info</mat-icon>
+      </div>
+    <div>
+      <span class="d-flex ms-3">{{data.message}}</span>
+    </div>
+  </div>
