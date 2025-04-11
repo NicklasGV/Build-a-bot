@@ -18,6 +18,8 @@ namespace BuildAbot.Database.Entities
 
         public List<Script> Scripts { get; set; } = new List<Script>();
         public List<Bot> Bots { get; set; } = new List<Bot>();
+        public List<Post> Posts { get; set; } = new List<Post>();
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         public List<FavoriteScript> FavoriteScripts { get; set; } = new List<FavoriteScript>();
     }
