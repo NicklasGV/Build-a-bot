@@ -8,6 +8,9 @@
         public string CodeLocationId { get; set; }
         public string GuideLocationId { get; set; }
         public UserScriptResponse User { get; set; } = new();
+
+        public List<BotScriptScriptsResponse> BotScripts { get; set; } = new();
+        public List<FavoriteScriptResponse> Favorites { get; set; } = new();
     }
 
     public class UserScriptResponse
@@ -15,5 +18,17 @@
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+    }
+
+    public class BotScriptScriptsResponse
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class FavoriteScriptResponse
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
     }
 }

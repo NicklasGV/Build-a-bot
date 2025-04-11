@@ -13,5 +13,6 @@
         [StringLength(50, ErrorMessage = "Password cannot be longer than 50 chars")]
         public string Password { get; set; }
 
+        public List<int> ScriptIds { get; set; } = new();
     }
 }

@@ -1,14 +1,9 @@
-/* stylelint-disable */
-$min-tablet-width: 554px; /* this is an old value. careful when deleted */
+$min-tablet-width: 554px;
 
-/*
- new landing page breaking measures
-*/
 $min-desktop-width: 1024px;
 $max-tablet-vertical-width: 768px;
 $max-mobile-width: 480px;
 
-/* used in landing ci only */
 $mobile-lg: 600px;
 $mobile-md: 481px;
 $mobile-sm: 375px;

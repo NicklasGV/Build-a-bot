@@ -10,10 +10,25 @@
             _hostingEnvironment = hostingEnvironment;
         }
 
+        public async Task<List<Script>> GetAllAsync()
+        {
+            return await _databaseContext.Script
+                .Include(s => s.User)
+                .Include(s => s.FavoriteScripts)
+                .ThenInclude(f => f.User)
+                .Include(s => s.BotScripts)
+                .ThenInclude(bs => bs.Bot)
+                .ToListAsync();
+        }
+
         public async Task<Script> FindByIdAsync(int scriptId)
         {
             return await _databaseContext.Script
                 .Include(s => s.User)
+                .Include(s => s.FavoriteScripts)
+                .ThenInclude(f => f.User)
+                .Include(s => s.BotScripts)
+                .ThenInclude(bs => bs.Bot)
                 .FirstOrDefaultAsync(s => s.Id == scriptId);
         }
 
@@ -35,6 +50,7 @@
                 script.Description = updateScript.Description;
                 script.CodeLocationId = updateScript.CodeLocationId;
                 script.GuideLocationId = updateScript.GuideLocationId;
+                script.FavoriteScripts = updateScript.FavoriteScripts;
 
                 await _databaseContext.SaveChangesAsync();
 
@@ -53,13 +69,6 @@
                 await _databaseContext.SaveChangesAsync();
             }
             return script;
-        }
-
-        public async Task<List<Script>> GetAllAsync()
-        {
-            return await _databaseContext.Script
-                .Include(s => s.User)
-                .ToListAsync();
         }
     }
 }

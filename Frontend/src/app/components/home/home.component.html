@@ -1,6 +1,89 @@
-<div class="bab-hero">
-    <div class="bab-hero-content">
-        <h1>Build a Bot</h1>
-        <p>Build your own bot with our easy-to-use platform.</p>
+<div class="bab-container">
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-content-left">
+                <div class="hero-content-left-header">
+                    <h1>Build a Bot</h1>
+                    <p>Build your own bot with our easy-to-use platform.</p>
+                </div>
+        
+                <div class="hero-buttons">
+                    <button [routerLink]="['/script-library']" class="hero-button"><h4>Script Library</h4></button>
+                    <button [routerLink]="['/bot-library']" class="hero-button"><h4>Bot Library</h4></button>
+                    <button [routerLink]="['/bot-compiler']" class="hero-button"><h4>Create Bot</h4></button>
+                    <button [routerLink]="['/script-library']" class="hero-button"><h4>Dashboard</h4></button>
+                </div>
+            </div>
+            <div class="hero-content-right">
+                <img src="../../../assets/images/Build-a-bot.svg" alt="Hero Image" class="hero-image" width="500px" height="500px">
+            </div>
+        </div>
+        <div class="vector-pattern">
+            <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#19175c" />
+                    <stop offset="80%" stop-color="#1F1F1F" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#myGradient)"
+                    d="M-1 31Q35 15 91 55 129 81 192 47 251 6 307 49 359 93 427 51 485 7 540 50 609 99 682 60 753 7 823 60 870 94 929 60 979 24 1013 57L1015 222-1 224Z" />
+            </svg>
+            <!--- Fantastic site for making these lines https://yqnn.github.io/svg-path-editor/ -->
+        </div>
+    </div>
+    <div class="bot-section">
+      <div class="bot-info-container">
+            <div class="bot-image">
+                <img src="../../../assets/images/ChatBot.webp" alt="Chat bot" class="bot-image">
+            </div>
+            <div class="bot-text">
+                <div class="bot-header">
+                    <h3>Our base bot</h3>
+                </div>
+                <div class="bot-tag">
+                    <span>A bot for smallest needs</span>
+                </div>
+                <div class="bot-description">
+                    <p>Our base form bot comes with role changer and chat reactions</p>
+                </div>
+            </div>
+      </div>
+  
+      <div class="bot-info-container reverse">
+            <div class="bot-image">
+                <img src="../../../assets/images/CoolBot.webp" alt="Cool bot" class="bot-image">
+            </div>
+            <div class="bot-text">
+                <div class="bot-header">
+                    <h3>Fun king bot</h3>
+                </div>
+                <div class="bot-tag">
+                    <span>For a more relaxing time</span>
+                </div>
+                <div class="bot-description">
+                    <p>This bot is for having a fun time, it comes with games that can be played directly on your discord server</p>
+                </div>
+            </div>
+      </div>
+  
+      <div class="bot-info-container">
+            <div class="bot-image">
+                <img src="../../../assets/images/NerdBot.webp" alt="Nerd bot" class="bot-image">
+            </div>
+            <div class="bot-text">
+                <div class="bot-header">
+                    <h3>Discord mod bot</h3>
+                </div>
+                <div class="bot-tag">
+                    <span>Has the most features to serve you</span>
+                </div>
+                <div class="bot-description">
+                    <p>For the server that needs a little extra in administration, here you will be able to log messages and put in the bannable words</p>
+                </div>
+            </div>
+      </div>
     </div>
 </div>
+  

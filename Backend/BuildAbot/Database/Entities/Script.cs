@@ -19,5 +19,10 @@
 
         [Column(TypeName = "nvarchar(500)")]
         public string GuideLocationId { get; set; }
+
+
+        public List<FavoriteScript> FavoriteScripts { get; set; } = new List<FavoriteScript>();
+        public List<BotScript> BotScripts { get; set; } = new List<BotScript>();
+
     }
 }

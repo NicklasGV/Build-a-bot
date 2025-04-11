@@ -18,6 +18,30 @@ namespace BuildAbot.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                List<UserResponse> users = await _userService.GetAllAsync();
+
+                if (users == null)
+                {
+                    return Problem("A problem occured the team is fixing it as we speak");
+                }
+
+                if (users.Count == 0)
+                {
+                    return NoContent();
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("{userId}")]
         public async Task<IActionResult> FindByIdAsync([FromRoute] int userId)
         {
@@ -90,30 +114,6 @@ namespace BuildAbot.Controllers
             catch (Exception ex)
             {
 
-                return Problem(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-        {
-            try
-            {
-                List<UserResponse> users = await _userService.GetAllAsync();
-
-                if (users == null)
-                {
-                    return Problem("A problem occured the team is fixing it as we speak");
-                }
-
-                if (users.Count == 0)
-                {
-                    return NoContent();
-                }
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
                 return Problem(ex.Message);
             }
         }
