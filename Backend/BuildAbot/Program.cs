@@ -21,6 +21,9 @@ namespace BuildAbot
             builder.Services.AddScoped<IBotRepository, BotRepository>();
             builder.Services.AddScoped<IBotService, BotService>();
 
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<IPostService, PostService>();
+
             // Add services to the container.
             builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
             builder.Services.AddControllers();

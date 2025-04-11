@@ -1,6 +1,4 @@
-﻿using BuildAbot.DTO.CommentDTO;
-
-namespace BuildAbot.DTO.PostDTO
+﻿namespace BuildAbot.DTO.PostDTO
 {
     public class PostResponse
     {
@@ -10,7 +8,23 @@ namespace BuildAbot.DTO.PostDTO
 
         public string Content { get; set; }
 
-        // List of comments for the post. Each comment can contain its own replies.
-        public List<CommentResponse> Comments { get; set; } = new();
+        public UserPostResponse User { get; set; } = new();
+        public List<CommentPostResponse> Comments { get; set; } = new();
+    }
+
+    public class UserPostResponse
+    {
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+    }
+    public class CommentPostResponse
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public int? ParentCommentId { get; set; }
+        public UserCommentResponse User { get; set; } = new();
+        public List<CommentPostResponse> Replies { get; set; } = new();
     }
 }
