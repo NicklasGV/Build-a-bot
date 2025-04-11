@@ -23,7 +23,7 @@ jobs:
       # 3. Install project dependencies
       - name: Install dependencies
         working-directory: Frontend
-        run: npm run install-force
+        run: npm run install
 
       # 4. Build the Angular app in production mode
       - name: Build Angular app
