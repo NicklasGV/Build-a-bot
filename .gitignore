@@ -1,6 +1,11 @@
-*__pycache__
+*pycache
 *.env
 *.vscode
 *.idea
-/Backend/.vs
-/Backend/BuildAbot/obj
+*.editorconfig
+*.cache
+Backend/.vs/Backend/FileContentIndex/
+Backend/.vs/
+Backend/BuildAbot/obj/
+Backend/BuildAbot/bin/
+Backend/BuildAbot/Migrations/
