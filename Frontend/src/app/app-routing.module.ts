@@ -19,6 +19,14 @@ const routes: Routes = [
     import('./components/bot-compiler/bot-compiler.component').then(it => it.BotCompilerComponent)
   },
   {
+    path: 'signup', loadComponent: () =>
+    import('./components/logon/signup/signup.component').then(it => it.SignupComponent)
+  },
+  {
+    path: 'login', loadComponent: () =>
+    import('./components/logon/login/login.component').then(it => it.LoginComponent)
+  },
+  {
     path: 'terms-and-conditions', loadComponent: () =>
     import('./components/terms-and-conditions/terms-and-conditions.component').then(it => it.TermsAndConditionsComponent)
   }

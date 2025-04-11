@@ -4,7 +4,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     padding: 8px 16px 8px 16px;
     background: $DARK;
     color: $WHITE;
@@ -12,11 +12,11 @@
     @include mobileAndTabletV {
       flex-direction: row-reverse;
       justify-content: space-between;
-      position: fixed;   // Make the navbar fixed to the viewport
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;     // Ensure it's on top of other content
+      z-index: 1000;
     }
 
     .logo a {
@@ -64,6 +64,33 @@
             color: $LIGHT_BLURPLE;
           }
         }
+      }
+    }
+  }
+
+  .login-signup {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+
+    @include mobileAndTabletV {
+      display: none;
+      margin-left: 0;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .login-button, .signup-button {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      color: $WHITE;
+      background-color: $BLURPLE;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $LIGHT_BLURPLE;
       }
     }
   }

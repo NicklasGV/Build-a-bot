@@ -1,47 +1,6 @@
 @use "../../../styles/colors.scss" as *;
 @use "../../../styles/media.scss" as *;
 
-.script-library-container {
-    @include mobileAndTabletV {
-        margin-top: 70px;
-    }
-}
-
-.bab-hero {
-    background: $DARK_BLURPLE_GRADIENT_REVERSE;
-    color: $LIGHT_BLURPLE;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    min-height: 35vw;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 0;
-    scroll-snap-align: start;
-}
-
-.bab-hero-content {
-    display: flex;
-    justify-content: space-between;
-    margin: 64px;
-}
-
-.bab-hero-content-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 16px;
-
-    @include mobileAndTabletV {
-        display: none;
-    }
-}
-
-.bab-hero-content-left-header {
-    text-align: left;
-}
-
 .script-section {
     display: flex;
     padding: 20px;
