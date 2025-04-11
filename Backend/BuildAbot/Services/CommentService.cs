@@ -32,7 +32,7 @@
             return response;
         }
 
-        private static Comment MapCommentRequestTComment(CommentRequest commentRequest)
+        private static Comment MapCommentRequestComment(CommentRequest commentRequest)
         {
             Comment comment = new Comment
             {
@@ -66,6 +66,26 @@
             }
 
             return null;
+        }
+
+        public async Task<CommentResponse> CreateAsync(CommentRequest commentRequest)
+        {
+            Comment newComment = MapCommentRequestComment(commentRequest);
+            newComment = await _commentRepository.CreateAsync(newComment);
+            return MapCommentToCommentResponse(newComment);
+        }
+
+        public async Task<CommentResponse> UpdateByIdAsync(int commentId, CommentRequest commentRequest)
+        {
+            Comment updateComment = MapCommentRequestComment(commentRequest);
+            Comment comment = await _commentRepository.UpdateByIdAsync(commentId, updateComment);
+            return MapCommentToCommentResponse(comment);
+        }
+
+        public async Task<CommentResponse> DeleteByIdAsync(int commentId)
+        {
+            var comment = await _commentRepository.DeleteByIdAsync(commentId);
+            return MapCommentToCommentResponse(comment);
         }
     }
 }

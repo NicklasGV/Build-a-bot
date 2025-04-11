@@ -24,31 +24,31 @@
                 },
                 Comments = post.Comments
                             .Where(x => x.ParentCommentId == null)
-                            .Select(x => new CommentPostResponse
-                            {
-                                Id = x.Id,
-                                Text = x.Text,
-                                CreatedAt = x.CreatedAt,
-                                User = new UserCommentResponse
-                                {
-                                    Id = x.User.Id,
-                                    UserName = x.User.UserName,
-                                    Email = x.User.Email.ToLower()
-                                },
-                                Replies = x.ChildComments.Select(r => new CommentPostResponse
-                                {
-                                    Id = r.Id,
-                                    Text = r.Text,
-                                    ParentCommentId = r.ParentCommentId,
-                                    CreatedAt = r.CreatedAt,
-                                    User = new UserCommentResponse
-                                    {
-                                        Id = x.User.Id,
-                                        UserName = x.User.UserName,
-                                        Email = x.User.Email.ToLower()
-                                    },
-                                }).ToList()
-                            }).ToList()
+                            .Select(MapCommentToResponse)
+                            .ToList()
+            };
+
+            return response;
+        }
+
+
+        public static CommentPostResponse MapCommentToResponse(Comment comment)
+        {
+            var response = new CommentPostResponse
+            {
+                Id = comment.Id,
+                Text = comment.Text,
+                CreatedAt = comment.CreatedAt,
+                ParentCommentId = comment.ParentCommentId,
+                User = new UserCommentResponse
+                {
+                    Id = comment.User.Id,
+                    UserName = comment.User.UserName,
+                    Email = comment.User.Email.ToLower()
+                },
+                Replies = comment.ChildComments != null && comment.ChildComments.Any()
+                          ? comment.ChildComments.Select(MapCommentToResponse).ToList()
+                          : new List<CommentPostResponse>()
             };
 
             return response;
