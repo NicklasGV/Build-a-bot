@@ -10,7 +10,8 @@ namespace BuildAbot.Database
         public DbSet<FavoriteScript> FavoriteScript { get; set; }
         public DbSet<Bot> Bot { get; set; }
         public DbSet<BotScript> BotScript { get; set; }
-
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +75,39 @@ namespace BuildAbot.Database
                 .WithMany(s => s.BotScripts)
                 .HasForeignKey(bs => bs.ScriptId);
 
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PostId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+               .HasOne(c => c.ParentComment)
+               .WithMany(c => c.ChildComments)
+               .HasForeignKey(c => c.ParentCommentId)
+               .IsRequired(false);
+
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(s => s.UserId);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(s => s.UserId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Posts)
+                .WithOne(p => p.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Dummy data for testing
             modelBuilder.Entity<User>().HasData(
@@ -131,6 +165,37 @@ namespace BuildAbot.Database
                     ScriptId = 1
                 }
                 );
+
+            modelBuilder.Entity<Post>().HasData(
+                new Post
+                {
+                    Id = 1,
+                    Title = "TestPost",
+                    Content = "TestContent",
+                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+                    UserId = 1
+                }
+            );
+
+            modelBuilder.Entity<Comment>().HasData(
+                new Comment
+                {
+                    Id = 1,
+                    Text = "TestTopComment",
+                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+                    UserId = 1,
+                    PostId = 1
+                },
+                new Comment
+                {
+                    Id = 2,
+                    Text = "TestChildComment",
+                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+                    UserId = 2,
+                    PostId = 1,
+                    ParentCommentId = 1
+                }
+            );
         }
     }
 }
