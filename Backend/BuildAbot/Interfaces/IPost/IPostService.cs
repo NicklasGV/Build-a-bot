@@ -4,8 +4,8 @@
     {
         Task<List<PostResponse>> GetAllAsync();
         Task<PostResponse?> FindByIdAsync(int postId);
-        //Task<Post> CreateAsync(Post newPost);
-        //Task<Post> UpdateByIdAsync(int postId, Post updatePost);
-        //Task<Post?> DeleteByIdAsync(int postId);
+        Task<PostResponse> CreateAsync(PostRequest newPost);
+        Task<PostResponse> UpdateByIdAsync(int postId, PostRequest updatePost);
+        Task<PostResponse?> DeleteByIdAsync(int postId);
     }
 }

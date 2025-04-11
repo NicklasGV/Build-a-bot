@@ -56,5 +56,59 @@ namespace BuildAbot.Controllers
                 return Problem(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromForm] PostRequest postRequest)
+        {
+            try
+            {
+                PostResponse postResponse = await _postService.CreateAsync(postRequest);
+                if (postResponse == null)
+                {
+                    return Problem("A problem occured the team is fixing it as we speak");
+                }
+                return Ok(postResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateByIdAsync(int id, [FromForm] PostRequest postRequest)
+        {
+            try
+            {
+                PostResponse postResponse = await _postService.UpdateByIdAsync(id, postRequest);
+                if (postResponse == null)
+                {
+                    return NotFound();
+                }
+                return Ok(postResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteByIdAsync(int id)
+        {
+            try
+            {
+                PostResponse postResponse = await _postService.DeleteByIdAsync(id);
+                if (postResponse == null)
+                {
+                    return NotFound();
+                }
+                return Ok(postResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

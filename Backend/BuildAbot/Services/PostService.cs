@@ -55,18 +55,15 @@
         }
 
 
-        private static Bot MapBotRequestToBot(BotRequest botRequest)
+        private static Post MapPostRequestToPost(PostRequest postRequest)
         {
-            Bot bot = new Bot
+            Post post = new Post
             {
-                UserId = botRequest.UserId,
-                Name = botRequest.Name,
-                BotScripts = botRequest.ScriptIds?.Select(x => new BotScript
-                {
-                    ScriptId = x
-                }).ToList() ?? new List<BotScript>()
+                UserId = postRequest.UserId,
+                Title = postRequest.Title,
+                Content = postRequest.Content,
             };
-            return bot;
+            return post;
         }
 
         public async Task<List<PostResponse>> GetAllAsync()
@@ -91,6 +88,26 @@
             }
 
             return null;
+        }
+
+        public async Task<PostResponse> CreateAsync(PostRequest postRequest)
+        {
+            Post newPost = MapPostRequestToPost(postRequest);
+            newPost = await _postRepository.CreateAsync(newPost);
+            return MapPostToPostResponse(newPost);
+        }
+
+        public async Task<PostResponse> UpdateByIdAsync(int postId, PostRequest postRequest)
+        {
+            Post updatePost = MapPostRequestToPost(postRequest);
+            Post post = await _postRepository.UpdateByIdAsync(postId, updatePost);
+            return MapPostToPostResponse(post);
+        }
+
+        public async Task<PostResponse> DeleteByIdAsync(int postId)
+        {
+            var post = await _postRepository.DeleteByIdAsync(postId);
+            return MapPostToPostResponse(post);
         }
     }
 }
