@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Script } from '../../models/script.model';
+import { ScriptService } from '../../services/script.service';
 
 @Component({
   selector: 'app-bot-compiler',
@@ -13,35 +15,34 @@ import { RouterModule } from '@angular/router';
 export class BotCompilerComponent {
   searchTerm: string = '';
 
-  scripts: { name: string }[] = [];
+  scripts: Script[] = [];
 
-  filteredScripts: { name: string }[] = [];
+  filteredScripts: Script[] = [];
 
   chosenScripts: string[] = [];
 
-  constructor() { }
+  constructor(private scriptService: ScriptService) { }
 
   ngOnInit(): void {
-    this.scripts = [
-      { name: 'Authentication Script' },
-      { name: 'Data Processing Script' },
-      { name: 'UI Rendering Script' },
-      { name: 'Notification Script' },
-      { name: 'Logging Script' }
-    ];
+    this.scriptService.getAll().subscribe({
+      next: (result) => {
+        this.scripts = result;
+      },
+    });
+    
     this.filteredScripts = this.scripts;
   }
 
   filterScripts(): void {
     const term = this.searchTerm.toLowerCase();
     this.filteredScripts = this.scripts.filter(script =>
-      script.name.toLowerCase().includes(term)
+      script.title.toLowerCase().includes(term)
     );
   }
 
-  addToChosenScripts(script: { name: string }): void {
-    if (!this.chosenScripts.includes(script.name)) {
-      this.chosenScripts.push(script.name);
+  addToChosenScripts(script: Script): void {
+    if (!this.chosenScripts.includes(script.title)) {
+      this.chosenScripts.push(script.title);
     }
   }
 }

@@ -42,39 +42,39 @@
                 <p>Explore our library of scripts to enhance your bot's functionality.</p>
             </div>
             <div class="script-showcase">
-                <div class="script-card" *ngFor="let script of dummyScripts" [class.active]="scriptStates[script.script_id]?.expanded">
+                <div class="script-card" *ngFor="let script of scripts" [class.active]="scriptStates[script.id].expanded">
                     <!-- Card Header -->
                     <div class="card-header">
-                        <h3 class="card-title">{{ script.script_name }}</h3>
-                        <span class="card-user">Made by {{ script.user_id }}</span>
+                        <h3 class="card-title">{{ script.title }}</h3>
+                        <span class="card-user">Made by {{ script.user.userName }}</span>
                     </div>
                     <div class="card-content">
                         <p class="card-description">{{ script.description }}</p>
                     </div>
-                    <button (click)="toggleExpanded(script.script_id)" class="show-more-btn">
-                        {{ scriptStates[script.script_id]?.expanded ? 'Show less' : 'Show more' }}
+                    <button (click)="toggleExpanded(script.id)" class="show-more-btn">
+                        {{ scriptStates[script.id].expanded ? 'Show less' : 'Show more' }}
                     </button>
-                    <div *ngIf="scriptStates[script.script_id]?.expanded" class="card-details">
+                    <div *ngIf="scriptStates[script.id]?.expanded" class="card-details">
                     <div class="tabs">
                         <button 
                             class="tab-button" 
-                            [class.active]="scriptStates[script.script_id]?.activeTab === 'about'" 
-                            (click)="setActiveTab(script.script_id, 'about')">
+                            [class.active]="scriptStates[script.id].activeTab === 'about'" 
+                            (click)="setActiveTab(script.id, 'about')">
                             Guide
                         </button>
                         <button 
                             class="tab-button" 
-                            [class.active]="scriptStates[script.script_id]?.activeTab === 'source'" 
-                            (click)="setActiveTab(script.script_id, 'source')">
+                            [class.active]="scriptStates[script.id].activeTab === 'source'" 
+                            (click)="setActiveTab(script.id, 'source')">
                             Source Code
                         </button>
                     </div>
                     <div class="tab-content">
-                        <div *ngIf="scriptStates[script.script_id]?.activeTab === 'about'">
-                            <p>{{ script.guide_id }}</p>
+                        <div *ngIf="scriptStates[script.id]?.activeTab === 'about'">
+                            <p>{{ script.guideLocationId }}</p>
                         </div>
-                        <div *ngIf="scriptStates[script.script_id]?.activeTab === 'source'">
-                            <p>Code ID: {{ script.code_id }}</p>
+                        <div *ngIf="scriptStates[script.id]?.activeTab === 'source'">
+                            <p>Code ID: {{ script.codeLocationId }}</p>
                         </div>
                     </div>
                 </div>

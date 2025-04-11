@@ -9,3 +9,4 @@ Backend/.vs/
 Backend/BuildAbot/obj/
 Backend/BuildAbot/bin/
 Backend/BuildAbot/Migrations/
+Backend/BuildAbot/appsettings.*

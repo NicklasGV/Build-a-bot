@@ -42,39 +42,39 @@
                 <p>Explore our library of bots to enhance your bot's functionality.</p>
             </div>
             <div class="bot-showcase">
-                <div class="bot-card" *ngFor="let bot of dummyBots" [class.active]="botStates[bot.bot_id]?.expanded">
+                <div class="bot-card" *ngFor="let bot of bots" [class.active]="botStates[bot.id].expanded">
                     <!-- Card Header -->
                     <div class="card-header">
-                        <h3 class="card-title">{{ bot.bot_name }}</h3>
-                        <span class="card-user">Made by {{ bot.user_id }}</span>
+                        <h3 class="card-title">{{ bot.name }}</h3>
+                        <span class="card-user">Made by {{ bot.user.userName }}</span>
                     </div>
-                    <div class="card-content">
+                    <!-- <div class="card-content">
                         <p class="card-debotion">{{ bot.description }}</p>
-                    </div>
-                    <button (click)="toggleExpanded(bot.bot_id)" class="show-more-btn">
-                        {{ botStates[bot.bot_id]?.expanded ? 'Show less' : 'Show more' }}
+                    </div> -->
+                    <button (click)="toggleExpanded(bot.id)" class="show-more-btn">
+                        {{ botStates[bot.id].expanded ? 'Show less' : 'Show more' }}
                     </button>
-                    <div *ngIf="botStates[bot.bot_id]?.expanded" class="card-details">
+                    <div *ngIf="botStates[bot.id].expanded" class="card-details">
                     <div class="tabs">
                         <button 
                             class="tab-button" 
-                            [class.active]="botStates[bot.bot_id]?.activeTab === 'about'" 
-                            (click)="setActiveTab(bot.bot_id, 'about')">
+                            [class.active]="botStates[bot.id].activeTab === 'about'" 
+                            (click)="setActiveTab(bot.id, 'about')">
                             Guide
                         </button>
                         <button 
                             class="tab-button" 
-                            [class.active]="botStates[bot.bot_id]?.activeTab === 'source'" 
-                            (click)="setActiveTab(bot.bot_id, 'source')">
+                            [class.active]="botStates[bot.id].activeTab === 'source'" 
+                            (click)="setActiveTab(bot.id, 'source')">
                             Source Code
                         </button>
                     </div>
                     <div class="tab-content">
-                        <div *ngIf="botStates[bot.bot_id]?.activeTab === 'about'">
-                            <p>{{ bot.guide_id }}</p>
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'about'">
+                            <p>{{ bot.name }}</p>
                         </div>
-                        <div *ngIf="botStates[bot.bot_id]?.activeTab === 'source'">
-                            <p>Code ID: {{ bot.code_id }}</p>
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'source'">
+                            <p>Code ID: {{ bot.name }}</p>
                         </div>
                     </div>
                 </div>

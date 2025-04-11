@@ -38,7 +38,6 @@
     </div>
     <div class="bot-filter-container">
         <div class="script-filter-container">
-            <!-- Search Input -->
             <div class="script-filter">
                 <input
                   type="text"
@@ -50,14 +49,13 @@
                 <button class="bi bi-gear script-filter-btn"></button>
             </div>
     
-            <!-- Card List for Available Scripts -->
             <div class="script-card-list">
                 <div
                   *ngFor="let script of filteredScripts"
                   class="script-card"
                   (click)="addToChosenScripts(script)"
                 >
-                  {{ script.name }}
+                  {{ script.title }}
                 </div>
               </div>
             </div>
