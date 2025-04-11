@@ -88,6 +88,29 @@
     gap: 10px;
     margin-top: 15px;
   }
+
+  .chosen-script-card-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+
+    & h4 {
+      margin-block: 16px;
+    }
+  }
+
+  .remove-script-btn {
+    padding: 8px;
+    background-color: $WHITE;
+    border: 0px solid #ccc;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+
+    &:hover {
+      color: $RED;
+    }
+  }
   
   .chosen-script-card {
     padding: 10px;

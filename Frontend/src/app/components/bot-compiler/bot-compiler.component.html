@@ -67,9 +67,19 @@
                 </div>
                 <!-- Chosen Scripts displayed as Cards -->
                 <div class="chosen-script-card-container">
-                <div *ngFor="let script of chosenScripts" class="chosen-script-card">
-                    {{ script }}
-                </div>
+                    <div *ngFor="let script of chosenScripts" class="chosen-script-card">
+                        <div class="chosen-script-card-header">
+                            <div class="chosen-script-remove-btn">
+                                <button (click)="removeFromChosenScripts(script)" class="remove-script-btn bi bi-trash-fill"></button>
+                            </div>
+                            <div class="chosen-script-card-header-title">
+                                <h4 class="chosen-script-card-title">{{ script.title }}</h4>
+                            </div>
+                        </div>
+                        <div class="chosen-script-card-content">
+                            <p class="chosen-script-card-description">{{ script.description }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

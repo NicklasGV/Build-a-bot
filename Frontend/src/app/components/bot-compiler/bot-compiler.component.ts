@@ -19,7 +19,7 @@ export class BotCompilerComponent {
 
   filteredScripts: Script[] = [];
 
-  chosenScripts: string[] = [];
+  chosenScripts: Script[] = [];
 
   constructor(private scriptService: ScriptService) { }
 
@@ -41,8 +41,15 @@ export class BotCompilerComponent {
   }
 
   addToChosenScripts(script: Script): void {
-    if (!this.chosenScripts.includes(script.title)) {
-      this.chosenScripts.push(script.title);
+    if (!this.chosenScripts.includes(script)) {
+      this.chosenScripts.push(script);
+    }
+  }
+
+  removeFromChosenScripts(script: Script): void {
+    const index = this.chosenScripts.indexOf(script);
+    if (index > -1) {
+      this.chosenScripts.splice(index, 1);
     }
   }
 }
