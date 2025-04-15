@@ -37,4 +37,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /Backend/api/
-          local-dir: Backend/published
+          local-dir: /Backend/published/
