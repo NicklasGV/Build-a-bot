@@ -33,8 +33,8 @@ jobs:
       - name: Deploy to FTP server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: your.backend.ftp.server.com
+          server: ${{ FTP_HOST_NAME }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /Backend/api/
-          local-dir: /Backend/published/
+          server-dir: /public_html/api/
+          local-dir: Backend/published/
