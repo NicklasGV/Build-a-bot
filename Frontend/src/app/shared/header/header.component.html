@@ -1,54 +1,63 @@
 <nav class="navbar">
   <div class="logo">
-    <a href="#">
+    <!-- You can add collapseNavbar() on the logo as well if desired -->
+    <a href="#" (click)="collapseNavbar()">
       <img src="../../../assets/images/Build-a-bot-wide.svg" alt="Build-a-Bot Logo" width="150px" height="50px"/>
     </a>
   </div>
-  <button type="button" class="mobile-menu-button" aria-label="Burger menu button" (click)="toggleMobileMenu()">
+  <button
+    type="button"
+    class="mobile-menu-button"
+    aria-label="Burger menu button"
+    (click)="toggleMobileMenu()"
+  >
     <i class="bi bi-list"></i>
   </button>
   <ul class="nav-links" [class.mobile-active]="isMobileMenuActive">
     <li>
-      <a href="#" class="bi bi-house"> Home</a>
+      <a href="#" class="bi bi-house" (click)="collapseNavbar()"> Home</a>
     </li>
     <li class="dropdown" [class.active]="isDropdownOpen" (click)="toggleDropdown($event)">
       <span class="bi bi-book dropbtn"> Libraries</span>
       <ul class="dropdown-content">
         <li>
-          <a href="/script-library"> Script Library</a>
+          <a href="/script-library" (click)="collapseNavbar()"> Script Library</a>
         </li>
         <li>
-          <a href="/bot-library"> Bot Library</a>
+          <a href="/bot-library" (click)="collapseNavbar()"> Bot Library</a>
         </li>
       </ul>
     </li>
     <li>
-      <a href="/bot-compiler" class="bi bi-robot"> Bot Compiler</a>
+      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"> Bot Compiler</a>
     </li>
+    <li>
+      <button [routerLink]="['/login']" class="login-button-nav" (click)="collapseNavbar()">Login</button>
+    </li>  
   </ul>
   <div class="login-signup">
-    <button [routerLink]="['/login']" class="login">Login</button>
+    <button [routerLink]="['/login']" class="login-button" (click)="collapseNavbar()">Login</button>
   </div>
 </nav>
 
 <nav class="side-nav" id="sideNav">
   <ul class="nav-links">
     <li>
-      <a href="#" class="bi bi-house"></a>
+      <a href="#" class="bi bi-house" (click)="collapseNavbar()"></a>
     </li>
     <li class="dropdown" [class.active]="isSideDropdownOpen" (click)="toggleSideDropdown($event)">
       <span class="bi bi-book dropbtn dropbtn-side-nav"></span>
       <ul class="dropdown-content">
         <li>
-          <a href="/script-library">Script Library</a>
+          <a href="/script-library" (click)="collapseNavbar()">Script Library</a>
         </li>
         <li>
-          <a href="/bot-library">Bot Library</a>
+          <a href="/bot-library" (click)="collapseNavbar()">Bot Library</a>
         </li>
       </ul>
     </li>
     <li>
-      <a href="/bot-compiler" class="bi bi-robot"></a>
+      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"></a>
     </li>
   </ul>
 </nav>

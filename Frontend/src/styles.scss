@@ -15,11 +15,14 @@
   padding: 20px;
   text-align: center;
   position: relative;
-  min-height: 35vw;
+  min-height: 80vh;
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0;
   scroll-snap-align: start;
+  @include mobileAndTabletV {
+      min-height: 45vh;
+  }
 }
 
 .hero-content {
@@ -39,16 +42,24 @@
   align-items: center;
   flex-direction: column;
   gap: 16px;
-  width: fit-content;
-  height: fit-content;
+
+  .hero-image {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+  }
 
   @include mobileAndTabletV {
-      display: none;
+    display: none;
   }
 }
 
 .hero-content-left-header {
   text-align: left;
+
+  @include mobileAndTabletV {
+    text-align: center;
+  }
 }
 
 body {
