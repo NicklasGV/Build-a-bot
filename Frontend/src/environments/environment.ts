@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.protonedmusic.com/api/'
+    apiUrl: 'https://api.buildabot.com/api/'
 };
