@@ -1,0 +1,47 @@
+name: Build and Deploy ASP .NET API
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'        # install the SDK, not just runtime
+
+      - name: Restore dependencies
+        working-directory: Backend
+        run: dotnet restore
+
+      - name: Build ASP .NET API
+        working-directory: Backend
+        run: dotnet build --configuration Release
+
+      - name: Publish self‑contained ASP .NET API
+        working-directory: Backend
+        run: |
+          dotnet publish \
+            --configuration Release \
+            --runtime linux-x64 \         # replace with your target RID, e.g. win-x64, linux-arm64, etc.
+            --self-contained true \       # bundle the .NET runtime
+            /p:PublishSingleFile=true \   # optional: produce a single executable
+            /p:PublishTrimmed=true \      # optional: trim unused assemblies
+            --output published
+
+      - name: Deploy to FTP server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server:    ${{ secrets.FTP_HOST_NAME }}
+          username:  ${{ secrets.FTP_USERNAME }}
+          password:  ${{ secrets.FTP_PASSWORD }}
+          server-dir: /api/
+          local-dir:  Backend/published/
