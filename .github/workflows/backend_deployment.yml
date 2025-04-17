@@ -2,8 +2,7 @@ name: Build and Deploy ASP .NET API
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build-deploy-backend:
@@ -19,23 +18,28 @@ jobs:
           dotnet-version: '8.0'
 
       - name: Restore dependencies
-        working-directory: Backend
+        working-directory: Backend/BuildAbot
         run: dotnet restore
 
       - name: Build ASP .NET API
-        working-directory: Backend
+        working-directory: Backend/BuildAbot
         run: dotnet build --configuration Release
 
-      - name: Publish self‑contained ASP .NET API
+      - name: Publish self‑contained ASP NET API
         working-directory: Backend/BuildAbot
-        run: dotnet publish --configuration Release --runtime linux-x64 --self-contained true \
-          /p:PublishSingleFile=true /p:PublishTrimmed=true --output published
+        run: |
+          dotnet publish --configuration Release \
+            --runtime linux-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:PublishTrimmed=true \
+            --output ../../published
 
       - name: Deploy to FTP server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server:    ${{ secrets.FTP_HOST_NAME }}
-          username:  ${{ secrets.FTP_USERNAME }}
-          password:  ${{ secrets.FTP_PASSWORD }}
+          server:     ${{ secrets.FTP_HOST_NAME }}
+          username:   ${{ secrets.FTP_USERNAME }}
+          password:   ${{ secrets.FTP_PASSWORD }}
           server-dir: /api/
           local-dir:  Backend/published/
