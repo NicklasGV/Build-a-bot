@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
+    RouterModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
