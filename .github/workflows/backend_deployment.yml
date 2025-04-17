@@ -28,14 +28,8 @@ jobs:
 
       - name: Publish self‑contained ASP .NET API
         working-directory: Backend
-        run: |
-          dotnet publish \
-            --configuration Release \
-            --runtime linux-x64 \         # replace with your target RID, e.g. win-x64, linux-arm64, etc.
-            --self-contained true \       # bundle the .NET runtime
-            /p:PublishSingleFile=true \   # optional: produce a single executable
-            /p:PublishTrimmed=true \      # optional: trim unused assemblies
-            --output published
+        run: dotnet publish --configuration Release --runtime linux-x64 --self-contained true \
+          /p:PublishSingleFile=true /p:PublishTrimmed=true --output published
 
       - name: Deploy to FTP server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
