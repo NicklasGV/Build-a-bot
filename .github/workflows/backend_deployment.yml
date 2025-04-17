@@ -33,7 +33,7 @@ jobs:
             --self-contained true \
             -p:PublishSingleFile=true \
             -p:PublishTrimmed=true \
-            --output ../../published
+            --output ../published
 
       - name: Deploy to FTP server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -42,4 +42,4 @@ jobs:
           username:   ${{ secrets.FTP_USERNAME }}
           password:   ${{ secrets.FTP_PASSWORD }}
           server-dir: /api/
-          local-dir:  Backend/BuildAbot/published/
+          local-dir:  Backend/published/
