@@ -2,7 +2,8 @@ name: Build and Deploy ASP .NET API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ -- ]
+    # switch to main for production deployment
 
 jobs:
   build-deploy-backend:
