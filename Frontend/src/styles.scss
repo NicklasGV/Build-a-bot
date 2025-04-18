@@ -15,13 +15,13 @@
   padding: 20px;
   text-align: center;
   position: relative;
-  min-height: 80vh;
+  min-height: 70vh;
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 45vh;
+      min-height: 65vh;
   }
 }
 
