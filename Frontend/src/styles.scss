@@ -21,7 +21,7 @@
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 80vh;
+      min-height: 90vh;
   }
 }
 
@@ -37,7 +37,7 @@
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 30vh;
+      min-height: 40vh;
   }
 }
 
