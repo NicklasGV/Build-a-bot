@@ -21,6 +21,9 @@
       <span class="bi bi-book dropbtn"> Libraries</span>
       <ul class="dropdown-content">
         <li>
+          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
+        </li>
+        <li>
           <a href="/script-library" (click)="collapseNavbar()"> Script Library</a>
         </li>
         <li>
@@ -48,6 +51,9 @@
     <li class="dropdown" [class.active]="isSideDropdownOpen" (click)="toggleSideDropdown($event)">
       <span class="bi bi-book dropbtn dropbtn-side-nav"></span>
       <ul class="dropdown-content">
+        <li>
+          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
+        </li>
         <li>
           <a href="/script-library" (click)="collapseNavbar()">Script Library</a>
         </li>

@@ -65,6 +65,7 @@ export class SignupComponent {
           this.cancel();
           this.signupForm.reset();
           this.snackBar.openSnackBar('User registered','','success');
+          this.router.navigate(['/login']);
         },
         error: (err) => {
           this.message = Object.values(err.error.errors).join(", ");

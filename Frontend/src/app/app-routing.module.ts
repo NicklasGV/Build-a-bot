@@ -7,6 +7,10 @@ const routes: Routes = [
     import('./components/home/home.component').then(it => it.HomeComponent)
   },
   {
+    path: 'libraries', loadComponent: () =>
+    import('./components/libraries/libraries.component').then(it => it.LibrariesComponent)
+  },
+  {
     path: 'script-library', loadComponent: () =>
     import('./components/script-library/script-library.component').then(it => it.ScriptLibraryComponent)
   },

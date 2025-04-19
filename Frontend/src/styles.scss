@@ -21,7 +21,23 @@
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 65vh;
+      min-height: 80vh;
+  }
+}
+
+.small-hero {
+  background: $DARK_BLURPLE_GRADIENT_REVERSE;
+  color: $LIGHT_BLURPLE;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  min-height: 50vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 0;
+  scroll-snap-align: start;
+  @include mobileAndTabletV {
+      min-height: 30vh;
   }
 }
 
@@ -129,6 +145,7 @@ h4 {
     
     li {
       color: $LIGHT_BLURPLE;
+      cursor: pointer;
       a {
         text-decoration: none;
         color: $LIGHT_BLURPLE;
