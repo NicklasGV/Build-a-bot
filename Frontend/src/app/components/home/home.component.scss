@@ -3,10 +3,11 @@
 
 .hero-buttons {
     display: flex;
-    justify-content: center;
     flex-direction: row;
     gap: 48px;
     margin-block: 48px;
+    max-width: 900px;
+    flex-wrap: wrap;
 
     @include mobileAndTabletV {
         flex-direction: column;
