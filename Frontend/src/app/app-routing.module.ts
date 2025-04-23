@@ -1,3 +1,4 @@
+import { DiscordCallbackComponent } from './components/discord-callback/discord-callback.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -29,7 +30,11 @@ const routes: Routes = [
   {
     path: 'terms-and-conditions', loadComponent: () =>
     import('./components/terms-and-conditions/terms-and-conditions.component').then(it => it.TermsAndConditionsComponent)
-  }
+  },
+  {
+    path: 'auth/callback', loadComponent: () =>
+    import('./components/discord-callback/discord-callback.component').then(it => it.DiscordCallbackComponent)
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   userName: string;
   email: string;
   password: string;
@@ -11,7 +11,7 @@ export interface User {
 
 export function resetUser() {
   return { 
-    id: 0, 
+    id: '', 
     userName: '',
     email: '', 
     password: '',

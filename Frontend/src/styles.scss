@@ -15,11 +15,30 @@
   padding: 20px;
   text-align: center;
   position: relative;
-  min-height: 35vw;
+  min-height: 105vh;
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0;
   scroll-snap-align: start;
+  @include mobileAndTabletV {
+      min-height: 120vh;
+  }
+}
+
+.small-hero {
+  background: $DARK_BLURPLE_GRADIENT_REVERSE;
+  color: $LIGHT_BLURPLE;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  min-height: 55vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 0;
+  scroll-snap-align: start;
+  @include mobileAndTabletV {
+      min-height: 55vh;
+  }
 }
 
 .hero-content {
@@ -39,11 +58,34 @@
   align-items: center;
   flex-direction: column;
   gap: 16px;
-  width: fit-content;
-  height: fit-content;
+  max-width: 600px;
+
+  .hero-image {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+  }
 
   @include mobileAndTabletV {
       display: none;
+  }
+}
+
+.small-hero-content-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+
+  .hero-image {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+  }
+
+  @include mobileAndTabletV {
+    display: none;
   }
 }
 
@@ -138,4 +180,3 @@ h4 {
     }
   }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

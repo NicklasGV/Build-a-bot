@@ -1,7 +1,15 @@
+// src/app/login.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +17,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -18,10 +27,20 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
+  // 👇 inject it!
+  constructor(
+    private auth: AuthService,
+    private fb: FormBuilder
+  ) {}
+
   onSubmit(): void {
-    // Here you would typically handle authentication
     console.log('Email:', this.email);
     console.log('Password:', this.password);
-    // You can add further logic for calling a login service, navigation, etc.
+    // e.g. this.auth.login(this.email, this.password).subscribe(...)
+  }
+
+  // 👇 proxy to your PKCE login
+  loginWithDiscord(): void {
+    this.auth.loginWithDiscord();
   }
 }

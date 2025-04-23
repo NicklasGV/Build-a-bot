@@ -63,6 +63,26 @@
         cursor: pointer;
     }
   }
+
+  .discord-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0 16px 0;
+    font-size: 14px;
+    color: $BLURPLE;
+    text-align: center;
+    & p {
+        margin: 0;
+        font-size: 14px;
+    }
+    & a {
+        color: $BLURPLE;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+  }
   
   .login-button {
     width: 100%;

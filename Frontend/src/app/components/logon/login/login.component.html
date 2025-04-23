@@ -25,6 +25,16 @@
                 #passwordInput="ngModel"
               />
             </div>
+            <div class="discord-login">
+              <p>Rather use discord?</p>
+              <a
+                type="button"
+                class="discord-button"
+                (click)="loginWithDiscord()"
+              >
+                <span>Login with Discord</span>
+              </a>
+            </div>
             <div class="not-signed-up">
               <p>Not signed up yet?</p>
               <a [routerLink]="['/signup']">Create an account</a>
