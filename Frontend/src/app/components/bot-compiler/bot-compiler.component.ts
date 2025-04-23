@@ -8,18 +8,21 @@ import { ScriptService } from '../../services/script.service';
 @Component({
   selector: 'app-bot-compiler',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    FormsModule,
+    
+  ],
   templateUrl: './bot-compiler.component.html',
   styleUrl: './bot-compiler.component.scss'
 })
 export class BotCompilerComponent {
   searchTerm: string = '';
-
   scripts: Script[] = [];
-
   filteredScripts: Script[] = [];
-
   chosenScripts: Script[] = [];
+  isFilterOpen: boolean = false;
 
   constructor(private scriptService: ScriptService) { }
 
@@ -51,5 +54,10 @@ export class BotCompilerComponent {
     if (index > -1) {
       this.chosenScripts.splice(index, 1);
     }
+  }
+
+  handleBotFilterClick(): void {
+    this.isFilterOpen = !this.isFilterOpen;
+    console.log('Bot filter toggled, is open:', this.isFilterOpen);
   }
 }

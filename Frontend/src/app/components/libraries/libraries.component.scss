@@ -1,0 +1,63 @@
+@use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
+
+.libraries-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px 0;
+    background: $DARK;
+}
+
+.library-buttons {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 48px;
+    margin-block: 48px;
+    @include mobileAndTabletV {
+        flex-direction: column;
+        gap: 24px;
+        margin-top: 64px;
+        margin-bottom: 56px;
+        align-items: center;
+    }
+}
+
+.library-button {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 145px;
+    background-color: $LIGHT_BLURPLE;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 160px;
+    box-shadow: 0 2px 10px $DARK_BLURPLE;
+    border-radius: 16px;
+    border: solid 1px $LIGHT_BLURPLE;
+    & p {
+        font-family: "Discord Nord";
+        font-size: 20px;
+        line-height: 90%;
+        color: $DARK_BLURPLE;
+        margin: auto;
+    }
+    @include mobileAndTabletV {
+        height: 85px;
+        width: 250px;
+    }
+}
+
+.library-button:hover {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+    box-shadow: 0 2px 10px $BLURPLE;
+    border: solid 1px $BLURPLE;
+    transition: all 0.1s ease-in-out;
+    & p {
+        font-family: "Discord Nord";
+        font-size: 20px;
+        line-height: 90%;
+        color: $LIGHT_BLURPLE;
+    }
+}

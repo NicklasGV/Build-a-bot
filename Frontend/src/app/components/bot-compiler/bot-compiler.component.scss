@@ -1,14 +1,10 @@
 @use "../../../styles/colors.scss" as *;
 @use "../../../styles/media.scss" as *;
 
-#hero {
-    min-height: 20vw;
-}
-
 .bot-compiler-header {
     display: flex;
     background: $DARK;
-    color: $BLURPLE;
+    color: $LIGHT_BLURPLE;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -23,6 +19,12 @@
     width: 100%;
     justify-content: center;
     min-height: 500px;
+
+    .script-filter-container {
+      @include mobileAndTabletV {
+        display: none;
+      }
+    }
 }
 
 .bot-compiler-section {
@@ -90,11 +92,10 @@
     margin-top: 15px;
   }
 
-  .chosen-script-card-header {
+  .bot-compiler-chosen-scripts-header {
     display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-
+    flex-direction: column;
+    color: $LIGHT_BLURPLE;
     & h4 {
       margin-block: 16px;
     }
@@ -119,4 +120,55 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-script-filter-modal {
+    position: fixed;
+    bottom: 70px; // adjust so it sits above the toggle button
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  
+  /* Fixed Toggle Button at the bottom center */
+  .filter-toggle-button {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    cursor: pointer;
+  }
+  
+  /* Optional: style the close button inside the modal */
+  .close-modal-btn {
+    display: block;
+    margin: 1rem auto 0;
+    background: transparent;
+    border: none;
+    color: #19175c;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    /* Hide the mobile modal and toggle on larger screens */
+    .mobile-script-filter-modal,
+    .filter-toggle-button {
+      display: none;
+    }
   }

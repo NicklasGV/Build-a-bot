@@ -49,6 +49,26 @@
                 }).ToList();
             }
 
+            if (user.Posts.Count > 0)
+            {
+                response.Posts = user.Posts.Select(x => new PostUserResponse
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                }).ToList();
+            }
+
+            if (user.Comments.Count > 0)
+            {
+                response.Comments = user.Comments.Select(x => new CommentUserResponse
+                {
+                    Id = x.Id,
+                    Text = x.Text,
+                    PostId = x.PostId,
+                }).ToList();
+            }
+
             return response;
         }
 

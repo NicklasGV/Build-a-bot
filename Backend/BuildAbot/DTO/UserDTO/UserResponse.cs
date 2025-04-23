@@ -8,6 +8,8 @@
 
         public List<ScriptUserResponse> Scripts { get; set; } = new();
         public List<BotUserResponse> Bots { get; set; } = new();
+        public List<PostUserResponse> Posts { get; set; } = new();
+        public List<CommentUserResponse> Comments { get; set; } = new();
         public List<FavoriteScriptUserResponse> Favorites { get; set; } = new();
     }
 
@@ -30,5 +32,17 @@
     {
         public int Id { get; set; }
         public string Title { get; set; }
+    }
+    public class PostUserResponse
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+    }
+    public class CommentUserResponse
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public int PostId { get; set; }
     }
 }

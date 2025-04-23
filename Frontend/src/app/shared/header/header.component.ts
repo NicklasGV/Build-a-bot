@@ -12,12 +12,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
-  
+export class HeaderComponent implements OnInit {
   isMobileMenuActive = false;
   isDropdownOpen = false;
   isSideDropdownOpen = false;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -54,5 +54,9 @@ export class HeaderComponent {
   toggleSideDropdown(event: Event): void {
     event.stopPropagation();
     this.isSideDropdownOpen = !this.isSideDropdownOpen;
+  }
+
+  collapseNavbar(): void {
+    this.isMobileMenuActive = false;
   }
 }

@@ -21,7 +21,7 @@
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 120vh;
+      min-height: 130vh;
   }
 }
 
@@ -31,13 +31,13 @@
   padding: 20px;
   text-align: center;
   position: relative;
-  min-height: 55vh;
+  min-height: 600px;
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0;
   scroll-snap-align: start;
   @include mobileAndTabletV {
-      min-height: 55vh;
+      min-height: 500px;
   }
 }
 
@@ -67,7 +67,7 @@
   }
 
   @include mobileAndTabletV {
-      display: none;
+    display: none;
   }
 }
 
@@ -91,6 +91,10 @@
 
 .hero-content-left-header {
   text-align: left;
+
+  @include mobileAndTabletV {
+    text-align: center;
+  }
 }
 
 body {
@@ -124,7 +128,7 @@ h4 {
 
 .vector-pattern {
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     right: 0;
     width: 100%;
     min-width: none;
@@ -160,6 +164,7 @@ h4 {
     
     li {
       color: $LIGHT_BLURPLE;
+      cursor: pointer;
       a {
         text-decoration: none;
         color: $LIGHT_BLURPLE;

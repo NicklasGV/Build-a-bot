@@ -3,16 +3,18 @@
 
 .hero-buttons {
     display: flex;
-    justify-content: center;
     flex-direction: row;
     gap: 48px;
     margin-block: 48px;
-    max-width: 700px;
+    max-width: 900px;
     flex-wrap: wrap;
 
     @include mobileAndTabletV {
         flex-direction: column;
         gap: 24px;
+        margin-top: 24px;
+        margin-bottom: 56px;
+        align-items: center;
     }
 }
 
@@ -35,7 +37,10 @@
     }
 }
 
-.hero-button h4 {
+.hero-button p {
+    font-family: "Discord Nord";
+    font-size: 20px;
+    line-height: 90%;
     color: $DARK_BLURPLE;
     margin: auto;
 }
@@ -45,7 +50,10 @@
     box-shadow: 0 2px 10px $BLURPLE;
     border: solid 1px $BLURPLE;
     transition: all 0.1s ease-in-out;
-    & h4 {
+    & p {
+        font-family: "Discord Nord";
+        font-size: 20px;
+        line-height: 90%;
         color: $LIGHT_BLURPLE;
     }
 }
