@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Data;
-
-namespace BuildAbot.Controllers
+﻿namespace BuildAbot.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,6 +12,26 @@ namespace BuildAbot.Controllers
         {
             _userService = userService;
             _userRepository = userRepository;
+        }
+
+        [AllowAnnonymous]
+        [HttpPost]
+        [Route("authenticate")]
+        public async Task<IActionResult> AuthenticateAsync([FromBody] LoginRequest login)
+        {
+            try
+            {
+                LoginResponse user = await _userService.AuthenticateUser(login);
+                if (user == null)
+                {
+                    return Unauthorized();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
         [HttpGet]

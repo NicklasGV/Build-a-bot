@@ -3,11 +3,35 @@
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IJwtUtils _jwtUtils;
 
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
+            _jwtUtils = jwtUtils;
+        }
+
+        public async Task<LoginResponse> AuthenticateUser(LoginRequest login)
+        {
+            User user = await _userRepository.FindByEmail(login.Email);
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (BCrypt.Net.BCrypt.Verify(login.Password, user.Password))
+            {
+                LoginResponse response = new()
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Token = _jwtUtils.GenerateJwtToken(user)
+                };
+                return response;
+            }
+            return null;
         }
 
         public static UserResponse MapUserToUserResponse(User user)
@@ -17,6 +41,7 @@
                 Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email.ToLower(),
+                Role = user.Role,
             };
             
             if (user.Scripts.Count > 0)
@@ -79,6 +104,7 @@
                 UserName = userRequest.UserName,
                 Email = userRequest.Email.ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(userRequest.Password) ?? string.Empty,
+                Role = userRequest.Role,
             };
             return user;
         }

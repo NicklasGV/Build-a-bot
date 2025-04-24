@@ -34,6 +34,11 @@
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
+        public async Task<User> FindByEmail(string email)
+        {
+            return await _databaseContext.User.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task<User> CreateAsync(User newUser)
         {
             _databaseContext.User.Add(newUser);

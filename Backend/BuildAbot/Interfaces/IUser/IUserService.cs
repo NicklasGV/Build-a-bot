@@ -2,6 +2,7 @@
 {
     public interface IUserService
     {
+        Task<LoginResponse> AuthenticateUser(LoginRequest login);
         Task<UserResponse?> FindByIdAsync(int userId);
         Task<UserResponse> CreateAsync(UserRequest newUser);
         Task<UserResponse?> UpdateByIdAsync(int userId, UserRequest updateUser);

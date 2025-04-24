@@ -117,6 +117,7 @@ namespace BuildAbot.Database
                     UserName = "TesterMand",
                     Email = "testmail1",
                     Password = "Passw0rd",
+                    Role = Role.Admin,
                 },
                 new User
                 {
@@ -124,6 +125,7 @@ namespace BuildAbot.Database
                     UserName = "Supporten",
                     Email = "testmail2",
                     Password = "Password",
+                    Role = Role.Developer,
                 }
                 );
 

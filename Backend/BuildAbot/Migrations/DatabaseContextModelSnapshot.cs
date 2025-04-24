@@ -268,6 +268,9 @@ namespace BuildAbot.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -282,6 +285,7 @@ namespace BuildAbot.Migrations
                             Id = 1,
                             Email = "testmail1",
                             Password = "Passw0rd",
+                            Role = 2,
                             UserName = "TesterMand"
                         },
                         new
@@ -289,6 +293,7 @@ namespace BuildAbot.Migrations
                             Id = 2,
                             Email = "testmail2",
                             Password = "Password",
+                            Role = 1,
                             UserName = "Supporten"
                         });
                 });
