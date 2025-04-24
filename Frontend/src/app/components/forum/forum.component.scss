@@ -1,0 +1,9 @@
+@use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
+
+.forum-section {
+    display: flex;
+    padding: 20px;
+    background: $DARK;
+    justify-content: center;
+}
