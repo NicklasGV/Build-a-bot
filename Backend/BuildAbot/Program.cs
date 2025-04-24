@@ -15,6 +15,8 @@ namespace BuildAbot
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
+            builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+
             builder.Services.AddScoped<IScriptRepository, ScriptRepository>();
             builder.Services.AddScoped<IScriptService, ScriptService>();
 
@@ -59,6 +61,7 @@ namespace BuildAbot
             app.UseRouting();
             app.UseStaticFiles();
             app.UseAuthorization();
+            app.UseMiddleware<JwtMiddleware>();
             app.MapControllers();
             app.Run();
         }
