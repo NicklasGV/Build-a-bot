@@ -102,7 +102,8 @@ export class AuthService {
       .pipe(
         switchMap(tokenRes =>
           this.http.get<{
-            id:            string;
+            id:            number;
+            discord_id:    string;
             username:      string;
             discriminator: string;
             avatar:        string | null;
@@ -118,7 +119,8 @@ export class AuthService {
         ),
         map(discordProfile => {
           const user: User = {
-            id: discordProfile.id,
+            id: 0,
+            discord_id: discordProfile.id,
             email: discordProfile.email || '',
             userName: `${discordProfile.username}`,
             token: verifier,

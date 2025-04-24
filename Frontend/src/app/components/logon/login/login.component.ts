@@ -6,12 +6,14 @@ import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
-  FormsModule
+  FormsModule,
+  FormControl
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { SnackbarService } from '../../../services/snackbar.service';
+import { User, resetUser } from '../../../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -28,22 +30,20 @@ import { SnackbarService } from '../../../services/snackbar.service';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  message: string = '';
   showPassword: boolean = false;
-
-  // 👇 inject it!
+  user: User = resetUser();
+  users: User[] = [];
+  
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private userService: UserService,
-    private formBuilder: FormBuilder,
     private snackBar: SnackbarService,
     private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
-    // redirect to home if already logged in
-    if (this.authService.currentUserValue != null && this.authService.currentUserValue.id != '') {
+    if (this.authService.currentUserValue != null && this.authService.currentUserValue.id != 0) {
       this.router.navigate(['/']);
     }
   }
@@ -57,12 +57,27 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    // e.g. this.auth.login(this.email, this.password).subscribe(...)
+    this.message  = '';
+    this.authService.login(this.email, this.password)
+    .subscribe({
+      next: async () => {
+        this.router.navigate(['/login']);
+        window.location.reload();
+        this.snackBar.openSnackBar('Login Succesful','','success');
+      },
+      error: err => {
+        console.error('Login error:', err);
+        if (err.status === 400 || err.status === 401 || err.status === 500) {
+          this.message = 'Incorrect email or password. Please try again.';
+          this.snackBar.openSnackBar(this.message, '', 'error');
+        } else {
+          this.message = 'An unexpected error occurred.';
+          this.snackBar.openSnackBar(this.message, '', 'error');
+        }
+      }
+    });
   }
 
-  // 👇 proxy to your PKCE login
   loginWithDiscord(): void {
     this.authService.loginWithDiscord();
   }

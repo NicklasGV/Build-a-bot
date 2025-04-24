@@ -1,12 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Bot } from '../../../models/bot.model';
+import { User } from '../../../models/user.model';
+import { UserService } from '../../../services/user.service';
+import { BotService } from '../../../services/bot.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-bots',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule, 
+    RouterModule
+  ],
   templateUrl: './user-bots.component.html',
-  styleUrl: './user-bots.component.scss'
+  styleUrls: ['./user-bots.component.scss']
 })
-export class UserBotsComponent {
+export class UserBotsComponent implements OnInit {
+  bots: Bot[] = [];
+  loading = false;
 
+  constructor(
+    private userService: UserService,
+    private botService: BotService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    const raw = sessionStorage.getItem('currentUser');
+    if (!raw) return;
+
+    const { id: userId } = JSON.parse(raw) as Pick<User, 'id'>;
+    this.loading = true;
+
+    this.userService.findById(userId.toString()).pipe(
+      switchMap(user => {
+        const botRefs = user.bots;
+        if (!botRefs || botRefs.length === 0) {
+          return of([] as Bot[]);
+        }
+        const calls = botRefs.map(b => this.botService.findById(b.id));
+        return forkJoin(calls);
+      })
+    ).subscribe({
+      next: bots => {
+        this.bots = bots;
+        this.loading = false;
+      },
+      error: err => {
+        console.error('Could not load bots', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  goToCreate() {
+    this.router.navigate(['/bot-compiler']);
+  }
 }

@@ -5,13 +5,12 @@
                 <nav class="breadcrumbs" aria-label="breadcrumb">
                     <ul>
                       <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
-                      <li class="active">Profile Dashboard</li>
+                      <li class="active">Admin Dashboard</li>
                     </ul>
                   </nav>
                 <div class="hero-content-left-header">
-                    <h1>User profile</h1>
-                    <h2>{{msg}} {{user.userName}}</h2>
-                    <p>This is your profile, here you can see your own bots, scripts and more!</p>
+                    <h1>Admin Dashboard</h1>
+                    <p>This is the dashboard for admins to administrate, modify and create.</p>
                 </div>
             </div>
             <div class="small-hero-content-right">
@@ -33,19 +32,31 @@
         </div>
     </div>
     <div class="dashboard-navbar">
-      <button
-        (click)="selectTab('bots')"
-        [class.active]="selectedTab === 'bots'">
-        Bots
-      </button>
-      <button
-        (click)="selectTab('posts')"
-        [class.active]="selectedTab === 'posts'">
-        Posts
-      </button>
+        <button
+          (click)="selectTab('users')"
+          [class.active]="selectedTab === 'users'">
+          Users
+        </button>
+        <button
+          (click)="selectTab('bots')"
+          [class.active]="selectedTab === 'bots'">
+          Bots
+        </button>
+        <button
+          (click)="selectTab('scripts')"
+          [class.active]="selectedTab === 'scripts'">
+          Scripts
+        </button>
+        <button
+          (click)="selectTab('posts')"
+          [class.active]="selectedTab === 'posts'">
+          Posts
+        </button>
     </div>
     <div class="dashboard-section">
-      <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
-      <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
+        <app-user-dashboard  *ngIf="selectedTab === 'users'"></app-user-dashboard>
+        <app-bots-dashboard   *ngIf="selectedTab === 'bots'"></app-bots-dashboard>
+        <app-scripts-dashboard  *ngIf="selectedTab === 'scripts'"></app-scripts-dashboard>
+        <app-posts-dashboard  *ngIf="selectedTab === 'posts'"></app-posts-dashboard>
     </div>
 </div>

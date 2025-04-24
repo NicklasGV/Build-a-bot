@@ -2,7 +2,7 @@
     <div class="login-container">
         <div class="card">
           <h2>Login</h2>
-          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="login-form-group">
               <label for="email">Email</label>
               <input
@@ -39,7 +39,7 @@
               <p>Not signed up yet?</p>
               <a [routerLink]="['/signup']">Create an account</a>
             </div>
-            <button class="login-button" type="submit" [disabled]="!loginForm.form.valid">Login</button>
+            <button class="login-button" type="submit" [disabled]="!userForm.form.valid">Login</button>
           </form>
         </div>
     </div>

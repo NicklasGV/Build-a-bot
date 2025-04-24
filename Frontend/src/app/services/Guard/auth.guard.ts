@@ -12,13 +12,13 @@ export class AuthGuard  {
   canActivate() {
     const currentUser = this.authService.currentUserValue;
 
-  // if (currentUser && currentUser.role == 'Admin') {
-  //   return true;
-  // } else {
-  //   this.snackBar.openSnackBar('You are not authorized to access this page', '', 'error');
-  //   this.router.navigate(['/']);
-  //   return false;
-  // }
+  if (currentUser && currentUser.role == 'Admin') {
+    return true;
+  } else {
+    this.snackBar.openSnackBar('You are not authorized to access this page', '', 'error');
+    this.router.navigate(['/']);
+    return false;
+  }
 }
   
 }

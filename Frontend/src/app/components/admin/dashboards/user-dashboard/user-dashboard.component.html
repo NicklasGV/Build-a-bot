@@ -1,0 +1,52 @@
+<div class="user-section">
+    <div class="form-section">
+        <h1>User Dashboard</h1>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+            <label>
+            Email:
+            <input formControlName="email" type="email">
+            </label>
+            <label>
+            Username:
+            <input formControlName="userName" type="text">
+            </label>
+            <label>
+            Password:
+            <input formControlName="password" type="password">
+            </label>
+            <label>
+            Scripts:
+            <select formControlName="scripts" multiple>
+                <option *ngFor="let s of users" [value]="s.id">{{ s.email }}</option>
+            </select>
+            </label>
+            <label>
+            Role:
+            <select formControlName="role">
+                <option *ngFor="let r of users" [value]="r.id">{{ r.role }}</option>
+            </select>
+            </label>
+            <button type="submit" [disabled]="userForm.invalid">Create User</button>
+        </form>
+    </div>
+    <div class="users-table">
+        <table class="user-table">
+            <thead>
+            <tr>
+                <th>ID</th><th>Email</th><th>Username</th><th>Role</th><th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let u of users">
+                <td>{{ u.id }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.userName }}</td>
+                <td>{{ u.role }}</td>
+                <td>
+                <button (click)="deleteUser(u.id)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

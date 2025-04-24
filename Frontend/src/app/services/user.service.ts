@@ -17,11 +17,11 @@ export class UserService {
   }
 
   delete(userId: number): Observable<User> {
-    return this.http.delete<User>(this.apiUrl + '/' + userId);
+    return this.http.delete<User>(this.apiUrl + userId);
   }
 
   findById(userId: string): Observable<User> {
-    return this.http.get<User>(this.apiUrl + '/' + userId);
+    return this.http.get<User>(this.apiUrl + userId);
   }
 
   create(user: User): Observable<User> {
@@ -30,6 +30,16 @@ export class UserService {
     formData.append('email', user.email);
     formData.append('password', user.password);
     formData.append('userName', user.userName);
+
+    if (user.scripts) {
+      user.scripts.forEach(scriptId => {
+        formData.append('scripts', scriptId.toString());
+      });
+    }
+
+    if (user.role) {
+      formData.append('role', user.role.toString());
+    }
 
     return this.http.post<User>(this.apiUrl + 'register', formData);
   }

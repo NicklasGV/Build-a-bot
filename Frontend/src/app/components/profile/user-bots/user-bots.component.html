@@ -1,1 +1,21 @@
-<p>user-bots works!</p>
+<div class="user-bots-section">
+    <div class="bot-grid">
+      <button
+        class="user-bot-item"
+        (click)="goToCreate()"
+      >
+        <p class="bi-plus" style="font-size: 2.5rem"></p>
+      </button>
+  
+      <ng-container *ngFor="let bot of bots">
+        <button
+          class="user-bot-item"
+          [routerLink]="['/bot', bot.id]"
+        >
+          <p>{{ bot.name }}</p>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+  
+  <div *ngIf="loading">Loading your bots…</div>

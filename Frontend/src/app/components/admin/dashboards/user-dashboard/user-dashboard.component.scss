@@ -1,0 +1,42 @@
+@use '../../../../../styles/colors' as*;
+@use '../../../../../styles/media' as *;
+
+.user-section {
+    display: flex;
+    flex-direction: column;
+    background-color: $DARK;
+    align-items: center;
+    & h1 {
+        color: $BLURPLE;
+    }
+}
+
+.form-section {
+    margin-block: 48px;
+}
+
+.user-form { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: $BLURPLE;
+}
+.user-form label { 
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.users-table {
+    width: 100%;
+}
+
+.user-table { 
+    width: 100%;
+    border-collapse: collapse;
+    color: $BLURPLE;
+}
+.user-table th, .user-table td { 
+    padding: .5rem;
+    border: 1px solid $LIGHT_BLURPLE;
+}

@@ -64,5 +64,4 @@ export class DashboardComponent {
     }
     return this.msg = "Good Evening"
   }
-
 }
