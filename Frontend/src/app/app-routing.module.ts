@@ -1,6 +1,8 @@
 import { DiscordCallbackComponent } from './components/discord-callback/discord-callback.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserBotsComponent } from './components/profile/user-bots/user-bots.component';
+import { UserPostsComponent } from './components/profile/user-posts/user-posts.component';
 
 const routes: Routes = [
   {
@@ -38,6 +40,15 @@ const routes: Routes = [
   {
     path: 'auth/callback', loadComponent: () =>
     import('./components/discord-callback/discord-callback.component').then(it => it.DiscordCallbackComponent)
+  },
+  {
+    path: 'user-profile/:userName', loadComponent: ()=> 
+    import('./components/profile/dashboard/dashboard.component').then( it => it.DashboardComponent),
+    children: [
+      { path: '',       redirectTo: 'bots', pathMatch: 'full' },
+      { path: 'bots',   component: UserBotsComponent },
+      { path: 'posts',  component: UserPostsComponent },
+    ]
   },
 ];
 

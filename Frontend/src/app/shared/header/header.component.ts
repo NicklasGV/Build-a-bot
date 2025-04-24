@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { User, resetUser } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +16,23 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+  currentUser: User = resetUser();
+  roleChecker: string = 'Admin';
+  isLoggedIn: boolean = false;
   isMobileMenuActive = false;
   isDropdownOpen = false;
   isSideDropdownOpen = false;
+  isProfileDropdownOpen = false;
+  isProfileDropdownOpenMobile = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private authService: AuthService, 
+    private router: Router,
+    private snackBar: SnackbarService
+  ) {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -40,7 +55,18 @@ export class HeaderComponent implements OnInit {
         }
       });
     }
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      this.isLoggedIn = !!user.token;
+    });
   }
+
+  // roleCheck(): boolean {
+  //   if (this.currentUser.role == this.roleChecker) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   toggleMobileMenu(): void {
     this.isMobileMenuActive = !this.isMobileMenuActive;
@@ -51,6 +77,16 @@ export class HeaderComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  toggleProfileDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+  }
+
+  toggleProfileDropdownMobile(event: Event): void {
+    event.stopPropagation();
+    this.isProfileDropdownOpenMobile = !this.isProfileDropdownOpenMobile;
+  }
+
   toggleSideDropdown(event: Event): void {
     event.stopPropagation();
     this.isSideDropdownOpen = !this.isSideDropdownOpen;
@@ -58,5 +94,11 @@ export class HeaderComponent implements OnInit {
 
   collapseNavbar(): void {
     this.isMobileMenuActive = false;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.snackBar.openSnackBar('Logged out', '', 'info');
+    this.router.navigate(['/']);
   }
 }

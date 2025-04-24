@@ -75,7 +75,7 @@
   }
 
   .login-button,
-  .login-button-nav {
+  .login-button-mobile {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -90,7 +90,7 @@
 }
 
 .login-button:hover,
-.login-button-nav:hover {
+.login-button-mobile:hover {
   background: $DARK_BLURPLE_GRADIENT_REVERSE;
   box-shadow: 0 2px 10px $BLURPLE;
   border: solid 1px $BLURPLE;
@@ -100,12 +100,16 @@
   }
 }
 
-.login-button-nav {
+.login-button-mobile,
+.profile-icon-mobile {
   display: none;
   @include mobileAndTabletV {
     display: flex;
-    margin-left: 16px;
   }
+}
+
+.profile-icon {
+  color: $BLURPLE;
 }
 
   .mobile-menu-button {
@@ -200,7 +204,8 @@
     }
   }
   
-  .dropdown-content {
+  .dropdown-content,
+  .profile-dropdown-content {
     display: none;
     position: absolute;
     z-index: 9999;
@@ -219,7 +224,16 @@
       text-decoration: none;
     }
   }
+
+  .profile-dropdown-content {
+    right: 0;
+    li a {
+      color: $DARK_BLURPLE;
+      cursor: pointer;
+    }
+  }
   
-  .dropdown.active .dropdown-content {
+  .dropdown.active .dropdown-content,
+  .dropdown.active .profile-dropdown-content {
     display: block;
   }

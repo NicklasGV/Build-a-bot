@@ -20,7 +20,7 @@ export class UserService {
     return this.http.delete<User>(this.apiUrl + '/' + userId);
   }
 
-  findById(userId: number): Observable<User> {
+  findById(userId: string): Observable<User> {
     return this.http.get<User>(this.apiUrl + '/' + userId);
   }
 
