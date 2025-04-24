@@ -1,0 +1,23 @@
+@use '../../../../styles/colors.scss' as *;
+@use '../../../../styles/media' as *;
+
+.dashboard-navbar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: $DARK;
+  
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+  
+      &.active {
+        background: $BLURPLE;
+        border-radius: 0.25rem;
+      }
+    }
+  }

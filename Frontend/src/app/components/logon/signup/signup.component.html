@@ -1,0 +1,44 @@
+<div class="bab-container" id="login-container">
+    <div class="login-container">
+      <div class="card">
+        <h2>Signup</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+          <div class="login-form-group">
+            <label for="userName">Username</label>
+            <input
+              type="text"
+              id="userName"
+              formControlName="userName"
+              required
+            />
+          </div>
+          <div class="login-form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              required
+            />
+          </div>
+          <div class="login-form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              required
+            />
+          </div>
+          <div class="not-signed-up">
+            <p>Already have an account?</p>
+            <a [routerLink]="['/login']">Go to Login</a>
+          </div>
+          <button class="login-button" type="submit" [disabled]="!signupForm.valid">
+            Signup
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

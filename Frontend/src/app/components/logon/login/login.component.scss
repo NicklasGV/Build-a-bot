@@ -1,0 +1,96 @@
+@use '../../../../styles/colors' as *;
+@use '../../../../styles/media.scss' as *;
+
+#login-container {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+  
+  /* Card styling */
+  .card {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid $DARK;
+    border-radius: 10px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    background-color: $DARK;
+    color: $BLURPLE;
+    text-align: center;
+  }
+  
+  .login-form-group {
+    margin-bottom: 15px;
+    text-align: left;
+
+    & label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    & input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        border: none;
+    }
+  }
+
+  .not-signed-up {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0 24px 0;
+    font-size: 14px;
+    color: $BLURPLE;
+    text-align: center;
+
+    & p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    & a {
+        color: $BLURPLE;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+  }
+
+  .discord-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0 16px 0;
+    font-size: 14px;
+    color: $BLURPLE;
+    text-align: center;
+    & p {
+        margin: 0;
+        font-size: 14px;
+    }
+    & a {
+        color: $BLURPLE;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }

@@ -1,0 +1,84 @@
+<div class="bab-container">
+    <div class="small-hero">
+        <div class="hero-content">
+            <div class="hero-content-left">
+                <nav class="breadcrumbs" aria-label="breadcrumb">
+                    <ul>
+                      <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
+                      <li [routerLink]="['/libraries']">Libraries</li>
+                      <li class="active">Bot Library</li>
+                    </ul>
+                  </nav>
+                <div class="hero-content-left-header">
+                    <h1>Build a Bot</h1>
+                    <p>Build your own bot with our easy-to-use platform.</p>
+                </div>
+            </div>
+            <div class="small-hero-content-right">
+                <img src="../../../assets/images/Build-a-bot.svg" alt="Hero Image" class="hero-image" width="500px" height="500px">
+            </div>
+        </div>
+        <div class="vector-pattern">
+            <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#19175c" />
+                    <stop offset="80%" stop-color="#1F1F1F" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#myGradient)"
+                    d="M-1 31Q35 15 91 55 129 81 192 47 251 6 307 49 359 93 427 51 485 7 540 50 609 99 682 60 753 7 823 60 870 94 929 60 979 24 1013 57L1015 222-1 224Z" />
+            </svg>
+            <!--- Fantastic site for making these lines https://yqnn.github.io/svg-path-editor/ -->
+        </div>
+    </div>
+    <div>
+        <!-- Possible showcase of most liked, most viewed and most downloaded bots-->
+    </div>
+    <div class="bot-section">
+        <div class="bot-wrapper">
+            <div class="bot-header">
+                <h2>Bot Library</h2>
+                <p>Explore our library of bots to enhance your bot's functionality.</p>
+            </div>
+            <div class="bot-showcase">
+                <div class="bot-card" *ngFor="let bot of bots" [class.active]="botStates[bot.id].expanded">
+                    <!-- Card Header -->
+                    <div class="card-header">
+                        <h3 class="card-title">{{ bot.name }}</h3>
+                        <span class="card-user">Made by {{ bot.user.userName }}</span>
+                    </div>
+                    <!-- <div class="card-content">
+                        <p class="card-debotion">{{ bot.description }}</p>
+                    </div> -->
+                    <button (click)="toggleExpanded(bot.id)" class="show-more-btn">
+                        {{ botStates[bot.id].expanded ? 'Show less' : 'Show more' }}
+                    </button>
+                    <div *ngIf="botStates[bot.id].expanded" class="card-details">
+                    <div class="tabs">
+                        <button 
+                            class="tab-button" 
+                            [class.active]="botStates[bot.id].activeTab === 'about'" 
+                            (click)="setActiveTab(bot.id, 'about')">
+                            Guide
+                        </button>
+                        <button 
+                            class="tab-button" 
+                            [class.active]="botStates[bot.id].activeTab === 'source'" 
+                            (click)="setActiveTab(bot.id, 'source')">
+                            Source Code
+                        </button>
+                    </div>
+                    <div class="tab-content">
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'about'">
+                            <p>{{ bot.name }}</p>
+                        </div>
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'source'">
+                            <p>Code ID: {{ bot.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

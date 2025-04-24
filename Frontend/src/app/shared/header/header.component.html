@@ -1,11 +1,91 @@
 <nav class="navbar">
-    <div class="logo">
-        <a href="#">
-            <img src="../../../assets/images/Build-a-bot-wide.svg" alt="Build-a-Bot Logo">
-          </a>
+  <div class="logo">
+    <!-- You can add collapseNavbar() on the logo as well if desired -->
+    <a href="#" (click)="collapseNavbar()">
+      <img src="../../../assets/images/Build-a-bot-wide.svg" alt="Build-a-Bot Logo" width="150px" height="50px"/>
+    </a>
+  </div>
+  <button
+    type="button"
+    class="mobile-menu-button"
+    aria-label="Burger menu button"
+    (click)="toggleMobileMenu()"
+  >
+    <i class="bi bi-list"></i>
+  </button>
+  <ul class="nav-links" [class.mobile-active]="isMobileMenuActive">
+    <li>
+      <a href="#" class="bi bi-house" (click)="collapseNavbar()"> Home</a>
+    </li>
+    <li class="dropdown" [class.active]="isDropdownOpen" (click)="toggleDropdown($event)">
+      <span class="bi bi-book dropbtn"> Libraries</span>
+      <ul class="dropdown-content">
+        <li>
+          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
+        </li>
+        <li>
+          <a href="/script-library" (click)="collapseNavbar()"> Script Library</a>
+        </li>
+        <li>
+          <a href="/bot-library" (click)="collapseNavbar()"> Bot Library</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"> Bot Compiler</a>
+    </li>
+    <li>
+      <button *ngIf="!isLoggedIn" [routerLink]="['/login']" class="login-button-mobile" (click)="collapseNavbar()">Login</button>
+      <div class="dropdown" [class.active]="isProfileDropdownOpenMobile" (click)="toggleProfileDropdownMobile($event)">
+        <a *ngIf="isLoggedIn" class="bi-person-circle profile-icon-mobile dropbtn" style="font-size: 2rem;"></a>
+        <ul class="profile-dropdown-content">
+          <li>
+            <a [routerLink]="['user-profile', currentUser.id]" (click)="collapseNavbar()"> Profile</a>
+          </li>
+          <li>
+            <a (click)="logout()"> Logout</a>
+          </li>
+        </ul>
+      </div>
+    </li>  
+  </ul>
+  <div class="login-signup">
+    <button *ngIf="!isLoggedIn" [routerLink]="['/login']" class="login-button">Login</button>
+    <div class="dropdown" [class.active]="isProfileDropdownOpen" (click)="toggleProfileDropdown($event)">
+      <a *ngIf="isLoggedIn" class="bi-person-circle profile-icon dropbtn" style="font-size: 2rem;"></a>
+      <ul class="profile-dropdown-content">
+        <li>
+          <a [routerLink]="['user-profile', currentUser.id]" (click)="collapseNavbar()"> Profile</a>
+        </li>
+        <li>
+          <a (click)="logout()"> Logout</a>
+        </li>
+      </ul>
     </div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Library</a></li>
-    </ul>
-  </nav>
+  </div>
+</nav>
+
+<nav class="side-nav" id="sideNav">
+  <ul class="nav-links">
+    <li>
+      <a href="#" class="bi bi-house" (click)="collapseNavbar()"></a>
+    </li>
+    <li class="dropdown" [class.active]="isSideDropdownOpen" (click)="toggleSideDropdown($event)">
+      <span class="bi bi-book dropbtn dropbtn-side-nav"></span>
+      <ul class="dropdown-content">
+        <li>
+          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
+        </li>
+        <li>
+          <a href="/script-library" (click)="collapseNavbar()">Script Library</a>
+        </li>
+        <li>
+          <a href="/bot-library" (click)="collapseNavbar()">Bot Library</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"></a>
+    </li>
+  </ul>
+</nav>

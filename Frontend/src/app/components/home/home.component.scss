@@ -1,8 +1,153 @@
 @use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
 
-.bab-hero {
-    background: $DARK_BLURPLE_GRADIENT_REVERSE;
-    color: $LIGHT_BLURPLE;
-    padding: 20px;
+.hero-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    margin-block: 48px;
+    max-width: 900px;
+    flex-wrap: wrap;
+
+    @include mobileAndTabletV {
+        flex-direction: column;
+        gap: 24px;
+        margin-top: 24px;
+        margin-bottom: 56px;
+        align-items: center;
+    }
+}
+
+.hero-button {
+    display: flex;
+    justify-content: center;
     text-align: center;
+    height: 145px;
+    background-color: $LIGHT_BLURPLE;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 160px;
+    box-shadow: 0 2px 10px $DARK_BLURPLE;
+    border-radius: 16px;
+    border: solid 1px $LIGHT_BLURPLE;
+
+    @include mobileAndTabletV {
+        height: 85px;
+        width: 250px;
+    }
+}
+
+.hero-button p {
+    font-family: "Discord Nord";
+    font-size: 20px;
+    line-height: 90%;
+    color: $DARK_BLURPLE;
+    margin: auto;
+}
+
+.hero-button:hover {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+    box-shadow: 0 2px 10px $BLURPLE;
+    border: solid 1px $BLURPLE;
+    transition: all 0.1s ease-in-out;
+    & p {
+        font-family: "Discord Nord";
+        font-size: 20px;
+        line-height: 90%;
+        color: $LIGHT_BLURPLE;
+    }
+}
+
+.bot-section h3,
+.bot-section p {
+    margin: 16px;
+}
+
+.bot-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px 0;
+    background: $DARK;
+}
+
+.bot-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 20px;
+
+    @include desktop {
+        width: 1000px;
+        max-width: 90vw;
+    }
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+.bot-image {
+    width: 240px;
+    height: 240px;
+    border-radius: 100%;
+    cursor: pointer;
+
+    @include mobileAndTabletV {
+        width: 140px;
+        height: 140px;
+    }
+
+    &:hover {
+        box-shadow: 0 2px 10px $BLURPLE;
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+.bot-text {
+    margin-top: 10px;
+    font-size: 24px;
+    width: 50vw;
+    max-width: 500px;
+    color: $LIGHT_BLURPLE;
+    text-align: center;
+
+    @include mobileAndTabletV {
+        font-size: 18px;
+    }
+}
+
+.bot-tag {
+    font-style: italic;
+    font-size: 16px;
+    color: $LIGHT_BLURPLE;
+    text-align: center;
+
+    @include mobileAndTabletV {
+        font-size: 14px;
+    }
+}
+
+.bot-tag span {
+    background-color: $LIGHT_BLURPLE;
+    color: $DARK_BLURPLE;
+    padding: 4px 8px;
+    border-radius: 16px;
+
+    @include mobileAndTabletV {
+        background-color: $DARK;
+        color: $LIGHT_BLURPLE;
+    }
+}
+
+.bot-description {
+    font-size: 16px;
+    color: $LIGHT_BLURPLE;
+    text-align: center;
+    margin-top: 8px;
+
+    @include mobileAndTabletV {
+        font-size: 14px;
+    }
 }
