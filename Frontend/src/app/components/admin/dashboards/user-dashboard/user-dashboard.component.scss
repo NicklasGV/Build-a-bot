@@ -1,42 +1,152 @@
-@use '../../../../../styles/colors' as*;
-@use '../../../../../styles/media' as *;
+@use '../../../../../styles/colors' as *;
+@use '../../../../../styles/media'  as *;
 
 .user-section {
-    display: flex;
-    flex-direction: column;
-    background-color: $DARK;
-    align-items: center;
-    & h1 {
-        color: $BLURPLE;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: $DARK;
+
+  @include tablet {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+// simple “card” wrapper
+.card {
+  background-color: lighten($DARK, 5%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 100%;
+
+  @include tablet {
+    width: 48%;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    color: $BLURPLE;
+  }
 }
 
 .form-section {
-    margin-block: 48px;
-}
-
-.user-form { 
-    display: flex;
-    flex-wrap: wrap;
+  .user-form {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1rem;
-    color: $BLURPLE;
-}
-.user-form label { 
-    display: flex;
-    flex-direction: column;
-    width: 200px;
+
+    @include mobileAndTabletV {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      
+      label {
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+        color: $BLURPLE;
+      }
+
+      input,
+      select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid $LIGHT_BLURPLE;
+        border-radius: 4px;
+        background-color: $DARK;
+        color: $BLURPLE;
+        font-size: 0.95rem;
+
+        &:focus {
+          outline: none;
+          border-color: $BLURPLE;
+          box-shadow: 0 0 0 2px rgba($BLURPLE, 0.2);
+        }
+      }
+    }
+
+    .actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background-color: $BLURPLE;
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        &:not(:disabled):hover {
+          background-color: darken($BLURPLE, 5%);
+        }
+      }
+    }
+  }
 }
 
 .users-table {
+  .user-table {
     width: 100%;
-}
-
-.user-table { 
-    width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow-x: auto;
     color: $BLURPLE;
-}
-.user-table th, .user-table td { 
-    padding: .5rem;
-    border: 1px solid $LIGHT_BLURPLE;
+
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid $LIGHT_BLURPLE;
+      text-align: left;
+    }
+
+    thead {
+      background-color: lighten($BLURPLE, 30%);
+      th {
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background-color 0.2s;
+
+        &:nth-child(odd) {
+          background-color: lighten($DARK, 2%);
+        }
+        &:hover {
+          background-color: lighten($DARK, 4%);
+        }
+      }
+    }
+
+    .delete-btn {
+      background: transparent;
+      color: $BLURPLE;
+      border: 1px solid $BLURPLE;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+
+      &:hover {
+        background-color: $BLURPLE;
+        color: #fff;
+      }
+    }
+  }
 }
