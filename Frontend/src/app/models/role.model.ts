@@ -7,3 +7,17 @@ export enum RoleId {
   Developer = 1,
   Admin     = 2
 }
+export const constRoles: Role[] = [
+  {
+    id: 0, 
+    name: "User"
+  },
+  {
+    id: 1,
+    name: "Developer"
+  },
+  {
+    id: 2,
+    name: "Admin"
+  }
+]

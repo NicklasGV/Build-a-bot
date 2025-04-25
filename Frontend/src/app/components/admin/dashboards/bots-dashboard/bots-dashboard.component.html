@@ -1,1 +1,84 @@
-<p>bots-dashboard works!</p>
+<div class="bot-section">
+    <div class="form-section card">
+      <h1>Bots Dashboard</h1>
+      <form [formGroup]="botForm" (ngSubmit)="onSubmit()" class="bot-form">
+        <input formControlName="id" type="hidden" />
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" type="name" placeholder="john doe" />
+        </div>
+        <div class="field">
+          <label for="bot">bot</label>
+          <input id="bot" formControlName="bot" type="text" placeholder="john doe 1" />
+        </div>
+        <div class="field">
+          <label for="scripts">Scripts</label>
+          <input id="scripts" formControlName="scripts" type="text" />
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="botForm.invalid">
+            {{ botForm.get('id')?.value ? 'Update Bot' : 'Create Bot' }}
+          </button>
+          <button
+            *ngIf="botForm.get('id')?.value"
+            type="button"
+            (click)="cancelEdit()"
+          >Cancel</button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="bots-table card">
+        <table class="bot-table">
+            <thead>
+                <tr>
+                    <th class="sorting" (click)="sortBy('id')">
+                        ID
+                        <span *ngIf="sortField==='id'">
+                        {{ sortDir==='asc' ? '▲' : '▼' }}
+                        </span>
+                    </th>
+                    <th class="sorting" (click)="sortBy('name')">
+                        Name
+                        <span *ngIf="sortField==='name'">
+                        {{ sortDir==='asc' ? '▲' : '▼' }}
+                        </span>
+                    </th>
+                    <th class="sorting" (click)="sortBy('userName')">
+                        botname
+                        <span *ngIf="sortField==='userName'">
+                        {{ sortDir==='asc' ? '▲' : '▼' }}
+                        </span>
+                    </th>
+                    <th class="sorting" (click)="sortBy('scriptCount')">
+                        Scripts
+                        <span *ngIf="sortField==='scriptCount'">
+                        {{ sortDir==='asc' ? '▲' : '▼' }}
+                        </span>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let b of bots">
+                <td>{{ b.id }}</td>
+                <td>{{ b.name }}</td>
+                <td>{{ b.user.userName }}</td>
+                <td>
+                  <ng-container *ngIf="b.botScripts?.length; else none">
+                    <span *ngFor="let s of b.botScripts; let i = index">
+                      {{ s.id }}<span *ngIf="i < b.botScripts.length - 1">, </span>
+                    </span>
+                  </ng-container>
+                  <ng-template #none>—</ng-template>
+                </td>
+                <td class="table-actions">
+                  <button class="edit-btn"   (click)="editBot(b.id)">Edit</button>
+                  <button class="delete-btn" (click)="deleteBot(b.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>          
+    </div>
+  </div>
+  

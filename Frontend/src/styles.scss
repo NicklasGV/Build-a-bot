@@ -106,24 +106,36 @@ h1 {
     font-family: "Discord Nord";
     font-size: 48px;
     line-height: 90%;
+    @include mobile {
+      font-size: 36px;
+    }
 }
 
 h2 {
     font-family: "Discord Nord";
     font-size: 36px;
     line-height: 90%;
+    @include mobile {
+      font-size: 24px;
+    }
 }
 
 h3 {
     font-family: "Discord Nord";
     font-size: 26px;
     line-height: 90%;
+    @include mobile {
+      font-size: 16px;
+    }
 }
 
 h4 {
     font-family: "Discord Nord";
     font-size: 20px;
     line-height: 90%;
+    @include mobile {
+      font-size: 14px;
+    }
 }
 
 .vector-pattern {

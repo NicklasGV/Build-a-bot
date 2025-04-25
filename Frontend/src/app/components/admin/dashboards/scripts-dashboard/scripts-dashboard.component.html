@@ -1,1 +1,77 @@
-<p>scripts-dashboard works!</p>
+<div class="script-section">
+    <div class="form-section card">
+      <h1>Scripts Dashboard</h1>
+      <form [formGroup]="scriptForm" (ngSubmit)="onSubmit()" class="script-form">
+        <input formControlName="id" type="hidden" />
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="scriptName">Username</label>
+          <input id="scriptName" formControlName="scriptName" type="text" placeholder="johndoe" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" formControlName="password" type="password" />
+        </div>
+        <div class="field">
+          <label for="role">Role</label>
+          <select id="role" formControlName="role">
+            <option [ngValue]="null" disabled selected>— select role —</option>
+            <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="scriptForm.invalid">
+            {{ scriptForm.get('id')?.value ? 'Update User' : 'Create User' }}
+          </button>
+          <button
+            *ngIf="scriptForm.get('id')?.value"
+            type="button"
+            (click)="cancelEdit()"
+          >Cancel</button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="scripts-table card">
+      <table class="script-table">
+        <thead>
+          <tr>
+            <th class="sorting" (click)="sortBy('id')">
+              ID
+              <span *ngIf="sortField==='id'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+              </span>
+            </th>
+            <th class="sorting" (click)="sortBy('name')">
+                Name
+                <span *ngIf="sortField==='name'">
+                {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+            </th>
+            <th class="sorting" (click)="sortBy('userName')">
+                botname
+                <span *ngIf="sortField==='userName'">
+                {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of scripts">
+            <td>{{ u.id }}</td>
+            <td>{{ u.title }}</td>
+            <td>{{ u.user.userName }}</td>
+            <td class="table-actions">
+              <button class="edit-btn" (click)="editUser(u.id)">Edit</button>
+              <button class="delete-btn" (click)="deleteUser(u.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

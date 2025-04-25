@@ -35,7 +35,7 @@ export class UserBotsComponent implements OnInit {
     const { id: userId } = JSON.parse(raw) as Pick<User, 'id'>;
     this.loading = true;
 
-    this.userService.findById(userId.toString()).pipe(
+    this.userService.findById(userId).pipe(
       switchMap(user => {
         const botRefs = user.bots;
         if (!botRefs || botRefs.length === 0) {
