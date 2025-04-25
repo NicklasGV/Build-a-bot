@@ -17,10 +17,10 @@ export class PostService {
   }
 
   delete(postId: number): Observable<Post> {
-    return this.http.delete<Post>(this.apiUrl + '/' + postId);
+    return this.http.delete<Post>(this.apiUrl + postId);
   }
 
   findById(postId: number): Observable<Post> {
-    return this.http.get<Post>(this.apiUrl + '/' + postId);
+    return this.http.get<Post>(this.apiUrl + postId);
   }
 }

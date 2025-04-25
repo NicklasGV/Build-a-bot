@@ -5,7 +5,8 @@
                 <nav class="breadcrumbs" aria-label="breadcrumb">
                     <ul>
                       <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
-                      <li class="active">Forum</li>
+                      <li [routerLink]="['/forum']">Forum</li>
+                      <li class="active">{{post.title}}</li>
                     </ul>
                   </nav>
                 <div class="hero-content-left-header">
@@ -31,46 +32,60 @@
             <!--- Fantastic site for making these lines https://yqnn.github.io/svg-path-editor/ -->
         </div>
     </div>
-    <div class="forum-section">
-      <div class="forum-wrapper">
-        <header class="forum-header">
-          <h2>Forum</h2>
-          <p>Welcome to our community discussion board.</p>
-        </header>
-    
-        <div class="posts-grid">
-          <div
-            class="post-card"
-            *ngFor="let post of posts;"
-            [routerLink]="['/post/', post.id]"
-          >
-            <div class="card-header">
-              <h3 class="post-title">{{ post.title }}</h3>
-              <span class="post-author">by {{ post.user?.userName }}</span>
-            </div>
-    
-            <div class="card-body">
-              <p class="post-content">{{ post.content }}</p>
-            </div>
-  
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="post-section">
 
-<ng-template #recursiveList let-comments>
-    <ng-container *ngFor="let c of comments">
-      <div class="comment">
-        <p>{{ c.text }}</p>
-        <!-- if there are any replies, recurse -->
-        <ng-container *ngIf="c.replies?.length">
-          <div class="replies">
+
+<div class="post-detail" *ngIf="loading; else loaded">
+    <p>Loading…</p>
+  </div>
+  
+  <ng-template #loaded>
+    <ng-container *ngIf="post">
+      <article class="post-card">
+        <header>
+          <h2>{{ post.title }}</h2>
+          <p class="author">by {{ post.user?.userName }}</p>
+        </header>
+  
+        <section class="content">
+          {{ post.content }}
+        </section>
+  
+        <section class="comments-section">
+          <h3>Comments</h3>
+          <ng-container *ngIf="post.comments.length; else noComments">
             <ng-container
-              *ngTemplateOutlet="recursiveList; context: { $implicit: c.replies }">
+              *ngTemplateOutlet="commentList; context: { $implicit: post.comments }">
             </ng-container>
-          </div>
-        </ng-container>
-      </div>
+          </ng-container>
+  
+          <ng-template #noComments>
+            <p class="no-comments">No comments yet. Be the first to chime in!</p>
+          </ng-template>
+        </section>
+      </article>
     </ng-container>
+  
+    <ng-template #notFound>
+      <p>Sorry, we couldn’t find that post.</p>
+    </ng-template>
   </ng-template>
+  
+  <!-- recursive comment list -->
+  <ng-template #commentList let-comments>
+    <ul class="comment-list">
+      <li *ngFor="let c of comments;" class="comment-item">
+        <p class="comment-text"><strong>{{ c.user.userName }}:</strong> {{ c.text }}</p>
+  
+        <ng-container *ngIf="c.replies?.length">
+          <ul class="replies-list">
+            <ng-container
+              *ngTemplateOutlet="commentList; context: { $implicit: c.replies }">
+            </ng-container>
+          </ul>
+        </ng-container>
+      </li>
+    </ul>
+  </ng-template>
+</div>
+</div>

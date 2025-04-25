@@ -7,3 +7,68 @@
     background: $DARK;
     justify-content: center;
 }
+
+.forum-wrapper {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+  
+  .post-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: $LIGHT_BLURPLE;
+    box-shadow: 0 2px 12px $DARK_BLURPLE;
+    position: relative;
+    overflow: visible;
+
+    &:hover {
+        box-shadow: 0 4px 16px $BLURPLE;
+        transform: scale(1.02);
+        transition: transform 0.2s, box-shadow 0.2s;
+        z-index: 50;
+    }
+  
+    
+
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #eaeaea;
+  
+      .post-title {
+        margin: 0 0 0.25rem;
+        font-size: 1.75rem;
+        line-height: 1.2;
+        word-break: break-word;
+      }
+  
+      .post-author {
+        font-size: 0.875rem;
+        color: #777;
+      }
+    }
+
+    .card-body {
+      padding: 1rem 1.5rem;
+      
+      .post-content {
+        margin: 0;
+        line-height: 1.6;
+  
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        hyphens: auto;
+  
+        max-height: 400px;   
+        overflow-y: auto;
+      }
+    }
+  }

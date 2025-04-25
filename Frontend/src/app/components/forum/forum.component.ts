@@ -38,18 +38,4 @@ export class ForumComponent {
       },
     });
   }
-
-  toggleExpanded(postId: number): void {
-    if (!this.postStates[postId]) {
-      this.postStates[postId] = { expanded: false, activeTab: 'about' };
-    }
-    this.postStates[postId].expanded = !this.postStates[postId].expanded;
-  }
-
-  setActiveTab(postId: number, tab: 'about' | 'source'): void {
-    if (!this.postStates[postId]) {
-      this.postStates[postId] = { expanded: false, activeTab: 'about' };
-    }
-    this.postStates[postId].activeTab = tab;
-  }
 }

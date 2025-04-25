@@ -3,7 +3,7 @@ import { User } from './user.model';
 
 export interface Post {
     id: number;
-    user: User;
+    user: User | null;
     title: string;
     content: string;
     createdAt: Date;
@@ -13,7 +13,7 @@ export interface Post {
 export function resetPost() {
     return { 
         id: 0, 
-        user: [],
+        user: null,
         title: '', 
         content: '', 
         createdAt: new Date(), 

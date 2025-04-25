@@ -42,6 +42,10 @@ const routes: Routes = [
     import('./components/forum/forum.component').then(it => it.ForumComponent)
   },
   {
+    path: 'post/:id', loadComponent: () =>
+    import('./components/post/post.component').then(it => it.PostComponent)
+  },
+  {
     path: 'auth/callback', loadComponent: () =>
     import('./components/discord-callback/discord-callback.component').then(it => it.DiscordCallbackComponent)
   },
