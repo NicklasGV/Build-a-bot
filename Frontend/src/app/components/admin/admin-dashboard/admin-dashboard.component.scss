@@ -7,14 +7,15 @@
     gap: 1rem;
     padding: 0.5rem;
     background: $DARK;
-  
+    @include mobileAndTabletV {
+      margin-top: 38px;
+    }
     button {
       padding: 0.5rem 1rem;
       border: none;
       background: transparent;
       color: white;
       cursor: pointer;
-  
       &.active {
         background: $BLURPLE;
         border-radius: 0.25rem;

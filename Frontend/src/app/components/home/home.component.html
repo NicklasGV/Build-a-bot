@@ -13,7 +13,8 @@
                     <button [routerLink]="['/script-library']" class="hero-button"><p>Script Library</p></button>
                     <button [routerLink]="['/bot-library']" class="hero-button"><p>Bot Library</p></button>
                     <button [routerLink]="['/bot-compiler']" class="hero-button"><p>Create Bot</p></button>
-                    <button [routerLink]="['/script-library']" class="hero-button"><p>Dashboard</p></button>
+                    <button *ngIf="isLoggedIn" [routerLink]="['user-profile', currentUser.id]" class="hero-button"><p>Dashboard</p></button>
+                    <button *ngIf="currentUser.role === RoleId.Admin" [routerLink]="['user-profile', currentUser.id]" class="hero-button"><p>Admin Dashboards</p></button>
                 </div>
             </div>
             <div class="hero-content-right">
