@@ -7,6 +7,7 @@
         public string Title { get; set; }
 
         public string Content { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public UserPostResponse User { get; set; } = new();
         public List<CommentPostResponse> Comments { get; set; } = new();
