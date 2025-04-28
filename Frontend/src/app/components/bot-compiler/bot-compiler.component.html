@@ -83,6 +83,16 @@
             </div>
         </div>
     </div>
+    <div class="download-script-section">
+        <button 
+        class="download-script-button"
+        [disabled]="chosenScripts.length === 0"
+        (click)="downloadBot()">
+            <p>
+                Download Bot
+            </p>
+        </button>
+    </div>
     <div *ngIf="isFilterOpen" class="mobile-script-filter-modal">
         <div class="script-filter-container">
             <div class="script-filter">

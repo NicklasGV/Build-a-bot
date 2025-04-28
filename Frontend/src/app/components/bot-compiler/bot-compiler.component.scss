@@ -163,12 +163,72 @@
     font-size: 1.2rem;
     cursor: pointer;
   }
-  
-  /* Responsive adjustments */
-  @media (min-width: 768px) {
-    /* Hide the mobile modal and toggle on larger screens */
-    .mobile-script-filter-modal,
-    .filter-toggle-button {
-      display: none;
+
+.download-script-section {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.download-script-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: 80px;
+  background-color: $LIGHT_BLURPLE;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  width: 260px;
+  box-shadow: 0 2px 10px $DARK_BLURPLE;
+  border-radius: 16px;
+  border: solid 1px $LIGHT_BLURPLE;
+
+  @include mobileAndTabletV {
+      height: 85px;
+      width: 250px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: rgba($LIGHT_BLURPLE, 0.4);
+    border-color: rgba($LIGHT_BLURPLE, 0.4);
+
+    p {
+      color: rgba($DARK_BLURPLE, 0.5);
     }
   }
+  &:disabled:hover {
+    background: rgba($LIGHT_BLURPLE, 0.4);
+    box-shadow: none;
+  }
+}
+
+.download-script-button p {
+  font-family: "Discord Nord";
+  font-size: 20px;
+  line-height: 90%;
+  color: $DARK_BLURPLE;
+  margin: auto;
+}
+
+.download-script-button:hover {
+  background: $DARK_BLURPLE_GRADIENT_REVERSE;
+  box-shadow: 0 2px 10px $BLURPLE;
+  border: solid 1px $BLURPLE;
+  transition: all 0.1s ease-in-out;
+  & p {
+      font-family: "Discord Nord";
+      font-size: 20px;
+      line-height: 90%;
+      color: $LIGHT_BLURPLE;
+  }
+}
+  
+@media (min-width: 768px) {
+  .mobile-script-filter-modal,
+  .filter-toggle-button {
+    display: none;
+  }
+}
