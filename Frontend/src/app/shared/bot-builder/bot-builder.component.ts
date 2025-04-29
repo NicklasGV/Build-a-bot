@@ -1,31 +1,29 @@
-import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ScriptService } from '../../services/script.service';
+import { Script } from '../../models/script.model';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Script } from '../../models/script.model';
-import { ScriptService } from '../../services/script.service';
-import { HttpClient } from '@angular/common/http';
-import { BotBuilderComponent } from "../../shared/bot-builder/bot-builder.component";
 
 @Component({
-  selector: 'app-bot-compiler',
+  selector: 'app-bot-builder',
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
-    BotBuilderComponent
-],
-  templateUrl: './bot-compiler.component.html',
-  styleUrl: './bot-compiler.component.scss'
+    FormsModule
+  ],
+  templateUrl: './bot-builder.component.html',
+  styleUrl: './bot-builder.component.scss'
 })
-export class BotCompilerComponent {
+export class BotBuilderComponent {
   searchTerm: string = '';
   scripts: Script[] = [];
   filteredScripts: Script[] = [];
   chosenScripts: Script[] = [];
   isFilterOpen: boolean = false;
-
+  
   constructor(private scriptService: ScriptService, private http: HttpClient) { }
 
   ngOnInit(): void {
