@@ -144,7 +144,17 @@
 
         public async Task<UserResponse> UpdateByIdAsync(int userId, UserRequest updateUser)
         {
-            var insertedUser = await _userRepository.UpdateByIdAsync(userId, MapUserRequestToUser(updateUser));
+            User insertedUser = MapUserRequestToUser(updateUser);
+
+            if (updateUser.Password.Length >= 8)
+            {
+                insertedUser = await _userRepository.UpdateByIdAsync(userId, insertedUser);
+            }
+            else
+            {
+                insertedUser = await _userRepository.UpdateByIdNoPasswordAsync(userId, insertedUser);
+            }
+            
 
             if (insertedUser != null)
             {

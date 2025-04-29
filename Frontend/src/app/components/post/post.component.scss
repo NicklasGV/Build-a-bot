@@ -1,0 +1,123 @@
+@use "../../../styles/colors.scss" as *;
+@use "../../../styles/media.scss" as *;
+
+.post-section {
+    display: flex;
+    padding: 20px;
+    background: $DARK;
+    justify-content: center;
+}
+
+.post-detail {
+    display: flex;
+    justify-content: center;
+    padding-top: calc(64px + 1rem);
+    padding-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: lighten($DARK, 90%);
+    min-height: 100vh;
+  
+    @include desktop() {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  .post-card {
+    width: 100%;
+    margin: 25px auto;
+    background-color: lighten($DARK, 4%);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  
+    @include not-mobile() {
+      max-width: clamp(300px, 80vw, 1000px);
+    }
+  
+    @include mobile() {
+      max-width: 320px;
+    }
+  
+    header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid lighten($DARK, 70%);
+  
+      @include mobile() {
+        padding: 0.75rem 1rem;
+      }
+  
+      h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+  
+        @include mobile() {
+          font-size: 1.25rem;
+        }
+      }
+  
+      .author {
+        font-size: 0.85rem;
+      }
+    }
+  
+    .content {
+      padding: 1rem 1.5rem;
+      line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+  
+      @include mobile() {
+        padding: 0.75rem 1rem;
+      }
+    }
+  
+    .comments-section {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid lighten($DARK, 70%);
+  
+      @include mobile() {
+        padding: 0.75rem 1rem;
+      }
+  
+      h3 {
+        margin-top: 0;
+        font-size: 1.2rem;
+  
+        @include mobile() {
+          font-size: 1rem;
+        }
+      }
+  
+      .comment-list {
+        margin-top: 1rem;
+        list-style: none;
+        padding: 0;
+  
+        .comment-item {
+          margin-bottom: 1rem;
+  
+          .comment-text {
+            margin: 0 0 0.5rem;
+            line-height: 1.4;
+            font-size: 0.95rem;
+  
+            @include mobile() {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+  
+      .replies-list {
+        margin: 0 0 0 1.5rem;
+        padding: 0;
+        border-left: 2px solid lighten($DARK, 70%);
+  
+        .comment-item {
+          margin-bottom: 0.75rem;
+        }
+      }
+    }
+  }

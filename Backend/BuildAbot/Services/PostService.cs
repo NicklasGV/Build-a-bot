@@ -15,6 +15,7 @@
             {
                 Id = post.Id,
                 Title = post.Title,
+                CreatedAt = post.CreatedAt,
                 Content = post.Content,
                 User = new UserPostResponse
                 {
@@ -62,6 +63,7 @@
                 UserId = postRequest.UserId,
                 Title = postRequest.Title,
                 Content = postRequest.Content,
+                CreatedAt = postRequest.CreatedAt
             };
             return post;
         }

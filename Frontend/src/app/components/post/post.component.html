@@ -1,0 +1,91 @@
+<div class="bab-container">
+    <div class="small-hero">
+        <div class="hero-content">
+            <div class="hero-content-left">
+                <nav class="breadcrumbs" aria-label="breadcrumb">
+                    <ul>
+                      <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
+                      <li [routerLink]="['/forum']">Forum</li>
+                      <li class="active">{{post.title}}</li>
+                    </ul>
+                  </nav>
+                <div class="hero-content-left-header">
+                    <h1>Build a Bot</h1>
+                    <p>Build your own bot with our easy-to-use platform.</p>
+                </div>
+            </div>
+            <div class="small-hero-content-right">
+                <img src="../../../assets/images/Build-a-bot.svg" alt="Hero Image" class="hero-image" width="500px" height="500px">
+            </div>
+        </div>
+        <div class="vector-pattern">
+            <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#19175c" />
+                    <stop offset="80%" stop-color="#1F1F1F" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#myGradient)"
+                    d="M-1 31Q35 15 91 55 129 81 192 47 251 6 307 49 359 93 427 51 485 7 540 50 609 99 682 60 753 7 823 60 870 94 929 60 979 24 1013 57L1015 222-1 224Z" />
+            </svg>
+            <!--- Fantastic site for making these lines https://yqnn.github.io/svg-path-editor/ -->
+        </div>
+    </div>
+    <div class="post-section">
+
+
+<div class="post-detail" *ngIf="loading; else loaded">
+    <p>Loading…</p>
+  </div>
+  
+  <ng-template #loaded>
+    <ng-container *ngIf="post">
+      <article class="post-card">
+        <header>
+          <h2>{{ post.title }}</h2>
+          <p class="author">by {{ post.user?.userName }}</p>
+        </header>
+  
+        <section class="content">
+          {{ post.content }}
+        </section>
+  
+        <section class="comments-section">
+          <h3>Comments</h3>
+          <ng-container *ngIf="post.comments.length; else noComments">
+            <ng-container
+              *ngTemplateOutlet="commentList; context: { $implicit: post.comments }">
+            </ng-container>
+          </ng-container>
+  
+          <ng-template #noComments>
+            <p class="no-comments">No comments yet. Be the first to chime in!</p>
+          </ng-template>
+        </section>
+      </article>
+    </ng-container>
+  
+    <ng-template #notFound>
+      <p>Sorry, we couldn’t find that post.</p>
+    </ng-template>
+  </ng-template>
+  
+  <!-- recursive comment list -->
+  <ng-template #commentList let-comments>
+    <ul class="comment-list">
+      <li *ngFor="let c of comments;" class="comment-item">
+        <p class="comment-text"><strong>{{ c.user.userName }}:</strong> {{ c.text }}</p>
+  
+        <ng-container *ngIf="c.replies?.length">
+          <ul class="replies-list">
+            <ng-container
+              *ngTemplateOutlet="commentList; context: { $implicit: c.replies }">
+            </ng-container>
+          </ul>
+        </ng-container>
+      </li>
+    </ul>
+  </ng-template>
+</div>
+</div>
