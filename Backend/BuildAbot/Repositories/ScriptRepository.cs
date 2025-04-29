@@ -1,13 +1,17 @@
-﻿namespace BuildAbot.Repositories
+﻿using BuildAbot.Helper;
+
+namespace BuildAbot.Repositories
 {
     public class ScriptRepository : IScriptRepository
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public ScriptRepository(DatabaseContext databaseContext, IWebHostEnvironment hostingEnvironment)
+        private readonly AppSettings _appSettings;
+        public ScriptRepository(DatabaseContext databaseContext, IWebHostEnvironment hostingEnvironment, IOptions<AppSettings> appSettings)
         {
             _databaseContext = databaseContext;
             _hostingEnvironment = hostingEnvironment;
+            _appSettings = appSettings.Value;
         }
 
         public async Task<List<Script>> GetAllAsync()
@@ -76,7 +80,7 @@
             Script script = await FindByIdAsync(scriptId);
 
             // Base FTP URL (up to public_html)
-            string baseFtp = "ftp://buildabot.dk:kx2nGdr39ztafwmge4AF@nt36.unoeuro.com/public_html";
+            string baseFtp = _appSettings.FTPBase + "/public_html";
             // The relative folder we want to end up in
             string remoteFolder = $"assets/uploads/{script.UserId}/{script.Id}";
 
@@ -102,6 +106,42 @@
 
             // Update DB
             script.CodeLocationId = Path.Combine("assets/uploads/" + script.UserId + "/" + script.Id + "/", fileName);
+            await UpdateByIdAsync(scriptId, script);
+
+            return script;
+        }
+
+
+
+        public async Task<Script?> UploadGuideFile(int scriptId, IFormFile file)
+        {
+            Script script = await FindByIdAsync(scriptId);
+
+            string baseFtp = _appSettings.FTPBase + "/public_html";
+            string remoteFolder = $"assets/uploads/{script.UserId}/{script.Id}";
+
+
+            await EnsureFtpDirectoryExists(baseFtp, remoteFolder);
+
+            // Delete old file if present
+            if (!string.IsNullOrEmpty(script.GuideLocationId))
+            {
+                await DeleteFileOnFtpAsync(script.GuideLocationId);
+            }
+
+            // Build final URI for upload
+            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            Uri uploadUri = new Uri($"{baseFtp}/{remoteFolder}/{fileName}");
+
+            var uploadRequest = (FtpWebRequest)WebRequest.Create(uploadUri);
+            uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
+
+            using (var fileStream = file.OpenReadStream())
+            using (var ftpStream = uploadRequest.GetRequestStream())
+                await fileStream.CopyToAsync(ftpStream);
+
+            // Update DB
+            script.GuideLocationId = Path.Combine("assets/uploads/" + script.UserId + "/" + script.Id + "/", fileName);
             await UpdateByIdAsync(scriptId, script);
 
             return script;
@@ -137,44 +177,9 @@
             }
         }
 
-
-        public async Task<Script?> UploadGuideFile(int scriptId, IFormFile file)
-        {
-            Script script = await FindByIdAsync(scriptId);
-
-            string baseFtp = "ftp://buildabot.dk:kx2nGdr39ztafwmge4AF@nt36.unoeuro.com/public_html";
-            string remoteFolder = $"assets/uploads/{script.UserId}/{script.Id}";
-
-
-            await EnsureFtpDirectoryExists(baseFtp, remoteFolder);
-
-            // Delete old file if present
-            if (!string.IsNullOrEmpty(script.GuideLocationId))
-            {
-                await DeleteFileOnFtpAsync(script.GuideLocationId);
-            }
-
-            // Build final URI for upload
-            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-            Uri uploadUri = new Uri($"{baseFtp}/{remoteFolder}/{fileName}");
-
-            var uploadRequest = (FtpWebRequest)WebRequest.Create(uploadUri);
-            uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
-
-            using (var fileStream = file.OpenReadStream())
-            using (var ftpStream = uploadRequest.GetRequestStream())
-                await fileStream.CopyToAsync(ftpStream);
-
-            // Update DB
-            script.GuideLocationId = Path.Combine("assets/uploads/" + script.UserId + "/" + script.Id + "/", fileName);
-            await UpdateByIdAsync(scriptId, script);
-
-            return script;
-        }
-
         public async Task DeleteFileOnFtpAsync(string filePath)
         {
-            string ftpUrl = "ftp://buildabot.dk:kx2nGdr39ztafwmge4AF@nt36.unoeuro.com/public_html/";
+            string ftpUrl = _appSettings.FTPBase + "/public_html";
             FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create(new Uri(new Uri(ftpUrl), filePath));
             ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
 
