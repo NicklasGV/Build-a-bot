@@ -2,7 +2,7 @@
     <div class="bot-grid">
       <button
         class="user-bot-item"
-        (click)="goToCreate()"
+        (click)="botBuilderDialog.showModal()"
       >
         <p class="bi-plus" style="font-size: 2.5rem"></p>
       </button>
@@ -17,5 +17,17 @@
       </ng-container>
     </div>
   </div>
+
+<dialog #botBuilderDialog
+  class="bot-builder-dialog"
+  (click)="onBackdropClick($event)">
+
+  <app-bot-builder></app-bot-builder>
+
+  <button type="button"
+      class="close-modal-btn"
+      aria-label="Close"
+      (click)="botBuilderDialog.close()">×</button>
+</dialog>
   
   <div *ngIf="loading">Loading your bots…</div>

@@ -1,27 +1,35 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+
 import { Bot } from '../../../models/bot.model';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { BotService } from '../../../services/bot.service';
-import { CommonModule } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
+import { BotBuilderComponent } from '../../../shared/bot-builder/bot-builder.component';
 
 @Component({
   selector: 'app-user-bots',
   standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule
-  ],
   templateUrl: './user-bots.component.html',
-  styleUrls: ['./user-bots.component.scss']
+  styleUrls: ['./user-bots.component.scss'],
+  imports: [CommonModule, RouterModule, BotBuilderComponent],
 })
-export class UserBotsComponent implements OnInit {
+export class UserBotsComponent implements OnInit, AfterViewInit {
   bots: Bot[] = [];
   loading = false;
+
+  @ViewChild('botBuilderDialog', { static: true })
+  dialogEl!: HTMLDialogElement;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -30,7 +38,7 @@ export class UserBotsComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
@@ -41,28 +49,37 @@ export class UserBotsComponent implements OnInit {
     const { id: userId } = JSON.parse(raw) as Pick<User, 'id'>;
     this.loading = true;
 
-    this.userService.findById(userId).pipe(
-      switchMap(user => {
-        const botRefs = user.bots;
-        if (!botRefs || botRefs.length === 0) {
-          return of([] as Bot[]);
-        }
-        const calls = botRefs.map(b => this.botService.findById(b.id));
-        return forkJoin(calls);
-      })
-    ).subscribe({
-      next: bots => {
-        this.bots = bots;
-        this.loading = false;
-      },
-      error: err => {
-        console.error('Could not load bots', err);
-        this.loading = false;
-      }
-    });
+    this.userService
+      .findById(userId)
+      .pipe(
+        switchMap((user) => {
+          const botRefs = user.bots;
+          if (!botRefs?.length) {
+            return of([] as Bot[]);
+          }
+          const calls = botRefs.map((b) => this.botService.findById(b.id));
+          return forkJoin(calls);
+        })
+      )
+      .subscribe({
+        next: (bots) => {
+          this.bots = bots;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Could not load bots', err);
+          this.loading = false;
+        },
+      });
   }
 
-  goToCreate() {
-    this.router.navigate(['/bot-compiler']);
+  ngAfterViewInit(): void {
+    this.dialogEl.addEventListener('cancel', () => this.dialogEl.close());
+  }
+
+  onBackdropClick(event: MouseEvent): void {
+    if (event.target === this.dialogEl) {
+      this.dialogEl.close();
+    }
   }
 }

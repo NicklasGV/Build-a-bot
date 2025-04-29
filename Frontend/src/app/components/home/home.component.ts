@@ -29,7 +29,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
-      this.isLoggedIn = !!user.token;
+      this.isLoggedIn = !!user?.token;
     });
   }
 }
