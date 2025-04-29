@@ -6,12 +6,24 @@
     padding: 20px;
     background: $DARK;
     justify-content: center;
+    color: $BLURPLE
 }
 
 .forum-wrapper {
-    width: 100%;
-    max-width: 700px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.forum-header {
+  & h2 {
+    display: flex;
+    justify-content: center;
   }
+  & p {
+    display: flex;
+    justify-content: center;
+  }
+}
 
   .posts-grid {
     display: grid;
@@ -29,6 +41,7 @@
     box-shadow: 0 2px 12px $DARK_BLURPLE;
     position: relative;
     overflow: visible;
+    color: $DARK;
 
     &:hover {
         box-shadow: 0 4px 16px $BLURPLE;
