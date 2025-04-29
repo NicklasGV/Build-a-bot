@@ -8,6 +8,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { UserBotsComponent } from "../user-bots/user-bots.component";
 import { UserPostsComponent } from "../user-posts/user-posts.component";
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,24 +36,23 @@ export class DashboardComponent {
   }
 
   ngOnInit(): void {
-    // this.userService.findById(this.authService.currentUserValue.id).subscribe(x => this.user = x);
-    // this.activatedRoute.paramMap.subscribe( params => {
-    //   if (this.authService.currentUserValue == null || this.authService.currentUserValue.id == '' || this.authService.currentUserValue.id != String(params.get('id')))
-    //   {
-    //     this.router.navigate(['/']);
-    //   }
-    //   //Store user in variable
-    //   this.user = this.authService.currentUserValue;
-    // });
-
-    this.authService.currentUser.subscribe(user => {
-          this.user = user;
-        });
-
-    this.WelcomeUser();
+    this.authService.currentUser.pipe(
+      filter(user => !!user && !!user.id),
+      tap(user => this.user = user),
+      switchMap(user => this.userService.findById(user.id))
+    ).subscribe({
+      next: fullUser => {
+        this.user = fullUser;
+        this.setGreeting();
+      },
+      error: err => {
+        console.error('Error loading user profile', err);
+        this.router.navigate(['/']);
+      }
+    });
   }
 
-  WelcomeUser() {
+  setGreeting() {
     var today = new Date().getHours();
     if (today >= 6 && today <= 11)
     {

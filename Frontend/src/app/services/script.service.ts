@@ -22,4 +22,12 @@ export class ScriptService {
   findById(scriptId: number): Observable<Script> {
     return this.http.get<Script>(this.apiUrl + '/' + scriptId);
   }
+
+  create(script: Script): Observable<Script> {
+    return this.http.post<Script>(this.apiUrl, script);
+  }
+
+  update(scriptId: number, script: Script): Observable<Script> {
+    return this.http.put<Script>(this.apiUrl + '/' + scriptId, script);
+  }
 }

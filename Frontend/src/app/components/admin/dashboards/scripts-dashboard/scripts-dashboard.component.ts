@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { switchMap, map } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { switchMap, map, lastValueFrom } from 'rxjs';
 import { Role, constRoles } from '../../../../models/role.model';
 import { User, resetUser } from '../../../../models/user.model';
 import { ScriptService } from '../../../../services/script.service';
@@ -8,6 +8,7 @@ import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Script } from '../../../../models/script.model';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 @Component({
   selector: 'app-scripts-dashboard',
@@ -15,41 +16,87 @@ import { Script } from '../../../../models/script.model';
   imports: [
       CommonModule,
       HttpClientModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      FormsModule,
+      MonacoEditorModule
     ],
   templateUrl: './scripts-dashboard.component.html',
   styleUrl: './scripts-dashboard.component.scss'
 })
 export class ScriptsDashboardComponent {
   scripts: Script[] = [];
-  roles: Role[] = [];
+  users: { id: number; userName: string }[] = [];
+  scriptForm: FormGroup;
+  isWriting = false;
+  selectedFile: File | null = null;
+  scriptText = '';
+  editorOptions = {
+    theme: 'vs-dark', language: 'python'
+  };
 
-  sortField: 'id' | 'name' | 'userName' | 'scriptCount' = 'id';
+  sortField: 'id' | 'title' | 'description' | 'userName' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
-  private userService = inject(UserService);
-  private scriptService = inject(ScriptService)
-  private fb = inject(FormBuilder);
+  private scriptService = inject(ScriptService);
+  private userService   = inject(UserService);
+  // private fileService   = inject(fileService)
+  private fb            = inject(FormBuilder);
 
 
-  scriptForm = this.fb.group({
-    id:       [0],
-    email:    ['', { nonNullable: true, validators: [] }],
-    userName: ['', { nonNullable: true, validators: [] }],
-    password: ['', { nonNullable: true, validators: [] }],
-    scripts:  [[] as number[]],
-    role:     [null as number | null]
-  });
-
-  ngOnInit() {
-    this.scriptService.getAll().subscribe({
-      next: scripts => this.scripts = scripts,
-      error: err   => console.error(err)
+  constructor() {
+    this.scriptForm = this.fb.group({
+      id:     [0],
+      title:  ['', Validators.required],
+      description:  ['', Validators.required],
+      userId: [null, Validators.required],
+      codeId: [''],
+      scriptText:  ['']
     });
-    this.roles = constRoles;
   }
 
-  sortBy(field: 'id' | 'name' | 'userName') {
+  ngOnInit(): void {
+    this.loadScripts();
+    this.loadUsers();
+  }
+
+  private loadScripts(): void {
+    this.scriptService.getAll().subscribe({
+      next: scripts => this.scripts = scripts,
+      error: err   => console.error('Failed to load scripts', err)
+    });
+  }
+
+  private loadUsers(): void {
+    this.userService.getAll().subscribe({
+      next: users => 
+        this.users = users.map(u => ({ id: u.id, userName: u.userName })),
+      error: err =>
+        console.error('Failed to load users', err)
+    });
+  }
+
+  toggleEditor() {
+    this.isWriting = !this.isWriting;
+    if (!this.isWriting) {
+      this.scriptText = '';
+    }
+  }
+
+  onFileSelected(evt: Event) {
+    const input = evt.target as HTMLInputElement;
+    if (input.files?.length) {
+      const f = input.files[0];
+      const ext = f.name.split('.').pop()?.toLowerCase();
+      if (ext === 'py' || ext === 'txt') {
+        this.selectedFile = f;
+      } else {
+        input.value = '';
+        this.selectedFile = null;
+      }
+    }
+  }
+
+  sortBy(field: 'id' | 'title' | 'description' | 'userName') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
@@ -74,12 +121,8 @@ export class ScriptsDashboardComponent {
           aVal = (a as any)[this.sortField];
           bVal = (b as any)[this.sortField];
       }
-
-      // null-safe compare
       if (aVal == null) return -1;
       if (bVal == null) return 1;
-
-      // string vs number
       if (typeof aVal === 'string') {
         return aVal.localeCompare(bVal);
       }
@@ -91,86 +134,95 @@ export class ScriptsDashboardComponent {
     }
   }
 
-  editUser(userId: number) {
-    this.userService.findById(userId).pipe(
-      switchMap(user =>
-        this.scriptService.getAll().pipe(
-          map(allScripts => ({ user, allScripts }))
-        )
-      )
-    )
-    .subscribe({
-      next: ({ user, allScripts }) => {
-        const scriptIds = allScripts
-          .filter(s => s.user.id === user.id)
-          .map(s => s.id);
-
-        this.scriptForm.patchValue({
-          id:       user.id,
-          email:    user.email,
-          userName: user.userName,
-          password: '',
-          scripts:  scriptIds,
-          role:     user.role ?? 0
-        });
-      },
-      error: err => console.error(err)
-    });
-  }
-
-  cancelEdit() {
-    // reset the form back to “create” mode
-    this.scriptForm.reset({
-      id:       0,
-      email:    '',
-      userName: '',
-      password: '',
-      scripts:  [],
-      role:     null
-    });
-  }
-
-  onSubmit() {
+  async onSubmit() {
     if (this.scriptForm.invalid) return;
 
+    // 1) if writing, turn text → blob → file
+    if (this.isWriting && this.scriptText.trim()) {
+      const blob = new Blob([this.scriptText], { type: 'text/plain' });
+      this.selectedFile = new File([blob], `${this.scriptForm.value.title}.txt`, {
+        type: 'text/plain'
+      });
+    }
+
+    // 2) upload file (if present)
+    // if (this.selectedFile) {
+    //   try {
+    //     const resp = await lastValueFrom(this.fileService.upload(this.selectedFile));
+    //     this.scriptForm.patchValue({ codeId: resp.filename });
+    //   } catch (err) {
+    //     console.error('Upload failed', err);
+    //     return;  // abort submission
+    //   }
+    // }
+
+    // 3) build payload
     const raw = this.scriptForm.value;
-    const payload: User = {
-      ...resetUser(),
-      id:       raw.id!,
-      email:    raw.email!,
-      userName: raw.userName!,
-      password: raw.password!,
-      scripts:  (raw.scripts || []).map(id => id.toString()),
-      role:     raw.role ?? undefined
+    const payload: Script = {
+      id: raw.id,
+      title: raw.title,
+      description: raw.description,
+      user: {
+        id: raw.userId,
+        userName: '',
+        email: '',
+        password: '',
+        scripts: [],
+        bots: [],
+        favorites: []
+      },
+      codeLocationId: raw.codeId,
+      guideLocationId: '',
+      botScripts: [],
+      favorites: []
     };
 
-    // if (payload.id && payload.id !== 0) {
-    //   // **Update** existing
-    //   this.userService.update(payload).subscribe({
-    //     next: updated => {
-    //       // swap it into our local list
-    //       const idx = this.scripts.findIndex(u => u.id === updated.id);
-    //       if (idx > -1) this.scripts[idx] = updated;
-    //       this.cancelEdit();
-    //     },
-    //     error: err => console.error(err)
-    //   });
-    // } else {
-      // **Create** new
-      // this.scriptService.create(payload).subscribe({
-      //   next: created => {
-      //     this.scripts.push(created);
-      //     this.cancelEdit();
-      //   },
-      //   error: err => console.error(err)
-      // });
-    // }
+    // 4) create vs update
+    if (payload.id && payload.id !== 0) {
+      this.scriptService.update(payload.id, payload).subscribe({
+        next: updated => {
+          const i = this.scripts.findIndex(s => s.id === updated.id);
+          if (i > -1) this.scripts[i] = updated;
+          this.cancelEdit();
+        },
+        error: err => console.error('Update failed', err)
+      });
+    } else {
+      this.scriptService.create(payload).subscribe({
+        next: created => {
+          this.scripts.push(created);
+          this.cancelEdit();
+        },
+        error: err => console.error('Create failed', err)
+      });
+    }
   }
 
-  deleteUser(id: number) {
-    // this.userService.delete(id).subscribe({
-    //   next: () => this.users = this.users.filter(u => u.id !== id),
-    //   error: err => console.error(err)
-    // });
+  editScript(id: number) {
+    this.scriptService.findById(id).subscribe({
+      next: s => {
+        this.cancelEdit();
+        this.scriptForm.patchValue({
+          id:     s.id,
+          title:  s.title,
+          userId: s.user.id,
+          codeId: s.codeLocationId
+        });
+      },
+      error: e => console.error('Load single failed', e)
+    });
+  }
+
+  deleteScript(scriptId: number): void {
+    this.scriptService.delete(scriptId).subscribe({
+      next: () => {
+        this.scripts = this.scripts.filter(s => s.id !== scriptId);
+      },
+      error: err => console.error('Delete failed', err)
+    });
+  }
+
+  cancelEdit(): void {
+    this.scriptForm.reset({ id: 0, title: '', userId: null });
   }
 }

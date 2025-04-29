@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
     }
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
-      this.isLoggedIn = !!user.token;
+      this.isLoggedIn = !!user?.token;
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { BotService } from '../../../services/bot.service';
 import { CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-user-bots',
@@ -23,12 +24,17 @@ export class UserBotsComponent implements OnInit {
   loading = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private userService: UserService,
     private botService: BotService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const raw = sessionStorage.getItem('currentUser');
     if (!raw) return;
 

@@ -97,6 +97,11 @@
   }
 }
 
+.cancel-btn {
+  background-color: $RED !important;
+  color: $FADED_RED !important;
+}
+
 body {
   font-family: 'Discord Regular';
   margin: 0;

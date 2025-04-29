@@ -27,9 +27,10 @@
             {{ userForm.get('id')?.value ? 'Update User' : 'Create User' }}
           </button>
           <button
-            *ngIf="userForm.get('id')?.value"
+            *ngIf="userForm.touched"
             type="button"
             (click)="cancelEdit()"
+            class="cancel-btn"
           >Cancel</button>
         </div>
       </form>
