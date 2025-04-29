@@ -56,14 +56,14 @@
                 Description = scriptRequest.Description,
                 CodeLocationId = scriptRequest.CodeLocationId ?? string.Empty,
                 GuideLocationId = scriptRequest.GuideLocationId ?? string.Empty,
-                FavoriteScripts = scriptRequest.UserIds
-                    .Where(x => x != 0)
-                    .Select(x => new FavoriteScript { UserId = x })
-                    .ToList(),
-                BotScripts = scriptRequest.BotIds
-                    .Where(x => x != 0)
-                    .Select(x => new BotScript { BotId = x })
-                    .ToList()
+                FavoriteScripts = (scriptRequest.UserIds ?? new List<int>())
+    .Where(x => x != 0)
+    .Select(x => new FavoriteScript { UserId = x })
+    .ToList(),
+                BotScripts = (scriptRequest.BotIds ?? new List<int>())
+    .Where(x => x != 0)
+    .Select(x => new BotScript { BotId = x })
+    .ToList()
             };
             return script;
         }
@@ -122,6 +122,32 @@
                 return MapScriptToScriptResponse(script);
             }
             return null;
+        }
+
+        public async Task<ScriptResponse> UploadScriptFile(int scriptId, IFormFile file)
+        {
+            Script script = await _scriptRepository.UploadScriptFile(scriptId, file);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+
+            return null;
+
+        }
+
+        public async Task<ScriptResponse> UploadGuideFile(int scriptId, IFormFile file)
+        {
+            Script script = await _scriptRepository.UploadGuideFile(scriptId, file);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+
+            return null;
+
         }
 
     }
