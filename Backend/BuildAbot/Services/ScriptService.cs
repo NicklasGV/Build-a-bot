@@ -116,6 +116,16 @@
         public async Task<ScriptResponse> DeleteByIdAsync(int scriptId)
         {
             var script = await _scriptRepository.DeleteByIdAsync(scriptId);
+            if (script.CodeLocationId != null)
+            {
+                await _scriptRepository.DeleteFileOnFtpAsync(script.CodeLocationId);    
+            }
+            if (script.GuideLocationId != null)
+            {
+                await _scriptRepository.DeleteFileOnFtpAsync(script.GuideLocationId);
+            }
+
+            await _scriptRepository.DeleteFolderOnFtpAsync(script.Id, script.UserId);
 
             if (script != null)
             {

@@ -9,5 +9,7 @@
         Task<List<Script>> GetAllAsync();
         Task<Script> UploadScriptFile(int scriptId, IFormFile file);
         Task<Script> UploadGuideFile(int scriptId, IFormFile file);
+        Task DeleteFileOnFtpAsync(string filePath);
+        Task DeleteFolderOnFtpAsync(int id, int scriptid);
     }
 }

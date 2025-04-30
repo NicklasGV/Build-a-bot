@@ -179,7 +179,7 @@ namespace BuildAbot.Repositories
 
         public async Task DeleteFileOnFtpAsync(string filePath)
         {
-            string ftpUrl = _appSettings.FTPBase + "/public_html";
+            string ftpUrl = _appSettings.FTPBase + "/public_html/";
             FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create(new Uri(new Uri(ftpUrl), filePath));
             ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
 
@@ -192,6 +192,25 @@ namespace BuildAbot.Repositories
             catch (WebException ex)
             {
                 Console.WriteLine($"Error deleting file: {ex.Message}");
+            }
+        }
+
+        public async Task DeleteFolderOnFtpAsync(int id, int userid)
+        {
+            string ftpUrl = $"{_appSettings.FTPBase}/public_html/assets/uploads/{userid}/{id}";
+
+            FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create(new Uri(ftpUrl));
+            ftpRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
+
+            try
+            {
+                FtpWebResponse ftpResponse = (FtpWebResponse)await ftpRequest.GetResponseAsync();
+                Console.WriteLine($"Folder deleted, status: {ftpResponse.StatusDescription}");
+                ftpResponse.Close();
+            }
+            catch (WebException ex)
+            {
+                Console.WriteLine($"Error deleting folder on {ftpUrl}: {ex.Message}");
             }
         }
     }
