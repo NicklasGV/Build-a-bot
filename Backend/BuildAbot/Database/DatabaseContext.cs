@@ -115,8 +115,15 @@ namespace BuildAbot.Database
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Script>()
-                .HasOne(s => s.Status)
-                .WithMany(s => s.Scripts)
+    .HasMany(s => s.BotScripts)
+    .WithOne(bs => bs.Script)
+    .HasForeignKey(bs => bs.ScriptId)
+    .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<Bot>()
+                .HasMany(b => b.BotScripts)
+                .WithOne(bs => bs.Bot)
+                .HasForeignKey(bs => bs.BotId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
