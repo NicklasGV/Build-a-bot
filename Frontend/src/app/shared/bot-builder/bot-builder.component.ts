@@ -149,10 +149,12 @@ bot.run('YOUR_BOT_TOKEN')
       title:          ui.title,
       description:    ui.description,
       codeLocationId: ui.codeLocationId,
+      scriptFile: ui.scriptFile,
       guideLocationId:ui.guideLocationId,
-      user:       currentUser,
-      botScripts: [],
-      favorites:  []
+      guideFile: ui.guideFile,
+      userId:       currentUser.id,
+      userIds: [],
+      botIds: [],
     }));
   
     const botData: Bot = {

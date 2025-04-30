@@ -6,10 +6,12 @@ export interface Script {
     title: string;
     description: string;
     codeLocationId: string;
+    scriptFile: File | null;
     guideLocationId: string;
-    user: User;
-    botScripts: Bot[];
-    favorites: string[];
+    guideFile: File | null;
+    userId: number;
+    userIds: number[]
+    botIds: number[];
   }
   
   export function resetScript() {
@@ -18,9 +20,11 @@ export interface Script {
         title: '', 
         description: '',
         codeLocationId: '',
+        scriptFile: null,
         guideLocationId: '',
-        user: [],
-        botScripts: [],
-        favorites: []
+        guideFile: null,
+        user: 0,
+        userIds: [],
+        botIds: []
   };
   }

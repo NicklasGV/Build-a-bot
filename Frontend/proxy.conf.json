@@ -1,0 +1,10 @@
+{
+    "/file": {
+      "target": "https://nt36.unoeuro.com",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "auth": "buildabot.dk:kx2nGdr39ztafwmge4AF"
+    }
+  }
+  

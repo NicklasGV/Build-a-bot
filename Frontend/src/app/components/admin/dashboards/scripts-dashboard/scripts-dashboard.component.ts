@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { switchMap, map, lastValueFrom } from 'rxjs';
-import { Role, constRoles } from '../../../../models/role.model';
-import { User, resetUser } from '../../../../models/user.model';
+import { lastValueFrom } from 'rxjs';
+import { FileService } from '../../../../services/file.service';
 import { ScriptService } from '../../../../services/script.service';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
@@ -34,12 +33,12 @@ export class ScriptsDashboardComponent {
     theme: 'vs-dark', language: 'python'
   };
 
-  sortField: 'id' | 'title' | 'description' | 'userName' = 'id';
+  sortField: 'id' | 'title' | 'description' | 'userId' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
   private scriptService = inject(ScriptService);
   private userService   = inject(UserService);
-  // private fileService   = inject(fileService)
+  private fileService   = inject(FileService)
   private fb            = inject(FormBuilder);
 
 
@@ -47,7 +46,7 @@ export class ScriptsDashboardComponent {
     this.scriptForm = this.fb.group({
       id:     [0],
       title:  ['', Validators.required],
-      description:  ['', Validators.required],
+      description:  [''],
       userId: [null, Validators.required],
       codeId: [''],
       scriptText:  ['']
@@ -96,7 +95,7 @@ export class ScriptsDashboardComponent {
     }
   }
 
-  sortBy(field: 'id' | 'title' | 'description' | 'userName') {
+  sortBy(field: 'id' | 'title' | 'description' | 'userId') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
@@ -113,9 +112,9 @@ export class ScriptsDashboardComponent {
       let aVal: any, bVal: any;
 
       switch (this.sortField) {
-        case 'userName':
-          aVal = a.user.userName;
-          bVal = b.user.userName;
+        case 'userId':
+          aVal = a.userId;
+          bVal = b.userId;
           break;
         default:
           aVal = (a as any)[this.sortField];
@@ -145,16 +144,16 @@ export class ScriptsDashboardComponent {
       });
     }
 
-    // 2) upload file (if present)
-    // if (this.selectedFile) {
-    //   try {
-    //     const resp = await lastValueFrom(this.fileService.upload(this.selectedFile));
-    //     this.scriptForm.patchValue({ codeId: resp.filename });
-    //   } catch (err) {
-    //     console.error('Upload failed', err);
-    //     return;  // abort submission
-    //   }
-    // }
+    //2) upload file (if present)
+    if (this.selectedFile) {
+      try {
+        const resp = await lastValueFrom(this.fileService.upload(this.selectedFile));
+        this.scriptForm.patchValue({ codeId: resp.filename });
+      } catch (err) {
+        console.error('Upload failed', err);
+        return;  // abort submission
+      }
+    }
 
     // 3) build payload
     const raw = this.scriptForm.value;
@@ -162,19 +161,13 @@ export class ScriptsDashboardComponent {
       id: raw.id,
       title: raw.title,
       description: raw.description,
-      user: {
-        id: raw.userId,
-        userName: '',
-        email: '',
-        password: '',
-        scripts: [],
-        bots: [],
-        favorites: []
-      },
+      userId: raw.userId,
       codeLocationId: raw.codeId,
       guideLocationId: '',
-      botScripts: [],
-      favorites: []
+      botIds: [],
+      scriptFile: null,
+      guideFile: null,
+      userIds: []
     };
 
     // 4) create vs update
@@ -205,7 +198,7 @@ export class ScriptsDashboardComponent {
         this.scriptForm.patchValue({
           id:     s.id,
           title:  s.title,
-          userId: s.user.id,
+          userId: s.userId,
           codeId: s.codeLocationId
         });
       },

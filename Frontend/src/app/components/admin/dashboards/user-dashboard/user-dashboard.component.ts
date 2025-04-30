@@ -105,7 +105,7 @@ export class UserDashboardComponent implements OnInit {
     .subscribe({
       next: ({ user, allScripts }) => {
         const scriptIds = allScripts
-          .filter(s => s.user.id === user.id)
+          .filter(s => s.userId === user.id)
           .map(s => s.id);
 
         this.userForm.patchValue({
