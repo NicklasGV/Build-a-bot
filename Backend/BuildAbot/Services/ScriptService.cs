@@ -56,14 +56,14 @@
                 Description = scriptRequest.Description,
                 CodeLocationId = scriptRequest.CodeLocationId ?? string.Empty,
                 GuideLocationId = scriptRequest.GuideLocationId ?? string.Empty,
-                FavoriteScripts = scriptRequest.UserIds
-                    .Where(x => x != 0)
-                    .Select(x => new FavoriteScript { UserId = x })
-                    .ToList(),
-                BotScripts = scriptRequest.BotIds
-                    .Where(x => x != 0)
-                    .Select(x => new BotScript { BotId = x })
-                    .ToList()
+                FavoriteScripts = (scriptRequest.UserIds ?? new List<int>())
+    .Where(x => x != 0)
+    .Select(x => new FavoriteScript { UserId = x })
+    .ToList(),
+                BotScripts = (scriptRequest.BotIds ?? new List<int>())
+    .Where(x => x != 0)
+    .Select(x => new BotScript { BotId = x })
+    .ToList()
             };
             return script;
         }
@@ -116,12 +116,48 @@
         public async Task<ScriptResponse> DeleteByIdAsync(int scriptId)
         {
             var script = await _scriptRepository.DeleteByIdAsync(scriptId);
+            if (script.CodeLocationId != null)
+            {
+                await _scriptRepository.DeleteFileOnFtpAsync(script.CodeLocationId);    
+            }
+            if (script.GuideLocationId != null)
+            {
+                await _scriptRepository.DeleteFileOnFtpAsync(script.GuideLocationId);
+            }
+
+            await _scriptRepository.DeleteFolderOnFtpAsync(script.Id, script.UserId);
 
             if (script != null)
             {
                 return MapScriptToScriptResponse(script);
             }
             return null;
+        }
+
+        public async Task<ScriptResponse> UploadScriptFile(int scriptId, IFormFile file)
+        {
+            Script script = await _scriptRepository.UploadScriptFile(scriptId, file);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+
+            return null;
+
+        }
+
+        public async Task<ScriptResponse> UploadGuideFile(int scriptId, IFormFile file)
+        {
+            Script script = await _scriptRepository.UploadGuideFile(scriptId, file);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+
+            return null;
+
         }
 
     }

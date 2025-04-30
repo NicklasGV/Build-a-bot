@@ -1,4 +1,6 @@
-﻿namespace BuildAbot.Controllers
+﻿using BuildAbot.DTO.UserDTO;
+
+namespace BuildAbot.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -66,6 +68,28 @@
             {
                 ScriptResponse scriptResponse = await _scriptService.CreateAsync(newScript);
 
+                if (newScript.ScriptFile != null)
+                {
+                    ScriptResponse scriptFile = await _scriptService.UploadScriptFile(scriptResponse.Id, newScript.ScriptFile);
+
+                    if (scriptFile != null)
+                    {
+                        scriptResponse = scriptFile;
+                    }
+
+                }
+
+                if (newScript.GuideFile != null)
+                {
+                    ScriptResponse guideFile = await _scriptService.UploadGuideFile(scriptResponse.Id, newScript.GuideFile);
+
+                    if (guideFile != null)
+                    {
+                        scriptResponse = guideFile;
+                    }
+
+                }
+
                 return Ok(scriptResponse);
             }
             catch (Exception ex)
@@ -81,6 +105,28 @@
             try
             {
                 var scriptResponse = await _scriptService.UpdateByIdAsync(scriptId, updateScript);
+
+                if (updateScript.ScriptFile != null)
+                {
+                    ScriptResponse scriptFile = await _scriptService.UploadScriptFile(scriptResponse.Id, updateScript.ScriptFile);
+
+                    if (scriptFile != null)
+                    {
+                        scriptResponse = scriptFile;
+                    }
+
+                }
+
+                if (updateScript.GuideFile != null)
+                {
+                    ScriptResponse guideFile = await _scriptService.UploadGuideFile(scriptResponse.Id, updateScript.GuideFile);
+
+                    if (guideFile != null)
+                    {
+                        scriptResponse = guideFile;
+                    }
+
+                }
 
                 if (scriptResponse == null)
                 {
