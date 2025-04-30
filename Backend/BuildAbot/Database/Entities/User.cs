@@ -18,6 +18,9 @@ namespace BuildAbot.Database.Entities
 
         public Role Role { get; set; }
 
+        public int? StatusId { get; set; }
+        public Status? Status { get; set; }
+
         public List<Script> Scripts { get; set; } = new List<Script>();
         public List<Bot> Bots { get; set; } = new List<Bot>();
         public List<Post> Posts { get; set; } = new List<Post>();

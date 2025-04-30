@@ -1,4 +1,6 @@
-﻿namespace BuildAbot.Services
+﻿using BuildAbot.DTO.ScriptDTO;
+
+namespace BuildAbot.Services
 {
     public class UserService : IUserService
     {
@@ -42,6 +44,12 @@
                 UserName = user.UserName,
                 Email = user.Email.ToLower(),
                 Role = user.Role,
+                Status = user.Status == null ? null : new StatusUserResponse
+                {
+                    Id = user.Status.Id,
+                    Title = user.Status.Title,
+                    DateTime = user.Status.DateTime
+                }
             };
             
             if (user.Scripts.Count > 0)
@@ -105,6 +113,10 @@
                 Email = userRequest.Email.ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(userRequest.Password) ?? string.Empty,
                 Role = userRequest.Role,
+                FavoriteScripts = (userRequest.ScriptIds ?? new List<int>())
+    .Where(x => x != 0)
+    .Select(x => new FavoriteScript { ScriptId = x })
+    .ToList(),
             };
             return user;
         }

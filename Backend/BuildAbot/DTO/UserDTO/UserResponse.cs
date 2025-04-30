@@ -7,6 +7,7 @@
         public string Email { get; set; }
         public Role Role { get; set; }
 
+        public StatusUserResponse Status { get; set; } = new();
         public List<ScriptUserResponse> Scripts { get; set; } = new();
         public List<BotUserResponse> Bots { get; set; } = new();
         public List<PostUserResponse> Posts { get; set; } = new();
@@ -45,5 +46,12 @@
         public int Id { get; set; }
         public string Text { get; set; }
         public int PostId { get; set; }
+    }
+
+    public class StatusUserResponse
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace BuildAbot.Database
         public DbSet<BotScript> BotScript { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
+        public DbSet<Status> Status { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,6 +109,16 @@ namespace BuildAbot.Database
                 .WithOne(c => c.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Status)
+                .WithMany(s => s.Users)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Script>()
+                .HasOne(s => s.Status)
+                .WithMany(s => s.Scripts)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Dummy data for testing
             modelBuilder.Entity<User>().HasData(
@@ -126,6 +137,15 @@ namespace BuildAbot.Database
                     Email = "testmail2",
                     Password = "Password",
                     Role = Role.Developer,
+                },
+                new User
+                {
+                    Id = 3,
+                    UserName = "Delete Tester",
+                    Email = "testmail3",
+                    Password = "Password",
+                    Role = Role.Developer,
+                    StatusId = 1,
                 }
                 );
 
@@ -136,6 +156,16 @@ namespace BuildAbot.Database
                     UserId = 1,
                     Title = "TestScript",
                     Description = "TestDescription",
+                    CodeLocationId = "CodeLocation",
+                    GuideLocationId = "GuideLocation",
+                },
+                new Script
+                {
+                    Id = 2,
+                    UserId = 3,
+                    Title = "TestScriptDeleted",
+                    Description = "TestDescription",
+                    StatusId = 2,
                     CodeLocationId = "CodeLocation",
                     GuideLocationId = "GuideLocation",
                 }
@@ -191,11 +221,35 @@ namespace BuildAbot.Database
                 new Comment
                 {
                     Id = 2,
+                    Text = "TestChildCommentDeleted",
+                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+                    UserId = 2,
+                    PostId = 1,
+                    IsDeleted = true,
+                    ParentCommentId = 1
+                },
+                new Comment
+                {
+                    Id = 3,
                     Text = "TestChildComment",
                     CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
                     UserId = 2,
                     PostId = 1,
-                    ParentCommentId = 1
+                    ParentCommentId = 2
+                }
+            );
+            modelBuilder.Entity<Status>().HasData(
+                new Status
+                {
+                    Id = 1,
+                    Title = "Deleted",
+                    DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
+                },
+                new Status
+                {
+                    Id = 2,
+                    Title = "Expired",
+                    DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
                 }
             );
         }

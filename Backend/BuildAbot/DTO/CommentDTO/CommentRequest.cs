@@ -9,9 +9,9 @@
 
         [Required]
         public int PostId { get; set; }
-
-        [Required]
-        public int UserId { get; set; }
+     
+        public int? UserId { get; set; }
+        public Boolean? isDeleted { get; set; } = false;
 
         public int? ParentCommentId { get; set; }
     }

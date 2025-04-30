@@ -21,6 +21,8 @@
         public string? GuideLocationId { get; set; }
         public IFormFile? GuideFile { get; set; }
 
+        public int? StatusId { get; set; } = null;
+
         public List<int>? UserIds { get; set; } = null;
         public List<int>? BotIds { get; set; } = null;
     }
