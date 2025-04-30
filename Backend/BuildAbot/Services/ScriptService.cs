@@ -24,6 +24,12 @@
                     Id = script.User.Id,
                     UserName = script.User.UserName,
                     Email = script.User.Email
+                },
+                Status = script.Status == null ? null : new StatusScriptResponse
+                {
+                    Id = script.Status.Id,
+                    Title = script.Status.Title,
+                    DateTime = script.Status.DateTime
                 }
 
             };

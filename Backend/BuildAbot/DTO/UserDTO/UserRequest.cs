@@ -2,6 +2,7 @@
 {
     public class UserRequest
     {
+        [Required]
         [StringLength(32, ErrorMessage = "First name cannot be longer than 32 chars")]
         public string UserName { get; set; }
 
@@ -16,6 +17,7 @@
         [Required]
         public Role Role { get; set; }
 
-        public List<int> ScriptIds { get; set; } = new();
+        public int? StatusId { get; set; } = null;
+        public List<int>? ScriptIds { get; set; } = new();
     }
 }

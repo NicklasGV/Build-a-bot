@@ -9,6 +9,7 @@
         public string GuideLocationId { get; set; }
         public UserScriptResponse User { get; set; } = new();
 
+        public StatusScriptResponse Status { get; set; } = new();
         public List<BotScriptScriptsResponse> BotScripts { get; set; } = new();
         public List<FavoriteScriptResponse> Favorites { get; set; } = new();
     }
@@ -30,5 +31,12 @@
     {
         public int Id { get; set; }
         public string Username { get; set; }
+    }
+
+    public class StatusScriptResponse
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

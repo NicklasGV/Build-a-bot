@@ -9,6 +9,7 @@
 
         public DateTime CreatedAt { get; set; }
 
+        public Boolean? IsDeleted { get; set; }
         public int? ParentCommentId { get; set; }
 
         
