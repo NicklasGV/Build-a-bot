@@ -7,7 +7,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class FileService {
-  private readonly apiUrl = '/file';
+  // private readonly apiUrl = environment.fileServerUrl;
+  private readonly apiUrl = '/files'
   private readonly fileServerHeaders = new HttpHeaders({
     Authorization: 'Basic ' + btoa(
       `${environment.fileServerUser}:${environment.fileServerPass}`

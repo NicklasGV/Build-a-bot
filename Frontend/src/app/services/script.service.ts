@@ -9,7 +9,8 @@ import { environment } from '../../environments/environment';
 })
 export class ScriptService {
   private readonly apiUrl = environment.apiUrl + 'Script/';
-  private readonly fileServerUrl = '/file';
+  // private readonly fileServerUrl = environment.fileServerUrl;
+  private readonly fileServerUrl = '/files'
 
   private readonly fileServerHeaders = new HttpHeaders({
     Authorization:

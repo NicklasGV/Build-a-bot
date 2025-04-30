@@ -144,17 +144,6 @@ export class ScriptsDashboardComponent {
       });
     }
 
-    //2) upload file (if present)
-    if (this.selectedFile) {
-      try {
-        const resp = await lastValueFrom(this.fileService.upload(this.selectedFile));
-        this.scriptForm.patchValue({ codeId: resp.filename });
-      } catch (err) {
-        console.error('Upload failed', err);
-        return;  // abort submission
-      }
-    }
-
     // 3) build payload
     const raw = this.scriptForm.value;
     const payload: Script = {
@@ -165,7 +154,7 @@ export class ScriptsDashboardComponent {
       codeLocationId: raw.codeId,
       guideLocationId: '',
       botIds: [],
-      scriptFile: null,
+      scriptFile: raw.scriptFile,
       guideFile: null,
       userIds: []
     };
