@@ -21,8 +21,9 @@
 <dialog #botBuilderDialog
   class="bot-builder-dialog"
   (click)="onBackdropClick($event)">
-
-  <app-bot-builder></app-bot-builder>
+  <div class="bot-builder-modal">
+    <app-bot-builder></app-bot-builder>
+  </div>
 
   <button type="button"
       class="close-modal-btn"

@@ -1,155 +1,178 @@
 @use "../../../styles/colors.scss" as *;
-@use "../../../styles/media.scss" as *;
+@use "../../../styles/media.scss"  as *;
 
-.bot-filter-container {
-    display: flex;
-    background: $DARK;
-    width: 100%;
-    justify-content: center;
-
-    .script-filter-container {
-      @include mobileAndTabletV {
-        display: none;
-      }
-    }
+.bot-builder-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include mobileAndTabletV {
+    text-align: center;
+  }
 }
 
-.bot-compiler-section {
-    display: flex;
-    color: $BLURPLE;
-    flex-direction: column;
-    justify-content: center;
+.bot-builder-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 80vw;
+  margin: 8px auto;
+  gap: 24px;
+
+  &--right {
+    align-items: flex-end;
+  }
+  & ul {
+    padding: 0;
+  }
+  @include mobileAndTabletV {
+    max-width: 90vw;
+  }
+}
+
+.bot-config-card,
+.script-filter-card,
+.script-pick-list,
+.script-chosen-list {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.card-title {
+  margin-bottom: 16px;
+  color: $BLURPLE;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: $LIGHT_BLURPLE;
+}
+
+.text-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  background: $WHITE;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  &:focus {
+    outline: none;
+    border-color: $BLURPLE;
+    box-shadow: 0 0 0 2px rgba($BLURPLE, 0.2);
+  }
+}
+
+.list-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.list-item {
+  padding: 12px 14px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  &--chosen {
+    justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+  }
+
+  &.rounded-top {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  &.rounded-bottom {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+
+.checkbox {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    margin-top: 4px;
+  }
+
+  .checkbox-label {
+    text-align: left;
+    line-height: 1.2;
+  }
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    color: $RED;
+  }
+}
+
+.monaco-wrapper {
+  flex: 1 1 100%;
+  min-height: 400px;
+  border: 1px solid $DARK_BLURPLE;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .monaco-editor {
     width: 100%;
     height: 100%;
-    padding: 2rem 0;
+  }
 }
 
-.script-filter-container {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    max-width: 250px;
-    width: 100%;
-    height: fit-content;
-  }
+.preview-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: 40px;
+  width: 160px;
+  background: $LIGHT_BLURPLE;
+  cursor: pointer;
+  box-shadow: 0 2px 10px $DARK_BLURPLE;
+  border-radius: 16px;
+  border: 1px solid $LIGHT_BLURPLE;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    background: rgba($LIGHT_BLURPLE, 0.4);
+    border-color: rgba($LIGHT_BLURPLE, 0.4);
 
-  .script-filter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  
-  .script-search-input {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .script-filter-btn {
-    padding: 8px;
-    background-color: $WHITE;
-    border: 1px solid #ccc;
-    width: 33px;
-    height: 33px;
-    cursor: pointer;
-  }
-  
-  .script-card-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .script-card {
-    padding: 10px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  .chosen-script-card-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-  }
-
-  .bot-compiler-chosen-scripts-header {
-    display: flex;
-    flex-direction: column;
-    color: $LIGHT_BLURPLE;
-    & h4 {
-      margin-block: 16px;
+    p {
+      font-size: 16px;
+      color: rgba($DARK_BLURPLE, 0.5);
     }
   }
+  &:hover:not(:disabled) {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+    box-shadow: 0 2px 10px $BLURPLE;
+    border: 1px solid $BLURPLE;
 
-  .remove-script-btn {
-    padding: 8px;
-    background-color: $WHITE;
-    border: 0px solid #ccc;
-    width: 33px;
-    height: 33px;
-    cursor: pointer;
-
-    &:hover {
-      color: $RED;
+    p {
+      color: $LIGHT_BLURPLE;
     }
   }
-  
-  .chosen-script-card {
-    padding: 10px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  p {
+    font-family: "Discord Nord";
+    font-size: 16px;
+    line-height: 90%;
+    color: $DARK_BLURPLE;
+    margin: auto;
   }
-
-  .mobile-script-filter-modal {
-    position: fixed;
-    bottom: 70px; // adjust so it sits above the toggle button
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 1000;
-  }
-  
-  /* Fixed Toggle Button at the bottom center */
-  .filter-toggle-button {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-    cursor: pointer;
-  }
-  
-  /* Optional: style the close button inside the modal */
-  .close-modal-btn {
-    display: block;
-    margin: 1rem auto 0;
-    background: transparent;
-    border: none;
-    color: #19175c;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
+}
 
 .download-script-section {
   display: flex;
@@ -162,60 +185,103 @@
   justify-content: center;
   text-align: center;
   height: 80px;
-  background-color: $LIGHT_BLURPLE;
-  cursor: pointer;
-  background-repeat: no-repeat;
   width: 260px;
+  background: $LIGHT_BLURPLE;
+  cursor: pointer;
   box-shadow: 0 2px 10px $DARK_BLURPLE;
   border-radius: 16px;
-  border: solid 1px $LIGHT_BLURPLE;
-
-  @include mobileAndTabletV {
-      height: 85px;
-      width: 250px;
-  }
+  border: 1px solid $LIGHT_BLURPLE;
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     box-shadow: none;
-    background-color: rgba($LIGHT_BLURPLE, 0.4);
+    background: rgba($LIGHT_BLURPLE, 0.4);
     border-color: rgba($LIGHT_BLURPLE, 0.4);
 
     p {
       color: rgba($DARK_BLURPLE, 0.5);
     }
   }
-  &:disabled:hover {
-    background: rgba($LIGHT_BLURPLE, 0.4);
-    box-shadow: none;
-  }
-}
 
-.download-script-button p {
-  font-family: "Discord Nord";
-  font-size: 20px;
-  line-height: 90%;
-  color: $DARK_BLURPLE;
-  margin: auto;
-}
+  &:hover:not(:disabled) {
+    background: $DARK_BLURPLE_GRADIENT_REVERSE;
+    box-shadow: 0 2px 10px $BLURPLE;
+    border: 1px solid $BLURPLE;
 
-.download-script-button:hover {
-  background: $DARK_BLURPLE_GRADIENT_REVERSE;
-  box-shadow: 0 2px 10px $BLURPLE;
-  border: solid 1px $BLURPLE;
-  transition: all 0.1s ease-in-out;
-  & p {
-      font-family: "Discord Nord";
-      font-size: 20px;
-      line-height: 90%;
+    p {
       color: $LIGHT_BLURPLE;
+    }
+  }
+
+  p {
+    font-family: "Discord Nord";
+    font-size: 20px;
+    line-height: 90%;
+    color: $DARK_BLURPLE;
+    margin: auto;
+  }
+  @include mobileAndTabletV {
+    height: 70px;
   }
 }
-  
+
+.mobile-script-filter-modal {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.close-modal-btn {
+  display: block;
+  margin: 1rem auto 0;
+  background: transparent;
+  border: none;
+  color: #19175c;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.filter-toggle-button {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  cursor: pointer;
+  @include mobileAndTabletV {
+    width: 48px;
+    height: 48px;
+  }
+}
+
 @media (min-width: 768px) {
   .mobile-script-filter-modal,
   .filter-toggle-button {
     display: none;
+  }
+}
+
+@include mobileAndTabletV {
+  .primary-btn,
+  .download-script-button {
+    width: 100%;
+    max-width: 40vw;
+    font-size: 16px;
   }
 }

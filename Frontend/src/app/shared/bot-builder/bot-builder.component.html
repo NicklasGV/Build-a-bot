@@ -1,85 +1,103 @@
 <div class="bot-builder-section">
-    <div class="bot-filter-container">
-        <div class="script-filter-container">
-            <div class="script-filter">
-                <input
-                  type="text"
-                  placeholder="Search Scripts"
-                  [(ngModel)]="searchTerm"
-                  (input)="filterScripts()"
-                  class="script-search-input"
-                />
-                <button class="bi bi-gear script-filter-btn"></button>
-            </div>
-            <div class="script-card-list">
-                <div
-                  *ngFor="let script of filteredScripts"
-                  class="script-card"
-                  (click)="addToChosenScripts(script)"
-                >
-                  {{ script.title }}
-                </div>
-            </div>
-        </div>
-        <div class="bot-compiler-section">
-            <div class="bot-compiler-chosen-scripts">
-                <div class="bot-compiler-chosen-scripts-header" id="bot-compiler-chosen-scripts-header">
-                    <h3>Chosen Scripts</h3>
-                    <p>These are the scripts you have chosen to compile.</p>
-                </div>
-                <div class="chosen-script-card-container">
-                    <div *ngFor="let script of chosenScripts" class="chosen-script-card">
-                        <div class="chosen-script-card-header">
-                            <div class="chosen-script-remove-btn">
-                                <button (click)="removeFromChosenScripts(script)" class="remove-script-btn bi bi-trash-fill"></button>
-                            </div>
-                            <div class="chosen-script-card-header-title">
-                                <h4 class="chosen-script-card-title">{{ script.title }}</h4>
-                            </div>
-                        </div>
-                        <div class="chosen-script-card-content">
-                            <p class="chosen-script-card-description">{{ script.description }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="bot-builder-row">
+      <div class="bot-config-card">
+        <h3 class="card-title">Bot configuration</h3>
+  
+        <label class="form-label" for="botName">Bot name</label>
+        <input id="botName"
+               type="text"
+               class="text-input"
+               [(ngModel)]="botName"
+               placeholder="Enter your bot's name">
+      </div>
+      <div class="script-filter-card" *ngIf="!isMobile">
+        <h3 class="card-title">Search modules</h3>
+        <label class="form-label" for="searchTerm">Search</label>
+        <input id="searchTerm"
+               type="text"
+               class="text-input"
+               [(ngModel)]="searchTerm"
+               placeholder="Search by name or description">
+      </div>
+    </div>
+    <div class="bot-builder-row">
+      <div class="script-pick-list">
+        <h3 class="card-title">Available scripts</h3>
+  
+        <ul class="list-scroll">
+          <li *ngFor="let script of filteredScripts(); let first = first; let last = last"
+              class="list-item"
+              [ngClass]="{ 'rounded-top': first, 'rounded-bottom': last }">
+  
+            <label class="checkbox">
+              <input type="checkbox"
+                     [(ngModel)]="script.selected"
+                     (change)="onScriptSelectionChange(script)">
+              <span class="checkbox-label">
+                <strong>{{ script.title }}</strong><br>
+                <small>{{ script.description }}</small>
+              </span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="script-chosen-list">
+        <h3 class="card-title">Selected scripts</h3>
+  
+        <ul class="list-scroll">
+          <li *ngFor="let script of selectedScripts; let first = first; let last = last"
+              class="list-item list-item--chosen"
+              [ngClass]="{ 'rounded-top': first, 'rounded-bottom': last }">
+  
+            <strong>{{ script.title }}</strong>
+            <button class="icon-btn"
+                    (click)="removeScript(script)"
+                    title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </li>
+  
+          <li *ngIf="selectedScripts.length === 0" class="list-item rounded-bottom">
+            <p>No scripts selected.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="bot-builder-row bot-builder-row--right">
+      <button class="preview-button"
+            [disabled]="selectedScripts.length === 0"
+            (click)="togglePreview()">
+        <p>{{ showPreview ? 'Hide preview' : 'Preview code' }}</p>
+      </button>
+    </div>
+    <div class="bot-builder-row" *ngIf="showPreview">
+      <div class="monaco-wrapper">
+        <ngx-monaco-editor [options]="editorOptions"
+                           [(ngModel)]="scriptContent">
+        </ngx-monaco-editor>
+      </div>
     </div>
     <div class="download-script-section">
-        <button 
-        class="download-script-button"
-        [disabled]="chosenScripts.length === 0"
-        (click)="downloadBot()">
-            <p>
-                Download Bot
-            </p>
-        </button>
+      <button class="download-script-button"
+              [disabled]="selectedScripts.length === 0 || !botName.trim()"
+              (click)="generateScript()">
+        <p>Generate &amp; download</p>
+      </button>
     </div>
     <div *ngIf="isFilterOpen" class="mobile-script-filter-modal">
-        <div class="script-filter-container">
-            <div class="script-filter">
-                <input
-                  type="text"
-                  placeholder="Search Scripts"
-                  [(ngModel)]="searchTerm"
-                  (input)="filterScripts()"
-                  class="script-search-input"
-                />
-                <button class="bi bi-gear script-filter-btn"></button>
-            </div>
-            <div class="script-card-list">
-                <div
-                  *ngFor="let script of filteredScripts"
-                  class="script-card"
-                  (click)="addToChosenScripts(script)"
-                >
-                  {{ script.title }}
-                </div>
-            </div>
-        </div>
-        <button class="close-modal-btn" (click)="handleBotFilterClick()">Close</button>
+      <div class="script-filter-card">
+        <h3 class="card-title">Search modules</h3>
+        <input type="text"
+               class="text-input"
+               placeholder="Search scripts"
+               [(ngModel)]="searchTerm"
+               (input)="searchTerm = searchTerm.trim()">
+      </div>
+      <button class="close-modal-btn" (click)="handleBotFilterClick()">Close</button>
     </div>
-    <button class="filter-toggle-button" (click)="handleBotFilterClick()">
-        <i class="bi bi-funnel"></i>
+    <button class="filter-toggle-button"
+            (click)="handleBotFilterClick()">
+      <i class="bi bi-funnel"></i>
     </button>
-</div>
+  </div>
+  

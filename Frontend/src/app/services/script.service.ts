@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Script } from '../../app/models/script.model';
@@ -9,6 +9,13 @@ import { environment } from '../../environments/environment';
 })
 export class ScriptService {
   private readonly apiUrl = environment.apiUrl + 'Script/';
+  private readonly fileServerUrl = environment.fileServerUrl;
+
+  private readonly fileServerHeaders = new HttpHeaders({
+    Authorization:
+      'Basic ' + btoa(`${environment.fileServerUser}:${environment.fileServerPass}`)
+  });
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Script[]>{
@@ -29,5 +36,13 @@ export class ScriptService {
 
   update(scriptId: number, script: Script): Observable<Script> {
     return this.http.put<Script>(this.apiUrl + '/' + scriptId, script);
+  }
+
+  getScriptContent(filename: string): Observable<string> {
+    const url = `${this.fileServerUrl}/file/${encodeURIComponent(filename)}`;
+    return this.http.get(url, {
+      headers: this.fileServerHeaders,
+      responseType: 'text'
+    });
   }
 }
