@@ -40,6 +40,7 @@
                 Id = comment.Id,
                 Text = comment.Text,
                 CreatedAt = comment.CreatedAt,
+                IsDeleted = comment.IsDeleted,
                 ParentCommentId = comment.ParentCommentId,
                 User = new UserCommentResponse
                 {

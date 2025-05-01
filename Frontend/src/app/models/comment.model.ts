@@ -7,6 +7,7 @@ export interface Comment {
     post: Post;
     text: string;
     createdAt: Date;
+    isDeleted: boolean | null; 
     parentCommentId: number | null;
     replies: Comment[];
     
@@ -20,6 +21,7 @@ export interface Comment {
         content: '', 
         createdAt: new Date(), 
         updatedAt: new Date(),
+        isDeleted: false,
         parentCommentId: null,
         replies: [],
     };

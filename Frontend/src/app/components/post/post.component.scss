@@ -120,6 +120,17 @@
               font-size: 0.9rem;
             }
           }
+
+          .comment-deleted {
+            margin: 0 0 0.5rem;
+            line-height: 1.4;
+            font-size: 0.95rem;
+            font-style: italic;
+  
+            @include mobile() {
+              font-size: 0.9rem;
+            }
+          }
         }
       }
   

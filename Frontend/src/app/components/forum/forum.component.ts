@@ -28,13 +28,6 @@ export class ForumComponent {
     this.postService.getAll().subscribe({
       next: (result) => {
         this.posts = result;
-        console.log(this.posts);
-
-        result.forEach(script => {
-          if (!this.postStates[script.id]) {
-            this.postStates[script.id] = { expanded: false, activeTab: 'about' };
-          }
-        });
       },
     });
   }
