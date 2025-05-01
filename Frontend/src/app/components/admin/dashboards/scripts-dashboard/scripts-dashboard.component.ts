@@ -156,7 +156,9 @@ export class ScriptsDashboardComponent {
       botIds: [],
       scriptFile: raw.scriptFile,
       guideFile: null,
-      userIds: []
+      userIds: [],
+      user: null,
+      status: null,
     };
 
     // 4) create vs update

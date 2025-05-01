@@ -1,5 +1,7 @@
+import { Status } from './status.model';
 import { User } from "./user.model";
 import { Bot } from "./bot.model";
+import { stat } from 'fs';
 
 export interface Script {
     id: number;
@@ -10,6 +12,8 @@ export interface Script {
     guideLocationId: string;
     guideFile: File | null;
     userId: number;
+    user: User | null;
+    status: Status | null;
     userIds: number[]
     botIds: number[];
   }
@@ -23,7 +27,9 @@ export interface Script {
         scriptFile: null,
         guideLocationId: '',
         guideFile: null,
-        user: 0,
+        userId: 0,
+        user: null,
+        status: null,
         userIds: [],
         botIds: []
   };

@@ -29,7 +29,7 @@ export class ScriptLibraryComponent {
   async ngOnInit(): Promise<void> {
     this.scriptService.getAll().subscribe({
       next: (result) => {
-        this.scripts = result;
+        this.scripts = result.filter(s => s.status == null);
         console.log(this.scripts);
 
         result.forEach(script => {

@@ -155,6 +155,8 @@ bot.run('YOUR_BOT_TOKEN')
       userId:       currentUser.id,
       userIds: [],
       botIds: [],
+      user:         currentUser,
+      status:       null,
     }));
   
     const botData: Bot = {

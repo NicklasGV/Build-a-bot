@@ -22,6 +22,7 @@ namespace BuildAbot.Repositories
                 .ThenInclude(f => f.User)
                 .Include(s => s.BotScripts)
                 .ThenInclude(bs => bs.Bot)
+                .Include(s => s.Status)
                 .ToListAsync();
         }
 
@@ -33,6 +34,7 @@ namespace BuildAbot.Repositories
                 .ThenInclude(f => f.User)
                 .Include(s => s.BotScripts)
                 .ThenInclude(bs => bs.Bot)
+                .Include(s => s.Status)
                 .FirstOrDefaultAsync(s => s.Id == scriptId);
         }
 
