@@ -160,5 +160,25 @@ namespace BuildAbot.Controllers
                 return Problem(ex.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("/Status/{scriptId}")]
+        public async Task<IActionResult> SoftDeleteByIdAsync([FromRoute] int scriptId)
+        {
+            try
+            {
+                var scriptResponse = await _scriptService.SoftDeleteByIdAsync(scriptId);
+                if (scriptResponse == null)
+                {
+                    return NotFound();
+                }
+                return Ok(scriptResponse);
+            }
+            catch (Exception ex)
+            {
+
+                return Problem(ex.Message);
+            }
+        }
     }
 }
