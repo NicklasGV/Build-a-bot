@@ -162,7 +162,7 @@ namespace BuildAbot.Controllers
         }
 
         [HttpDelete]
-        [Route("/Status/{scriptId}")]
+        [Route("Status/{scriptId}")]
         public async Task<IActionResult> SoftDeleteByIdAsync([FromRoute] int scriptId)
         {
             try
