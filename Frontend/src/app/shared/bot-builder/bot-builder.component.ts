@@ -153,6 +153,7 @@ ${body}
     return `
 import discord
 from discord.ext import commands
+${imports}
 
 bot = commands.Bot(command_prefix='!')
 
@@ -160,7 +161,6 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print(f'Logged in as {bot.user}')
 
-${imports}
 
 def register_all():
 ${calls}

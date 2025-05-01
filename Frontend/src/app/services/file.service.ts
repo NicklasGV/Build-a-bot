@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class FileService {
-  // private readonly apiUrl = environment.fileServerUrl;
-  private readonly apiUrl = '/files'
+  private readonly apiUrl = environment.fileServerUrl;
+  //private readonly apiUrl = '/files'
   private readonly fileServerHeaders = new HttpHeaders({
     Authorization: 'Basic ' + btoa(
       `${environment.fileServerUser}:${environment.fileServerPass}`
@@ -19,7 +19,7 @@ export class FileService {
 
   /** List all files for a given codeId */
   getFiles(codeId: string): Observable<any> {
-    const url = `${this.apiUrl}/files/${encodeURIComponent(codeId)}`;
+    const url = `${this.apiUrl}/${encodeURIComponent(codeId)}`;
     return this.http.get<any>(url, { headers: this.fileServerHeaders });
   }
 

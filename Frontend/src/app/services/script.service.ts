@@ -9,8 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class ScriptService {
   private readonly apiUrl = environment.apiUrl + 'Script/';
-  // private readonly fileServerUrl = environment.fileServerUrl;
-  private readonly fileServerUrl = '/files'
+  private readonly fileServerUrl = environment.fileServerUrl;
 
   private readonly fileServerHeaders = new HttpHeaders({
     Authorization:
@@ -79,7 +78,7 @@ export class ScriptService {
   }
 
   getScriptContent(filename: string): Observable<string> {
-    const url = `${this.fileServerUrl}/file/${encodeURIComponent(filename)}`;
+    const url = `${this.fileServerUrl}/${encodeURIComponent(filename)}`;
     return this.http.get(url, {
       headers: this.fileServerHeaders,
       responseType: 'text'
