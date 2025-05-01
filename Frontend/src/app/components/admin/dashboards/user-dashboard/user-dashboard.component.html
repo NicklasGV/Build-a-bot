@@ -1,0 +1,85 @@
+<div class="user-section">
+    <div class="form-section card">
+      <h1>User Dashboard</h1>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+        <input formControlName="id" type="hidden" />
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="userName">Username</label>
+          <input id="userName" formControlName="userName" type="text" placeholder="johndoe" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" formControlName="password" type="password" />
+        </div>
+        <div class="field">
+          <label for="role">Role</label>
+          <select id="role" formControlName="role">
+            <option [ngValue]="null" disabled selected>— select role —</option>
+            <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="userForm.invalid">
+            {{ userForm.get('id')?.value ? 'Update User' : 'Create User' }}
+          </button>
+          <button
+            *ngIf="userForm.touched"
+            type="button"
+            (click)="cancelEdit()"
+            class="cancel-btn"
+          >Cancel</button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="users-table card">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th class="sorting" (click)="sortBy('id')">
+              ID
+              <span *ngIf="sortField==='id'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+              </span>
+            </th>
+            <th class="sorting" (click)="sortBy('email')">
+                Email
+                <span *ngIf="sortField==='email'">
+                {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+            </th>
+            <th class="sorting" (click)="sortBy('userName')">
+                Username
+                <span *ngIf="sortField==='userName'">
+                {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+            </th>
+            <th class="sorting" (click)="sortBy('role')">
+              Role
+              <span *ngIf="sortField==='role'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+              </span>
+          </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users">
+            <td>{{ u.id }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.userName }}</td>
+            <td>{{ u.role ?? '—' }}</td>
+            <td class="table-actions">
+              <button class="edit-btn" (click)="editUser(u.id)">Edit</button>
+              <button class="delete-btn" (click)="deleteUser(u.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -37,12 +37,16 @@
     <li>
       <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"> Bot Compiler</a>
     </li>
+    <li *ngIf="currentUser?.role == RoleId.Admin">
+      <a class="bi-person-fill-gear" [routerLink]="['/admin/admin-dashboard']" (click)="collapseNavbar()"> 
+        Admin panels
+      </a>
     <li>
       <button *ngIf="!isLoggedIn" [routerLink]="['/login']" class="login-button-mobile" (click)="collapseNavbar()">Login</button>
       <div class="dropdown" [class.active]="isProfileDropdownOpenMobile" (click)="toggleProfileDropdownMobile($event)">
         <a *ngIf="isLoggedIn" class="bi-person-circle profile-icon-mobile dropbtn" style="font-size: 2rem;"></a>
         <ul class="profile-dropdown-content">
-          <li>
+          <li *ngIf="isLoggedIn">
             <a [routerLink]="['user-profile', currentUser.id]" (click)="collapseNavbar()"> Profile</a>
           </li>
           <li>
@@ -57,7 +61,7 @@
     <div class="dropdown" [class.active]="isProfileDropdownOpen" (click)="toggleProfileDropdown($event)">
       <a *ngIf="isLoggedIn" class="bi-person-circle profile-icon dropbtn" style="font-size: 2rem;"></a>
       <ul class="profile-dropdown-content">
-        <li>
+        <li *ngIf="isLoggedIn">
           <a [routerLink]="['user-profile', currentUser.id]" (click)="collapseNavbar()"> Profile</a>
         </li>
         <li>

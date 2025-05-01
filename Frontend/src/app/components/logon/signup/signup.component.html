@@ -1,44 +1,92 @@
 <div class="bab-container" id="login-container">
-    <div class="login-container">
-      <div class="card">
-        <h2>Signup</h2>
-        <form [formGroup]="signupForm" (ngSubmit)="signup()">
-          <div class="login-form-group">
-            <label for="userName">Username</label>
-            <input
-              type="text"
-              id="userName"
-              formControlName="userName"
-              required
-            />
+  <div class="login-container">
+    <div class="card">
+      <h2>Signup</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="signup()">
+<!----------------------------------------------USERNAME---------------------------------------------->
+        <div class="login-form-group">
+          <label for="userName">Username</label>
+          <input
+            type="text"
+            id="userName"
+            formControlName="userName"
+            required
+          />
+          <div class="error-message" *ngIf="signupForm.get('userName')!.touched && signupForm.get('userName')!.invalid">
+            Username is required.
           </div>
-          <div class="login-form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              required
-            />
+        </div>
+<!----------------------------------------------EMAIL---------------------------------------------->
+        <div class="login-form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            required
+          />
+          <div class="error-message" *ngIf="signupForm.get('email')!.touched && signupForm.get('email')!.invalid">
+            A valid email is required.
           </div>
-          <div class="login-form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              formControlName="password"
-              required
-            />
+        </div>
+<!----------------------------------------------PASSWORD---------------------------------------------->
+        <div class="login-form-group password-wrapper">
+          <label for="password">Password</label>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            required
+          />
+          <i
+            class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+            (click)="togglePasswordVisibility()"
+            aria-hidden="true"
+          ></i>
+          <div
+            class="error-message"
+            *ngIf="signupForm.get('password')!.touched && signupForm.get('password')!.errors"
+          >
+            <div *ngIf="signupForm.get('password')!.hasError('required')">
+              Password is required.
+            </div>
+            <div *ngIf="signupForm.get('password')!.hasError('pattern')">
+              Password must be at least 8 characters and include uppercase, lowercase, number, and special character.
+            </div>
           </div>
-          <div class="not-signed-up">
-            <p>Already have an account?</p>
-            <a [routerLink]="['/login']">Go to Login</a>
+        </div>
+<!----------------------------------------------CONFIRMPASSWORD---------------------------------------------->
+        <div class="login-form-group password-wrapper">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            required
+          />
+          <i
+            class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+            (click)="togglePasswordVisibility()"
+            aria-hidden="true"
+          ></i>
+          <div
+            class="error-message"
+            *ngIf="signupForm.hasError('passwordsMismatch') && signupForm.get('confirmPassword')!.touched"
+          >
+            Passwords do not match.
           </div>
-          <button class="login-button" type="submit" [disabled]="!signupForm.valid">
-            Signup
-          </button>
-        </form>
-      </div>
+        </div>
+<!----------------------------------------------LOGIN---------------------------------------------->
+        <div class="not-signed-up">
+          <p>Already have an account?</p>
+          <a [routerLink]="['/login']">Go to Login</a>
+        </div>
+        <button class="login-button" type="submit" [disabled]="!signupForm.valid">
+          Signup
+        </button>
+      </form>
     </div>
   </div>
-  
+</div>

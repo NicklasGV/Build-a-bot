@@ -1,0 +1,179 @@
+import { ScriptService } from './../../../../services/script.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { resetUser, User } from '../../../../models/user.model';
+import { UserService } from '../../../../services/user.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Role, constRoles } from '../../../../models/role.model';
+import { switchMap, map } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-user-dashboard',
+  standalone: true,
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './user-dashboard.component.html',
+  styleUrl: './user-dashboard.component.scss'
+})
+export class UserDashboardComponent implements OnInit {
+  users: User[] = [];
+  roles: Role[] = [];
+
+  sortField: 'id' | 'email' | 'userName' | 'role' = 'id';
+  sortDir: 'asc' | 'desc' = 'asc';
+
+  private userService = inject(UserService);
+  private scriptService = inject(ScriptService)
+  private fb = inject(FormBuilder);
+
+
+  userForm = this.fb.group({
+    id:       [0],
+    email:    ['', { nonNullable: true, validators: [] }],
+    userName: ['', { nonNullable: true, validators: [] }],
+    password: ['', { nonNullable: true, validators: [] }],
+    scripts:  [[] as number[]],
+    role:     [null as number | null]
+  });
+
+  ngOnInit() {
+    this.userService.getAll().subscribe({
+      next: users => this.users = users,
+      error: err   => console.error(err)
+    });
+    this.roles = constRoles;
+  }
+
+  sortBy(field: 'id' | 'email' | 'userName' | 'role') {
+    if (this.sortField === field) {
+      // same column → just flip direction
+      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      this.users.reverse();
+    } else {
+      this.sortField = field;
+      this.sortDir   = 'asc';
+      this.applySort();
+    }
+  }
+
+  private applySort() {
+    this.users.sort((a, b) => {
+      let aVal: any, bVal: any;
+
+      switch (this.sortField) {
+        case 'userName':
+          aVal = a.userName;
+          bVal = b.userName;
+          break;
+        case 'role':
+          aVal = a.scripts;
+          bVal = b.scripts;
+          break;
+        default:
+          aVal = (a as any)[this.sortField];
+          bVal = (b as any)[this.sortField];
+      }
+
+      // null-safe compare
+      if (aVal == null) return -1;
+      if (bVal == null) return 1;
+
+      // string vs number
+      if (typeof aVal === 'string') {
+        return aVal.localeCompare(bVal);
+      }
+      return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+    });
+
+    if (this.sortDir === 'desc') {
+      this.users.reverse();
+    }
+  }
+
+  editUser(userId: number) {
+    this.userService.findById(userId).pipe(
+      switchMap(user =>
+        this.scriptService.getAll().pipe(
+          map(allScripts => ({ user, allScripts }))
+        )
+      )
+    )
+    .subscribe({
+      next: ({ user, allScripts }) => {
+        const scriptIds = allScripts
+          .filter(s => s.userId === user.id)
+          .map(s => s.id);
+
+        this.userForm.patchValue({
+          id:       user.id,
+          email:    user.email,
+          userName: user.userName,
+          password: '',
+          scripts:  scriptIds,
+          role:     user.role ?? 0
+        });
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  cancelEdit() {
+    // reset the form back to “create” mode
+    this.userForm.reset({
+      id:       0,
+      email:    '',
+      userName: '',
+      password: '',
+      scripts:  [],
+      role:     null
+    });
+  }
+
+  onSubmit() {
+    if (this.userForm.invalid) return;
+
+    const raw = this.userForm.value;
+    const payload: User = {
+      ...resetUser(),
+      id:       raw.id!,
+      email:    raw.email!,
+      userName: raw.userName!,
+      password: raw.password!,
+      scripts:  (raw.scripts || []).map(id => id.toString()),
+      role:     raw.role ?? undefined
+    };
+
+    if (payload.id && payload.id !== 0) {
+      // **Update** existing
+      this.userService.update(payload).subscribe({
+        next: updated => {
+          // swap it into our local list
+          const idx = this.users.findIndex(u => u.id === updated.id);
+          if (idx > -1) this.users[idx] = updated;
+          this.cancelEdit();
+        },
+        error: err => console.error(err)
+      });
+    } else {
+      // **Create** new
+      this.userService.create(payload).subscribe({
+        next: created => {
+          this.users.push(created);
+          this.cancelEdit();
+        },
+        error: err => console.error(err)
+      });
+    }
+  }
+
+  deleteUser(id: number) {
+    this.userService.delete(id).subscribe({
+      next: () => this.users = this.users.filter(u => u.id !== id),
+      error: err => console.error(err)
+    });
+  }
+}

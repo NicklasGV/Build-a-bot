@@ -8,9 +8,9 @@
                       <li class="active">Profile Dashboard</li>
                     </ul>
                   </nav>
-                <div class="hero-content-left-header">
+                <div class="hero-content-left-header" *ngIf="user">
                     <h1>User profile</h1>
-                    <h2>{{msg}} {{user.userName}}</h2>
+                    <h2>{{ msg }} {{ user.userName || user.email }}</h2>
                     <p>This is your profile, here you can see your own bots, scripts and more!</p>
                 </div>
             </div>
@@ -33,20 +33,19 @@
         </div>
     </div>
     <div class="dashboard-navbar">
-        <button
-          (click)="selectTab('bots')"
-          [class.active]="selectedTab === 'bots'">
-          Bots
-        </button>
-        <button
-          (click)="selectTab('posts')"
-          [class.active]="selectedTab === 'posts'">
-          Posts
-        </button>
-      </div>
-      
-      <div class="dashboard-section">
-        <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
-        <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
-      </div>
+      <button
+        (click)="selectTab('bots')"
+        [class.active]="selectedTab === 'bots'">
+        Bots
+      </button>
+      <button
+        (click)="selectTab('posts')"
+        [class.active]="selectedTab === 'posts'">
+        Posts
+      </button>
+    </div>
+    <div class="dashboard-section">
+      <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
+      <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
+    </div>
 </div>

@@ -4,16 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Script } from '../../models/script.model';
 import { ScriptService } from '../../services/script.service';
+import { HttpClient } from '@angular/common/http';
+import { BotBuilderComponent } from "../../shared/bot-builder/bot-builder.component";
 
 @Component({
   selector: 'app-bot-compiler',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
+    CommonModule,
+    RouterModule,
     FormsModule,
-    
-  ],
+    BotBuilderComponent
+],
   templateUrl: './bot-compiler.component.html',
   styleUrl: './bot-compiler.component.scss'
 })
@@ -24,7 +26,7 @@ export class BotCompilerComponent {
   chosenScripts: Script[] = [];
   isFilterOpen: boolean = false;
 
-  constructor(private scriptService: ScriptService) { }
+  constructor(private scriptService: ScriptService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.scriptService.getAll().subscribe({
@@ -59,5 +61,22 @@ export class BotCompilerComponent {
   handleBotFilterClick(): void {
     this.isFilterOpen = !this.isFilterOpen;
     console.log('Bot filter toggled, is open:', this.isFilterOpen);
+  }
+
+  downloadBot() {
+    const payload = this.chosenScripts.map(s => ({
+      fileName: s.title + '.py',
+      codeLocationId: s.codeLocationId
+    }));
+  
+    this.http.post('/api/compile-bot', payload, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a   = document.createElement('a');
+        a.href    = url;
+        a.download= 'discord-bot.zip';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
 }

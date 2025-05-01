@@ -1,7 +1,7 @@
 import { UserService } from './../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { User, resetUser } from '../../../models/user.model';
@@ -30,21 +30,49 @@ export class SignupComponent {
   showPassword: boolean = false;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService, 
     private router: Router,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private snackBar: SnackbarService,
     private renderer: Renderer2
-  ) { }
+  ) { 
+    this.signupForm = this.buildForm();
+  }
 
-  // ngOnInit(): void {
-  //   redirect to home if already logged in
-  //   if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
-  //     this.router.navigate(['/']);
-  //   }
-  // }
+  private buildForm(): FormGroup {
+    return this.fb.group({
+      userName: [null, Validators.required],
+      email:    [null, [Validators.required, Validators.email]],
+      password: [
+        null,
+        [
+          Validators.required,
+          // Minimum 8 chars, at least one uppercase, one lowercase, one number, one special char
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/)
+        ]
+      ],
+      confirmPassword: [null, Validators.required]
+    }, {
+      validators: this.passwordsMatchValidator()
+    });
+  }
 
+  private passwordsMatchValidator(): ValidatorFn {
+    return (group: AbstractControl): { [key: string]: any } | null => {
+      const pw = group.get('password')!.value;
+      const cpw = group.get('confirmPassword')!.value;
+      return pw && cpw && pw !== cpw ? { passwordsMismatch: true } : null;
+    };
+  }
+
+  ngOnInit(): void {
+    // redirect to home if already logged in
+    if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
+      this.router.navigate(['/']);
+    }
+  }
   
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

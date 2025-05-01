@@ -1,1 +1,34 @@
-<p>user-bots works!</p>
+<div class="user-bots-section">
+    <div class="bot-grid">
+      <button
+        class="user-bot-item"
+        (click)="botBuilderDialog.showModal()"
+      >
+        <p class="bi-plus" style="font-size: 2.5rem"></p>
+      </button>
+  
+      <ng-container *ngFor="let bot of bots">
+        <button
+          class="user-bot-item"
+          [routerLink]="['/bot', bot.id]"
+        >
+          <p>{{ bot.name }}</p>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+<dialog #botBuilderDialog
+  class="bot-builder-dialog"
+  (click)="onBackdropClick($event)">
+  <div class="bot-builder-modal">
+    <app-bot-builder></app-bot-builder>
+  </div>
+
+  <button type="button"
+      class="close-modal-btn"
+      aria-label="Close"
+      (click)="botBuilderDialog.close()">×</button>
+</dialog>
+  
+  <div *ngIf="loading">Loading your bots…</div>

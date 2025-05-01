@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { User, resetUser } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { RoleId } from '../../models/role.model';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 })
 export class HeaderComponent implements OnInit {
   currentUser: User = resetUser();
-  roleChecker: string = 'Admin';
+  public RoleId = RoleId;
   isLoggedIn: boolean = false;
   isMobileMenuActive = false;
   isDropdownOpen = false;
@@ -57,16 +58,9 @@ export class HeaderComponent implements OnInit {
     }
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
-      this.isLoggedIn = !!user.token;
+      this.isLoggedIn = !!user?.token;
     });
   }
-
-  // roleCheck(): boolean {
-  //   if (this.currentUser.role == this.roleChecker) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   toggleMobileMenu(): void {
     this.isMobileMenuActive = !this.isMobileMenuActive;

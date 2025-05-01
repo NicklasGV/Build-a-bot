@@ -58,6 +58,10 @@ const routes: Routes = [
       { path: 'posts',  component: UserPostsComponent },
     ]
   },
+  {
+    path: 'admin/admin-dashboard', loadComponent: () =>
+    import('./components/admin/admin-dashboard/admin-dashboard.component').then(it => it.AdminDashboardComponent)
+  },
 ];
 
 @NgModule({

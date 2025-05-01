@@ -16,10 +16,25 @@ export class BotService {
   }
 
   delete(botId: number): Observable<Bot> {
-    return this.http.delete<Bot>(this.apiUrl + '/' + botId);
+    return this.http.delete<Bot>(this.apiUrl + botId);
   }
 
   findById(botId: number): Observable<Bot> {
-    return this.http.get<Bot>(this.apiUrl + '/' + botId);
+    return this.http.get<Bot>(this.apiUrl + botId);
   }
+
+  create(bot: Bot): Observable<Bot> {
+      const formData = new FormData();
+  
+      formData.append('UserId', bot.user.id.toString());
+      formData.append('Name', bot.name);
+  
+      if (bot.botScripts) {
+        bot.botScripts.forEach(scriptId => {
+          formData.append('scriptIds', scriptId.toString());
+        });
+      }
+  
+      return this.http.post<Bot>(this.apiUrl, formData);
+    }
 }
