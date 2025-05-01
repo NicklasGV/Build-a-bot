@@ -7,6 +7,7 @@ global using BuildAbot.Interfaces.IScript;
 global using BuildAbot.Interfaces.IBot;
 global using BuildAbot.Interfaces.IPost;
 global using BuildAbot.Interfaces.IComment;
+global using BuildAbot.Interfaces.IStatus;
 global using BuildAbot.DTO.UserDTO;
 global using BuildAbot.DTO.ScriptDTO;
 global using BuildAbot.DTO.BotDTO;

@@ -134,5 +134,25 @@
                 return Problem(ex.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("Status/{userId}")]
+        public async Task<IActionResult> SoftDeleteByIdAsync([FromRoute] int userId)
+        {
+            try
+            {
+                var userResponse = await _userService.SoftDeleteByIdAsync(userId);
+                if (userResponse == null)
+                {
+                    return NotFound();
+                }
+                return Ok(userResponse);
+            }
+            catch (Exception ex)
+            {
+
+                return Problem(ex.Message);
+            }
+        }
     }
 }

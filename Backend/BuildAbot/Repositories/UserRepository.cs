@@ -19,6 +19,7 @@
                 .ThenInclude(f => f.Script)
                 .Include(u => u.Posts)
                 .Include(u => u.Comments)
+                .Include(u => u.Status)
                 .ToListAsync();
         }
 
@@ -31,6 +32,7 @@
                 .ThenInclude(f => f.Script)
                 .Include(u => u.Posts)
                 .Include(u => u.Comments)
+                .Include(u => u.Status)
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 

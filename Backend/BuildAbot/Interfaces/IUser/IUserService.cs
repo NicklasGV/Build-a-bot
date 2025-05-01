@@ -7,6 +7,7 @@
         Task<UserResponse> CreateAsync(UserRequest newUser);
         Task<UserResponse?> UpdateByIdAsync(int userId, UserRequest updateUser);
         Task<UserResponse> DeleteByIdAsync(int userId);
+        Task<UserResponse> SoftDeleteByIdAsync(int userId);
         Task<List<UserResponse>> GetAllAsync();
     }
 }
