@@ -33,22 +33,49 @@ export class ScriptService {
 
   create(script: Script): Observable<Script> {
     const formData = new FormData();
-  
+    
+    formData.append('userId', script.user.id.toString())
     formData.append('title', script.title);
     formData.append('description', script.description);
     formData.append('codeLocationId', script.codeLocationId);
     if (script.scriptFile) {
-      formData.append('scriptFile', script.scriptFile, script.scriptFile.name);
+      formData.append('scriptFile', script.scriptFile);
     }
     formData.append('guideLocationId', script.guideLocationId);
     if (script.guideFile) {
-      formData.append('guideFile', script.guideFile, script.guideFile.name);
+      formData.append('guideFile', script.guideFile);
     }
     return this.http.post<Script>(this.apiUrl + 'create', formData);
   }
 
   update(scriptId: number, script: Script): Observable<Script> {
-    return this.http.put<Script>(this.apiUrl + '/' + scriptId, script);
+    const formData = new FormData();
+  
+    formData.append('userId', script.user.id.toString())
+    formData.append('title', script.title);
+    formData.append('description', script.description);
+    formData.append('codeLocationId', script.codeLocationId);
+    if (script.scriptFile) {
+      formData.append('scriptFile', script.scriptFile);
+    }
+    formData.append('guideLocationId', script.guideLocationId);
+    if (script.guideFile) {
+      formData.append('guideFile', script.guideFile);
+    }
+    if (script.StatusId) {
+      formData.append('statusId', script.StatusId.toString())
+    }
+    if (script.userIds && script.userIds.length) {
+      script.userIds.forEach(id =>
+        formData.append('userIds', id.toString())
+      );
+    }
+    if (script.botIds && script.botIds.length) {
+      script.botIds.forEach(id =>
+        formData.append('botIds', id.toString())
+      );
+    }
+    return this.http.put<Script>(this.apiUrl + scriptId, formData);
   }
 
   getScriptContent(filename: string): Observable<string> {

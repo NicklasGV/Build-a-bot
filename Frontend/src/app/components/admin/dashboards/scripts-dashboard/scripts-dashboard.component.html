@@ -1,46 +1,76 @@
 <div class="script-section">
   <div class="form-section card">
     <h1>Scripts Dashboard</h1>
-    <form [formGroup]="scriptForm" (ngSubmit)="onSubmit()" class="script-form">
-      <input formControlName="id" type="hidden" />
+    <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="script-form">
+      <!-- Hidden ID -->
+      <input
+        type="hidden"
+        [(ngModel)]="script.id"
+        name="id"
+      />
 
+      <!-- Title -->
       <div class="field">
         <label for="title">Title</label>
         <input
           id="title"
-          formControlName="title"
           type="text"
           placeholder="Script Title"
+          required
+          [(ngModel)]="script.title"
+          name="title"
         />
       </div>
 
+      <!-- Description -->
       <div class="field">
         <label for="description">Description</label>
         <input
           id="description"
-          formControlName="description"
           type="text"
           placeholder="Brief description of the script"
+          required
+          [(ngModel)]="script.description"
+          name="description"
         />
       </div>
 
+      <!-- Owner -->
       <div class="field">
         <label for="userId">Owner</label>
-        <select id="userId" formControlName="userId">
-          <option value="" disabled selected>— select user —</option>
-          <option *ngFor="let u of users" [value]="u.id">{{ u.userName }}</option>
+        <select
+          id="userId"
+          required
+          [(ngModel)]="script.user.id"
+          name="userId"
+        >
+          <option [ngValue]="''" disabled>— select user —</option>
+          <option *ngFor="let u of users" [ngValue]="u.id">
+            {{ u.userName }}
+          </option>
         </select>
       </div>
 
-      <div *ngIf="!isWriting" class="field">
-        <label for="fileInput">File</label>
+      <div class="field">
+        <label for="filePath">File path</label>
         <input
-          id="codeId"
+          id="filePath"
+          type="text"
+          placeholder="/location/of/code"
+          [(ngModel)]="script.codeLocationId"
+          name="filePath"
+        />
+      </div>
+
+      <!-- File upload vs. inline editor -->
+      <div *ngIf="!isWriting" class="field">
+        <label for="scriptFile">File</label>
+        <input
+          id="scriptFile"
           class="file-field"
-          (change)="onFileSelected($event)"
-          formControlName="codeId"
           type="file"
-          accept=".txt, .py"
+          accept=".txt,.py"
+          (change)="onFileSelected($event)"
         />
         <button
           type="button"
@@ -55,7 +85,12 @@
       <div *ngIf="isWriting" class="field">
         <label>Write Script</label>
         <div class="manoca-card-body">
-          <ngx-monaco-editor class="monaco-editor-body" [options]="editorOptions" formControlName="scriptText"></ngx-monaco-editor>
+          <ngx-monaco-editor
+            class="monaco-editor-body"
+            [options]="editorOptions"
+            [(ngModel)]="scriptText"
+            name="scriptText"
+          ></ngx-monaco-editor>
         </div>
         <button
           type="button"
@@ -66,22 +101,16 @@
         </button>
       </div>
 
-      <!-- <div class="field">
-        <label for="codeId">Script File Path</label>
-        <input
-          id="codeId"
-          formControlName="codeId"
-          placeholder="(auto-filled after upload)"
-          readonly
-        />
-      </div> -->
-
+      <!-- Actions -->
       <div class="actions">
-        <button type="submit" [disabled]="scriptForm.invalid">
-          {{ scriptForm.get('id')?.value ? 'Update Script' : 'Create Script' }}
+        <button
+          type="submit"
+          [disabled]="scriptForm.invalid"
+        >
+          {{ script.id ? 'Update Script' : 'Create Script' }}
         </button>
         <button
-          *ngIf="scriptForm.touched"
+          *ngIf="scriptForm.valid"
           type="button"
           (click)="cancelEdit()"
         >
@@ -90,51 +119,61 @@
       </div>
     </form>
   </div>
-  
-    <div class="scripts-table card">
-      <table class="script-table">
-        <thead>
-          <tr>
-            <th class="sorting" (click)="sortBy('id')">
-              ID
-              <span *ngIf="sortField==='id'">
+
+  <div class="scripts-table card">
+    <table class="script-table">
+      <thead>
+        <tr>
+          <th class="sorting" (click)="sortBy('id')">
+            ID
+            <span *ngIf="sortField==='id'">
               {{ sortDir==='asc' ? '▲' : '▼' }}
-              </span>
-            </th>
-            <th class="sorting" (click)="sortBy('title')">
-                Title
-                <span *ngIf="sortField==='title'">
-                {{ sortDir==='asc' ? '▲' : '▼' }}
-                </span>
-            </th>
-            <th class="sorting" (click)="sortBy('description')">
-                Description
-                <span *ngIf="sortField==='description'">
-                {{ sortDir==='asc' ? '▲' : '▼' }}
-                </span>
-            </th>
-            <th class="sorting" (click)="sortBy('userId')">
-              User
-              <span *ngIf="sortField==='userId'">
-              {{ sortDir==='asc' ? '▲' : '▼' }}
-              </span>
+            </span>
           </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let u of scripts">
-            <td>{{ u.id }}</td>
-            <td>{{ u.title }}</td>
-            <td>{{ u.description }}</td>
-            <td>{{ u.userId }}</td>
-            <td class="table-actions">
-              <button class="edit-btn" (click)="editScript(u.id)">Edit</button>
-              <button class="delete-btn" (click)="deleteScript(u.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <th class="sorting" (click)="sortBy('title')">
+            Title
+            <span *ngIf="sortField==='title'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="sorting" (click)="sortBy('description')">
+            Description
+            <span *ngIf="sortField==='description'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="sorting" (click)="sortBy('user')">
+            User
+            <span *ngIf="sortField==='user'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="sorting" (click)="sortBy('filePath')">
+            File path
+            <span *ngIf="sortField==='filePath'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of scripts">
+          <td>{{ s.id }}</td>
+          <td>{{ s.title }}</td>
+          <td>{{ s.description }}</td>
+          <td>{{ s.user.userName }}</td>
+          <td>{{ s.codeLocationId }}</td>
+          <td class="table-actions">
+            <button class="edit-btn" (click)="editScript(s)">
+              Edit
+            </button>
+            <button class="delete-btn" (click)="deleteScript(s.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
+</div>
