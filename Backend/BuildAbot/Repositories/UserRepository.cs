@@ -2,10 +2,12 @@
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IStatusRepository _statusRepository;
         private readonly DatabaseContext _databaseContext;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public UserRepository(DatabaseContext databaseContext, IWebHostEnvironment hostingEnvironment)
+        public UserRepository(DatabaseContext databaseContext, IStatusRepository statusRepository, IWebHostEnvironment hostingEnvironment)
         {
+            _statusRepository = statusRepository;
             _databaseContext = databaseContext;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -56,6 +58,12 @@
                 user.UserName = updateUser.UserName;
                 user.Email = updateUser.Email;
                 user.Password = updateUser.Password;
+                if (user.StatusId != updateUser.StatusId)
+                {
+                    await _statusRepository.DeleteByIdAsync(user.StatusId);
+                    user.StatusId = updateUser.StatusId;
+
+                }
 
                 await _databaseContext.SaveChangesAsync();
 
@@ -71,6 +79,12 @@
             {
                 user.UserName = updateUser.UserName;
                 user.Email = updateUser.Email;
+                if (user.StatusId != updateUser.StatusId)
+                {
+                    await _statusRepository.DeleteByIdAsync(user.StatusId);
+                    user.StatusId = updateUser.StatusId;
+
+                }
 
                 await _databaseContext.SaveChangesAsync();
 

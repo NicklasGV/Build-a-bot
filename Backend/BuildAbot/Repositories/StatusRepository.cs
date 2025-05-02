@@ -27,5 +27,17 @@ namespace BuildAbot.Repositories
             newStatus = await FindByIdAsync(newStatus.Id);
             return newStatus;
         }
+
+        public async Task<Status> DeleteByIdAsync(int statusId)
+        {
+            var status = await FindByIdAsync(statusId);
+
+            if (status != null)
+            {
+                _databaseContext.Remove(status);
+                await _databaseContext.SaveChangesAsync();
+            }
+            return status;
+        }
     }
 }
