@@ -1,85 +1,125 @@
 <div class="user-section">
-    <div class="form-section card">
-      <h1>User Dashboard</h1>
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
-        <input formControlName="id" type="hidden" />
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" formControlName="email" type="email" placeholder="you@example.com" />
+  <div class="form-section card">
+    <h1>User Dashboard</h1>
+    <form #f="ngForm"
+          (ngSubmit)="onSubmit()"
+          class="user-form"
+          novalidate>
+      <input
+        type="hidden"
+        [(ngModel)]="user.id"
+        name="id"
+      />
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+          email
+          [(ngModel)]="user.email"
+          name="email"
+          #emailModel="ngModel"
+        />
+        <div class="error-message" *ngIf="emailModel.invalid && emailModel.touched">
+          <small *ngIf="emailModel.errors?.['required']">Email is required.</small>
+          <small *ngIf="emailModel.errors?.['email']">Invalid email.</small>
         </div>
-        <div class="field">
-          <label for="userName">Username</label>
-          <input id="userName" formControlName="userName" type="text" placeholder="johndoe" />
+      </div>
+      <div class="field">
+        <label for="userName">Username</label>
+        <input
+          id="userName"
+          type="text"
+          placeholder="johndoe"
+          required
+          minlength="3"
+          [(ngModel)]="user.userName"
+          name="userName"
+          #userNameModel="ngModel"
+        />
+        <div class="error-message" *ngIf="userNameModel.invalid && userNameModel.touched">
+          <small *ngIf="userNameModel.errors?.['required']">Username is required.</small>
+          <small *ngIf="userNameModel.errors?.['minlength']">
+            Minimum 3 characters.
+          </small>
         </div>
-        <div class="field">
-          <label for="password">Password</label>
-          <input id="password" formControlName="password" type="password" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          required
+          [(ngModel)]="user.password"
+          name="password"
+          #passwordModel="ngModel"
+        />
+        <div class="error-message" *ngIf="passwordModel.invalid && passwordModel.touched">
+          <small>Password is required.</small>
         </div>
-        <div class="field">
-          <label for="role">Role</label>
-          <select id="role" formControlName="role">
-            <option [ngValue]="null" disabled selected>— select role —</option>
-            <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
-          </select>
+      </div>
+      <div class="field">
+        <label for="role">Role</label>
+        <select
+          id="role"
+          required
+          [(ngModel)]="user.role"
+          name="role"
+          #roleModel="ngModel"
+        >
+          <option [ngValue]="null" disabled>— select role —</option>
+          <option *ngFor="let r of roles" [ngValue]="r.id">{{ r.name }}</option>
+        </select>
+        <div class="error-message" *ngIf="roleModel.invalid && roleModel.touched">
+          <small>Role is required.</small>
         </div>
-        <div class="actions">
-          <button type="submit" [disabled]="userForm.invalid">
-            {{ userForm.get('id')?.value ? 'Update User' : 'Create User' }}
-          </button>
-          <button
-            *ngIf="userForm.touched"
-            type="button"
-            (click)="cancelEdit()"
-            class="cancel-btn"
-          >Cancel</button>
-        </div>
-      </form>
-    </div>
-  
-    <div class="users-table card">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th class="sorting" (click)="sortBy('id')">
-              ID
-              <span *ngIf="sortField==='id'">
-              {{ sortDir==='asc' ? '▲' : '▼' }}
-              </span>
-            </th>
-            <th class="sorting" (click)="sortBy('email')">
-                Email
-                <span *ngIf="sortField==='email'">
-                {{ sortDir==='asc' ? '▲' : '▼' }}
-                </span>
-            </th>
-            <th class="sorting" (click)="sortBy('userName')">
-                Username
-                <span *ngIf="sortField==='userName'">
-                {{ sortDir==='asc' ? '▲' : '▼' }}
-                </span>
-            </th>
-            <th class="sorting" (click)="sortBy('role')">
-              Role
-              <span *ngIf="sortField==='role'">
-              {{ sortDir==='asc' ? '▲' : '▼' }}
-              </span>
-          </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let u of users">
-            <td>{{ u.id }}</td>
-            <td>{{ u.email }}</td>
-            <td>{{ u.userName }}</td>
-            <td>{{ u.role ?? '—' }}</td>
-            <td class="table-actions">
-              <button class="edit-btn" (click)="editUser(u.id)">Edit</button>
-              <button class="delete-btn" (click)="deleteUser(u.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      </div>
+      <div class="actions">
+        <button type="submit" [disabled]="f.invalid">
+          {{ user.id ? 'Update User' : 'Create User' }}
+        </button>
+        <button
+          *ngIf="f.dirty"
+          type="button"
+          (click)="cancelEdit()"
+          class="cancel-btn"
+        >Cancel</button>
+      </div>
+    </form>
   </div>
-  
+  <div class="users-table card">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th class="sorting" (click)="sortBy('id')">
+            ID <span *ngIf="sortField==='id'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th class="sorting" (click)="sortBy('email')">
+            Email <span *ngIf="sortField==='email'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th class="sorting" (click)="sortBy('userName')">
+            Username <span *ngIf="sortField==='userName'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th class="sorting" (click)="sortBy('role')">
+            Role <span *ngIf="sortField==='role'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.id }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.userName }}</td>
+          <td>{{ u.role ?? '—' }}</td>
+          <td class="table-actions">
+            <button class="edit-btn" (click)="editUser(u)">Edit</button>
+            <button class="delete-btn" (click)="deleteUser(u.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,7 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
-import { FileService } from '../../../../services/file.service';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ScriptService } from '../../../../services/script.service';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
