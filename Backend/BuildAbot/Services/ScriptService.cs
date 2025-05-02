@@ -1,13 +1,17 @@
-﻿namespace BuildAbot.Services
+﻿using BuildAbot.Interfaces.IStatus;
+
+namespace BuildAbot.Services
 {
     public class ScriptService: IScriptService
     {
         private readonly IScriptRepository _scriptRepository;
+        private readonly IStatusRepository _statusRepository;
 
 
-        public ScriptService(IScriptRepository scriptRepository)
+        public ScriptService(IScriptRepository scriptRepository, IStatusRepository statusRepository)
         {
             _scriptRepository = scriptRepository;
+            _statusRepository = statusRepository;
         }
 
         public static ScriptResponse MapScriptToScriptResponse(Script script)
@@ -132,6 +136,31 @@
             }
 
             await _scriptRepository.DeleteFolderOnFtpAsync(script.Id, script.UserId);
+
+            if (script != null)
+            {
+                return MapScriptToScriptResponse(script);
+            }
+            return null;
+        }
+
+        public async Task<ScriptResponse> SoftDeleteByIdAsync(int scriptId)
+        {
+            Status newStatus = new Status
+            {
+                Title = "Expired",
+                DateTime = DateTime.Now,
+            };
+            var status = await _statusRepository.CreateAsync(newStatus);
+            Script script = await _scriptRepository.FindByIdAsync(scriptId);
+
+            if (script == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            script.StatusId = status.Id;
+            script = await _scriptRepository.UpdateByIdAsync(scriptId, script);
 
             if (script != null)
             {

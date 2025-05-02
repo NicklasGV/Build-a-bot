@@ -1,19 +1,22 @@
-import { resetUser, User } from "./user.model";
+import { Status } from './status.model';
+import { User } from "./user.model";
 import { Bot } from "./bot.model";
+import { stat } from 'fs';
 
 export interface Script {
-  user: User;
-  id: number;
-  title: string;
-  description: string;
-  codeLocationId: string;
-  scriptFile: File | null;
-  guideLocationId: string;
-  guideFile: File | null;
-  StatusId?: number;
-  userIds: number[]
-  botIds: number[];
-}
+    id: number;
+    title: string;
+    description: string;
+    codeLocationId: string;
+    scriptFile: File | null;
+    guideLocationId: string;
+    guideFile: File | null;
+    userId: number;
+    user: User | null;
+    status: Status | null;
+    userIds: number[]
+    botIds: number[];
+  }
   
   export function resetScript() {
     return { 
@@ -24,7 +27,9 @@ export interface Script {
         scriptFile: null,
         guideLocationId: '',
         guideFile: null,
-        user: resetUser(),
+        userId: 0,
+        user: null,
+        status: null,
         userIds: [],
         botIds: []
   };

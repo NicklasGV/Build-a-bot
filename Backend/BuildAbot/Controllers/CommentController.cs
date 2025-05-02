@@ -111,5 +111,23 @@ namespace BuildAbot.Controllers
                 return Problem(ex.Message);
             }
         }
+
+        [HttpDelete("Status/{id}")]
+        public async Task<IActionResult> SoftDeleteByIdAsync(int id)
+        {
+            try
+            {
+                CommentResponse commentResponse = await _commentService.SoftDeleteByIdAsync(id);
+                if (commentResponse == null)
+                {
+                    return NotFound();
+                }
+                return Ok(commentResponse);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

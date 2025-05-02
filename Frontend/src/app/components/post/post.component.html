@@ -51,7 +51,8 @@
   <ng-template #commentList let-comments>
     <ul class="comment-list">
       <li *ngFor="let c of comments;" class="comment-item">
-        <p class="comment-text"><strong>{{ c.user.userName }}:</strong> {{ c.text }}</p>
+        <p *ngIf="c.isDeleted" class="comment-deleted">User deleted comment</p>
+        <p *ngIf="!c.isDeleted" class="comment-text"><strong>{{ c.user.userName }}:</strong> {{ c.text }}</p>
   
         <ng-container *ngIf="c.replies?.length">
           <ul class="replies-list">

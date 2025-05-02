@@ -6,6 +6,7 @@
         Task<ScriptResponse> CreateAsync(ScriptRequest newScript);
         Task<ScriptResponse?> UpdateByIdAsync(int scriptId, ScriptRequest updateScript);
         Task<ScriptResponse> DeleteByIdAsync(int scriptId);
+        Task<ScriptResponse> SoftDeleteByIdAsync(int scriptId);
         Task<List<ScriptResponse>> GetAllAsync();
         Task<ScriptResponse> UploadScriptFile(int scriptId, IFormFile file);
         Task<ScriptResponse> UploadGuideFile(int scriptId, IFormFile file);

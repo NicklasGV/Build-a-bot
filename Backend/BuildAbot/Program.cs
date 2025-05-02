@@ -1,3 +1,5 @@
+using BuildAbot.Interfaces.IStatus;
+
 namespace BuildAbot
 {
     public class Program
@@ -19,6 +21,8 @@ namespace BuildAbot
 
             builder.Services.AddScoped<IScriptRepository, ScriptRepository>();
             builder.Services.AddScoped<IScriptService, ScriptService>();
+
+            builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 
             builder.Services.AddScoped<IBotRepository, BotRepository>();
             builder.Services.AddScoped<IBotService, BotService>();

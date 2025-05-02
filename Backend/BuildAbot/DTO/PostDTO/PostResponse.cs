@@ -24,6 +24,7 @@
         public int Id { get; set; }
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Boolean? IsDeleted { get; set; }
         public int? ParentCommentId { get; set; }
         public UserCommentResponse User { get; set; } = new();
         public List<CommentPostResponse> Replies { get; set; } = new();
