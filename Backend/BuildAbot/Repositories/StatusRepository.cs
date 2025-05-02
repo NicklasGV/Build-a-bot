@@ -28,9 +28,9 @@ namespace BuildAbot.Repositories
             return newStatus;
         }
 
-        public async Task<Status> DeleteByIdAsync(int statusId)
+        public async Task<Status?> DeleteByIdAsync(int statusId)
         {
-            var status = await FindByIdAsync(statusId);
+            var status = await FindByIdAsync((int)statusId);
 
             if (status != null)
             {
