@@ -87,5 +87,13 @@
             var comment = await _commentRepository.DeleteByIdAsync(commentId);
             return MapCommentToCommentResponse(comment);
         }
+
+        public async Task<CommentResponse> SoftDeleteByIdAsync(int commentId)
+        {
+            var comment = await _commentRepository.FindByIdAsync(commentId);
+            comment.IsDeleted = true;
+            comment = await _commentRepository.UpdateByIdAsync(commentId, comment);
+            return MapCommentToCommentResponse(comment);
+        }
     }
 }

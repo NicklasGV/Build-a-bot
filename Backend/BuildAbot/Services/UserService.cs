@@ -8,15 +8,19 @@ namespace BuildAbot.Services
         private readonly IUserRepository _userRepository;
         private readonly IStatusRepository _statusRepository;
         private readonly IBotRepository _botRepository;
+        private readonly IPostRepository _postRepository;
+        private readonly ICommentService _commentService;
         private readonly IScriptService _scriptService;
         private readonly IJwtUtils _jwtUtils;
 
 
-        public UserService(IUserRepository userRepository, IStatusRepository statusRepository, IBotRepository botRepository, IScriptService scriptService ,IJwtUtils jwtUtils)
+        public UserService(IUserRepository userRepository, IStatusRepository statusRepository, IBotRepository botRepository, IScriptService scriptService, IPostRepository postRepository, ICommentService commentService ,IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
             _statusRepository = statusRepository;
             _botRepository = botRepository;
+            _postRepository = postRepository;
+            _commentService = commentService;
             _scriptService = scriptService;
             _jwtUtils = jwtUtils;
         }
@@ -210,9 +214,14 @@ namespace BuildAbot.Services
             foreach (var bot in user.Bots)
                 await _botRepository.DeleteByIdAsync(bot.Id);
 
+            foreach (var post in user.Posts)
+                await _postRepository.DeleteByIdAsync(post.Id);
 
             foreach (var script in user.Scripts)
                 await _scriptService.SoftDeleteByIdAsync(script.Id);
+
+            foreach (var comment in user.Comments)
+                await _commentService.SoftDeleteByIdAsync(comment.Id);
 
             var updatedUser = await _userRepository.UpdateByIdAsync(userId, user);
 
