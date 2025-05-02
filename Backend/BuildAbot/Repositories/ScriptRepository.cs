@@ -1,14 +1,18 @@
-﻿using BuildAbot.Helper;
+﻿using BuildAbot.Database.Entities;
+using BuildAbot.Helper;
+using BuildAbot.Interfaces.IStatus;
 
 namespace BuildAbot.Repositories
 {
     public class ScriptRepository : IScriptRepository
     {
+        private readonly IStatusRepository _statusRepository;
         private readonly DatabaseContext _databaseContext;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly AppSettings _appSettings;
-        public ScriptRepository(DatabaseContext databaseContext, IWebHostEnvironment hostingEnvironment, IOptions<AppSettings> appSettings)
+        public ScriptRepository(DatabaseContext databaseContext, IStatusRepository statusRepository ,IWebHostEnvironment hostingEnvironment, IOptions<AppSettings> appSettings)
         {
+            _statusRepository = statusRepository;
             _databaseContext = databaseContext;
             _hostingEnvironment = hostingEnvironment;
             _appSettings = appSettings.Value;
@@ -57,6 +61,12 @@ namespace BuildAbot.Repositories
                 script.CodeLocationId = updateScript.CodeLocationId;
                 script.GuideLocationId = updateScript.GuideLocationId;
                 script.FavoriteScripts = updateScript.FavoriteScripts;
+                if (script.StatusId != updateScript.StatusId)
+                {
+                    await _statusRepository.DeleteByIdAsync(script.StatusId);
+                    script.StatusId = updateScript.StatusId;
+
+                }
 
                 await _databaseContext.SaveChangesAsync();
 
