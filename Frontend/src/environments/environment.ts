@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     apiUrl: 'https://api.buildabot.dk/api/',
+    devApiUrl: 'https://buildabot.dk/',
     discord: {
         clientId:    '1364129896376569877',
         redirectUri: 'http://localhost:4200/auth/discord/callback',
