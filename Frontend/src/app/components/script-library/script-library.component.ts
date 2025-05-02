@@ -30,7 +30,6 @@ export class ScriptLibraryComponent {
     this.scriptService.getAll().subscribe({
       next: (result) => {
         this.scripts = result.filter(s => s.status == null);
-        console.log(this.scripts);
 
         result.forEach(script => {
           if (!this.scriptStates[script.id]) {

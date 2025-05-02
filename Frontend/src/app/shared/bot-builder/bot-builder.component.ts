@@ -26,21 +26,15 @@ import { SnackbarService }  from './../../services/snackbar.service';
   styleUrls: ['./bot-builder.component.scss']
 })
 export class BotBuilderComponent implements OnInit {
-
-  /** ======== state ======== */
   currentUser:     User | null = null;
-  scripts:         ScriptWithSelection[] = [];
-  selectedScripts: ScriptWithSelection[] = [];
-
+  scripts:         Script[] = [];
+  selectedScripts: Script[] = [];
   botName = 'My Discord Bot';
   searchTerm = '';
-
-  /** preview / monaco */
   showPreview   = false;
   scriptContent = '';
   editorOptions = { theme: 'vs-dark', language: 'python', automaticLayout: true };
 
-  /** mobile filter modal */
   isFilterOpen  = false;
   get isMobile(): boolean {
     return typeof window !== 'undefined'
@@ -74,12 +68,13 @@ export class BotBuilderComponent implements OnInit {
     this.scriptService.getAll().subscribe({
       next: scripts => {
         this.scripts = scripts.map(s => ({ ...s, selected: false }));
+        this.scripts = scripts.filter(s => s.status == null);
       },
       error: () => this.snackBar.openSnackBar('Failed to load scripts', '', 'error')
     });
   }
 
-  filteredScripts(): ScriptWithSelection[] {
+  filteredScripts(): Script[] {
     const term = this.searchTerm.trim().toLowerCase();
     return term
       ? this.scripts.filter(s =>
@@ -88,7 +83,7 @@ export class BotBuilderComponent implements OnInit {
       : this.scripts;
   }
 
-  onScriptSelectionChange(script: ScriptWithSelection): void {
+  onScriptSelectionChange(script: Script): void {
     if (script.selected) {
       this.scriptService.getScriptContent(script.codeLocationId).subscribe({
         next: content => {
@@ -106,7 +101,7 @@ export class BotBuilderComponent implements OnInit {
     }
   }
 
-  removeScript(script: ScriptWithSelection): void {
+  removeScript(script: Script): void {
     script.selected = false;
     this.selectedScripts = this.selectedScripts.filter(s => s.id !== script.id);
     this.updateScriptPreview();
@@ -174,7 +169,6 @@ bot.run('YOUR_BOT_TOKEN')
   /* ---------- preview ---------- */
 
   private updateScriptPreview(): void {
-    // Show the generated main.py in the editor
     this.scriptContent = this.buildMainPy();
   }
 
@@ -209,10 +203,4 @@ bot.run('YOUR_BOT_TOKEN')
   //       this.snackBar.openSnackBar('Failed to bundle bot files', '', 'error')
   //     );
   }
-}
-
-/* ---------- extra typing ---------- */
-export interface ScriptWithSelection extends Script {
-  selected: boolean;
-  content?: string;
 }

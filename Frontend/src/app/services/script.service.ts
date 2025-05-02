@@ -27,7 +27,9 @@ export class ScriptService {
   create(script: Script): Observable<Script> {
     const formData = new FormData();
     
-    formData.append('userId', script.user.id.toString())
+    if (script.user?.id) {
+      formData.append('userId', script.user.id.toString())
+    }
     formData.append('title', script.title);
     formData.append('description', script.description);
     formData.append('codeLocationId', script.codeLocationId);
@@ -43,8 +45,9 @@ export class ScriptService {
 
   update(scriptId: number, script: Script): Observable<Script> {
     const formData = new FormData();
-  
-    formData.append('userId', script.user.id.toString())
+    if (script.user?.id) {
+      formData.append('userId', script.user.id.toString())
+    }
     formData.append('title', script.title);
     formData.append('description', script.description);
     formData.append('codeLocationId', script.codeLocationId);
@@ -55,8 +58,8 @@ export class ScriptService {
     if (script.guideFile) {
       formData.append('guideFile', script.guideFile);
     }
-    if (script.StatusId) {
-      formData.append('statusId', script.StatusId.toString())
+    if (script.status?.id) {
+      formData.append('statusId', script.status?.id.toString())
     }
     if (script.userIds && script.userIds.length) {
       script.userIds.forEach(id =>

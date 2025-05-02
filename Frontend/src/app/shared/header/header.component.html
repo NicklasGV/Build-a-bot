@@ -24,9 +24,6 @@
       <span class="bi bi-book dropbtn"> Libraries</span>
       <ul class="dropdown-content">
         <li>
-          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
-        </li>
-        <li>
           <a href="/script-library" (click)="collapseNavbar()"> Script Library</a>
         </li>
         <li>
@@ -70,29 +67,4 @@
       </ul>
     </div>
   </div>
-</nav>
-
-<nav class="side-nav" id="sideNav">
-  <ul class="nav-links">
-    <li>
-      <a href="#" class="bi bi-house" (click)="collapseNavbar()"></a>
-    </li>
-    <li class="dropdown" [class.active]="isSideDropdownOpen" (click)="toggleSideDropdown($event)">
-      <span class="bi bi-book dropbtn dropbtn-side-nav"></span>
-      <ul class="dropdown-content">
-        <li>
-          <a href="/libraries" (click)="collapseNavbar()"> Libraries</a>
-        </li>
-        <li>
-          <a href="/script-library" (click)="collapseNavbar()">Script Library</a>
-        </li>
-        <li>
-          <a href="/bot-library" (click)="collapseNavbar()">Bot Library</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"></a>
-    </li>
-  </ul>
 </nav>

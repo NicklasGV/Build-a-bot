@@ -100,8 +100,8 @@ export class ScriptsDashboardComponent {
 
       switch (this.sortField) {
         case 'user':
-          aVal = a.user.id;
-          bVal = b.user.id;
+          aVal = a.user?.id;
+          bVal = b.user?.id;
           break;
         default:
           aVal = (a as any)[this.sortField];
@@ -178,5 +178,12 @@ export class ScriptsDashboardComponent {
   cancelEdit(): void {
     this.script = resetScript();
     this.snackBar.openSnackBar('Script cancelled.', '', 'warning')
+  }
+
+  expiryDate(original?: string | Date): Date | undefined {
+    if (!original) return undefined;
+    const d = new Date(original);
+    d.setMonth(d.getMonth() + 6);
+    return d;
   }
 }

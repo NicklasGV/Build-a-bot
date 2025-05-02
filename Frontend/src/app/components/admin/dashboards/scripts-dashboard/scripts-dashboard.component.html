@@ -154,6 +154,7 @@
               {{ sortDir==='asc' ? '▲' : '▼' }}
             </span>
           </th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -164,6 +165,15 @@
           <td>{{ s.description }}</td>
           <td>{{ s.user.userName }}</td>
           <td>{{ s.codeLocationId }}</td>
+          <td>
+            {{ s.status?.title || 'Not expired' }}
+            <time
+              *ngIf="expiryDate(s.status?.dateTime) as exp"
+              [attr.datetime]="exp | date:'dd-MM-yyyyTHH:mm:ss'"
+            >
+              at {{ exp | date:'mediumDate' }}
+            </time>
+          </td>
           <td class="table-actions">
             <button class="edit-btn" (click)="editScript(s)">
               Edit

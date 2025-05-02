@@ -1,7 +1,5 @@
 import { Status } from './status.model';
-import { User } from "./user.model";
-import { Bot } from "./bot.model";
-import { stat } from 'fs';
+import { resetUser, User } from "./user.model";
 
 export interface Script {
     id: number;
@@ -12,10 +10,12 @@ export interface Script {
     guideLocationId: string;
     guideFile: File | null;
     userId: number;
-    user: User | null;
+    user: User;
     status: Status | null;
-    userIds: number[]
+    userIds: number[];
     botIds: number[];
+    selected?: boolean;
+    content?: string;
   }
   
   export function resetScript() {
@@ -28,7 +28,7 @@ export interface Script {
         guideLocationId: '',
         guideFile: null,
         userId: 0,
-        user: null,
+        user: resetUser(),
         status: null,
         userIds: [],
         botIds: []
