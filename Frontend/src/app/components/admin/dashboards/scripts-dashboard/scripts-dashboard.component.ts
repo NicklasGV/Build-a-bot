@@ -1,13 +1,12 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
-import { FileService } from '../../../../services/file.service';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ScriptService } from '../../../../services/script.service';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Script } from '../../../../models/script.model';
+import { resetScript, Script } from '../../../../models/script.model';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { SnackbarService } from '../../../../services/snackbar.service';
 
 @Component({
   selector: 'app-scripts-dashboard',
@@ -15,7 +14,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
   imports: [
       CommonModule,
       HttpClientModule,
-      ReactiveFormsModule,
       FormsModule,
       MonacoEditorModule
     ],
@@ -24,8 +22,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 })
 export class ScriptsDashboardComponent {
   scripts: Script[] = [];
+  script: Script = resetScript();
   users: { id: number; userName: string }[] = [];
-  scriptForm: FormGroup;
+  message = '';
   isWriting = false;
   selectedFile: File | null = null;
   scriptText = '';
@@ -33,25 +32,14 @@ export class ScriptsDashboardComponent {
     theme: 'vs-dark', language: 'python'
   };
 
-  sortField: 'id' | 'title' | 'description' | 'userId' = 'id';
+  sortField: 'id'|'title'|'description'|'user'|'filePath' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
-  private scriptService = inject(ScriptService);
-  private userService   = inject(UserService);
-  private fileService   = inject(FileService)
-  private fb            = inject(FormBuilder);
-
-
-  constructor() {
-    this.scriptForm = this.fb.group({
-      id:     [0],
-      title:  ['', Validators.required],
-      description:  [''],
-      userId: [null, Validators.required],
-      codeId: [''],
-      scriptText:  ['']
-    });
-  }
+  constructor(
+    private scriptService: ScriptService,
+    private userService: UserService,
+    private snackBar: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.loadScripts();
@@ -67,8 +55,7 @@ export class ScriptsDashboardComponent {
 
   private loadUsers(): void {
     this.userService.getAll().subscribe({
-      next: users => 
-        this.users = users.map(u => ({ id: u.id, userName: u.userName })),
+      next: users => this.users = users,
       error: err =>
         console.error('Failed to load users', err)
     });
@@ -95,7 +82,7 @@ export class ScriptsDashboardComponent {
     }
   }
 
-  sortBy(field: 'id' | 'title' | 'description' | 'userId') {
+  sortBy(field: 'id'|'title'|'description'|'user'|'filePath') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
@@ -112,9 +99,9 @@ export class ScriptsDashboardComponent {
       let aVal: any, bVal: any;
 
       switch (this.sortField) {
-        case 'userId':
-          aVal = a.userId;
-          bVal = b.userId;
+        case 'user':
+          aVal = a.user?.id;
+          bVal = b.user?.id;
           break;
         default:
           aVal = (a as any)[this.sortField];
@@ -134,67 +121,49 @@ export class ScriptsDashboardComponent {
   }
 
   async onSubmit() {
-    if (this.scriptForm.invalid) return;
-
-    // 1) if writing, turn text → blob → file
     if (this.isWriting && this.scriptText.trim()) {
       const blob = new Blob([this.scriptText], { type: 'text/plain' });
-      this.selectedFile = new File([blob], `${this.scriptForm.value.title}.txt`, {
-        type: 'text/plain'
-      });
+      this.selectedFile = new File([blob], `${this.script.title}.txt`, { type: 'text/plain' });
     }
-
-    // 3) build payload
-    const raw = this.scriptForm.value;
-    const payload: Script = {
-      id: raw.id,
-      title: raw.title,
-      description: raw.description,
-      userId: raw.userId,
-      codeLocationId: raw.codeId,
-      guideLocationId: '',
-      botIds: [],
-      scriptFile: raw.scriptFile,
-      guideFile: null,
-      userIds: [],
-      user: null,
-      status: null,
-    };
-
-    // 4) create vs update
-    if (payload.id && payload.id !== 0) {
-      this.scriptService.update(payload.id, payload).subscribe({
-        next: updated => {
-          const i = this.scripts.findIndex(s => s.id === updated.id);
-          if (i > -1) this.scripts[i] = updated;
-          this.cancelEdit();
+    this.message = "";
+    if (this.selectedFile) {
+      this.script.scriptFile = this.selectedFile
+    }
+    if (this.script.id == 0) {
+      //create
+      this.scriptService.create(this.script)
+      .subscribe({
+        next: (x) => {
+          this.scripts.push(x);
+          this.script = resetScript();
+          this.snackBar.openSnackBar("Script created", '', 'success');
         },
-        error: err => console.error('Update failed', err)
+        error: (err) => {
+          console.log(err);
+          this.message = Object.values(err.error.errors).join(", ");
+          this.snackBar.openSnackBar(this.message, '', 'error');
+        }
       });
     } else {
-      this.scriptService.create(payload).subscribe({
-        next: created => {
-          this.scripts.push(created);
-          this.cancelEdit();
+      //update
+      this.scriptService.update(this.script.id, this.script)
+      .subscribe({
+        error: (err) => {
+          this.message = Object.values(err.error.errors).join(", ");
+          this.snackBar.openSnackBar(this.message, '', 'error');
         },
-        error: err => console.error('Create failed', err)
+        complete: () => {
+          this.userService.getAll().subscribe(x => this.users = x);
+          this.script = resetScript();
+          this.snackBar.openSnackBar("Script updated", '', 'success');
+        }
       });
     }
+    this.script = resetScript();
   }
 
-  editScript(id: number) {
-    this.scriptService.findById(id).subscribe({
-      next: s => {
-        this.cancelEdit();
-        this.scriptForm.patchValue({
-          id:     s.id,
-          title:  s.title,
-          userId: s.userId,
-          codeId: s.codeLocationId
-        });
-      },
-      error: e => console.error('Load single failed', e)
-    });
+  editScript(script: Script) {
+    Object.assign(this.script, script)
   }
 
   deleteScript(scriptId: number): void {
@@ -207,6 +176,14 @@ export class ScriptsDashboardComponent {
   }
 
   cancelEdit(): void {
-    this.scriptForm.reset({ id: 0, title: '', userId: null });
+    this.script = resetScript();
+    this.snackBar.openSnackBar('Script cancelled.', '', 'warning')
+  }
+
+  expiryDate(original?: string | Date): Date | undefined {
+    if (!original) return undefined;
+    const d = new Date(original);
+    d.setMonth(d.getMonth() + 6);
+    return d;
   }
 }

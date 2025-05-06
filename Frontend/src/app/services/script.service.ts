@@ -9,13 +9,6 @@ import { environment } from '../../environments/environment';
 })
 export class ScriptService {
   private readonly apiUrl = environment.apiUrl + 'Script/';
-  // private readonly fileServerUrl = environment.fileServerUrl;
-  private readonly fileServerUrl = '/files'
-
-  private readonly fileServerHeaders = new HttpHeaders({
-    Authorization:
-      'Basic ' + btoa(`${environment.fileServerUser}:${environment.fileServerPass}`)
-  });
 
   constructor(private http: HttpClient) { }
 
@@ -33,28 +26,57 @@ export class ScriptService {
 
   create(script: Script): Observable<Script> {
     const formData = new FormData();
-  
+    
+    if (script.user?.id) {
+      formData.append('userId', script.user.id.toString())
+    }
     formData.append('title', script.title);
     formData.append('description', script.description);
     formData.append('codeLocationId', script.codeLocationId);
     if (script.scriptFile) {
-      formData.append('scriptFile', script.scriptFile, script.scriptFile.name);
+      formData.append('scriptFile', script.scriptFile);
     }
     formData.append('guideLocationId', script.guideLocationId);
     if (script.guideFile) {
-      formData.append('guideFile', script.guideFile, script.guideFile.name);
+      formData.append('guideFile', script.guideFile);
     }
     return this.http.post<Script>(this.apiUrl + 'create', formData);
   }
 
   update(scriptId: number, script: Script): Observable<Script> {
-    return this.http.put<Script>(this.apiUrl + '/' + scriptId, script);
+    const formData = new FormData();
+    if (script.user?.id) {
+      formData.append('userId', script.user.id.toString())
+    }
+    formData.append('title', script.title);
+    formData.append('description', script.description);
+    formData.append('codeLocationId', script.codeLocationId);
+    if (script.scriptFile) {
+      formData.append('scriptFile', script.scriptFile);
+    }
+    formData.append('guideLocationId', script.guideLocationId);
+    if (script.guideFile) {
+      formData.append('guideFile', script.guideFile);
+    }
+    if (script.status?.id) {
+      formData.append('statusId', script.status?.id.toString())
+    }
+    if (script.userIds && script.userIds.length) {
+      script.userIds.forEach(id =>
+        formData.append('userIds', id.toString())
+      );
+    }
+    if (script.botIds && script.botIds.length) {
+      script.botIds.forEach(id =>
+        formData.append('botIds', id.toString())
+      );
+    }
+    return this.http.put<Script>(this.apiUrl + scriptId, formData);
   }
 
   getScriptContent(filename: string): Observable<string> {
-    const url = `${this.fileServerUrl}/file/${encodeURIComponent(filename)}`;
+    const url = `${environment.devApiUrl}/${encodeURIComponent(filename)}`;
     return this.http.get(url, {
-      headers: this.fileServerHeaders,
       responseType: 'text'
     });
   }

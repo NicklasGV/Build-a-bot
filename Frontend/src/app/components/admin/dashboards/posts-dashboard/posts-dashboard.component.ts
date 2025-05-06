@@ -55,7 +55,7 @@ users: User[] = [];
     .subscribe({
       next: ({ user, allScripts }) => {
         const scriptIds = allScripts
-          .filter(s => s.userId === user.id)
+          .filter(s => s.user.id === user.id)
           .map(s => s.id);
 
         this.userForm.patchValue({

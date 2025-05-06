@@ -1,12 +1,13 @@
 import { ScriptService } from './../../../../services/script.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { resetUser, User } from '../../../../models/user.model';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Role, constRoles } from '../../../../models/role.model';
 import { switchMap, map } from 'rxjs/operators';
+import { SnackbarService } from '../../../../services/snackbar.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -14,37 +15,29 @@ import { switchMap, map } from 'rxjs/operators';
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.scss'
 })
 export class UserDashboardComponent implements OnInit {
+  message: string = "";
   users: User[] = [];
+  user: User = resetUser();
   roles: Role[] = [];
+  formData = new FormData();
 
   sortField: 'id' | 'email' | 'userName' | 'role' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
-  private userService = inject(UserService);
-  private scriptService = inject(ScriptService)
-  private fb = inject(FormBuilder);
-
-
-  userForm = this.fb.group({
-    id:       [0],
-    email:    ['', { nonNullable: true, validators: [] }],
-    userName: ['', { nonNullable: true, validators: [] }],
-    password: ['', { nonNullable: true, validators: [] }],
-    scripts:  [[] as number[]],
-    role:     [null as number | null]
-  });
+  constructor(
+    private userService: UserService,
+    private scriptService: ScriptService,
+    private snackbar: SnackbarService
+  ) {}
 
   ngOnInit() {
-    this.userService.getAll().subscribe({
-      next: users => this.users = users,
-      error: err   => console.error(err)
-    });
+    this.userService.getAll().subscribe(x => this.users = x);
     this.roles = constRoles;
   }
 
@@ -94,80 +87,48 @@ export class UserDashboardComponent implements OnInit {
     }
   }
 
-  editUser(userId: number) {
-    this.userService.findById(userId).pipe(
-      switchMap(user =>
-        this.scriptService.getAll().pipe(
-          map(allScripts => ({ user, allScripts }))
-        )
-      )
-    )
-    .subscribe({
-      next: ({ user, allScripts }) => {
-        const scriptIds = allScripts
-          .filter(s => s.userId === user.id)
-          .map(s => s.id);
-
-        this.userForm.patchValue({
-          id:       user.id,
-          email:    user.email,
-          userName: user.userName,
-          password: '',
-          scripts:  scriptIds,
-          role:     user.role ?? 0
-        });
-      },
-      error: err => console.error(err)
-    });
+  editUser(user: User) {
+    Object.assign(this.user, user);
   }
 
   cancelEdit() {
-    // reset the form back to “create” mode
-    this.userForm.reset({
-      id:       0,
-      email:    '',
-      userName: '',
-      password: '',
-      scripts:  [],
-      role:     null
-    });
+    this.user = resetUser();
+      this.snackbar.openSnackBar('User canceled.', '','warning');
   }
 
   onSubmit() {
-    if (this.userForm.invalid) return;
-
-    const raw = this.userForm.value;
-    const payload: User = {
-      ...resetUser(),
-      id:       raw.id!,
-      email:    raw.email!,
-      userName: raw.userName!,
-      password: raw.password!,
-      scripts:  (raw.scripts || []).map(id => id.toString()),
-      role:     raw.role ?? undefined
-    };
-
-    if (payload.id && payload.id !== 0) {
-      // **Update** existing
-      this.userService.update(payload).subscribe({
-        next: updated => {
-          // swap it into our local list
-          const idx = this.users.findIndex(u => u.id === updated.id);
-          if (idx > -1) this.users[idx] = updated;
-          this.cancelEdit();
-        },
-        error: err => console.error(err)
-      });
-    } else {
-      // **Create** new
-      this.userService.create(payload).subscribe({
-        next: created => {
-          this.users.push(created);
-          this.cancelEdit();
-        },
-        error: err => console.error(err)
-      });
-    }
+    this.message = "";
+      if (this.user.id == 0) {
+        //create
+        this.userService.create(this.user)
+        .subscribe({
+          next: (x) => {
+            this.users.push(x);
+            this.user = resetUser();
+            this.snackbar.openSnackBar("User created", '', 'success');
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackbar.openSnackBar(this.message, '', 'error');
+          }
+        });
+      } else {
+        //update
+        this.userService.update(this.user)
+        .subscribe({
+          error: (err) => {
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackbar.openSnackBar(this.message, '', 'error');
+          },
+          complete: () => {
+            this.userService.getAll().subscribe(x => this.users = x);
+            this.user = resetUser();
+            this.snackbar.openSnackBar("User updated", '', 'success');
+          }
+        });
+      }
+      this.user = resetUser();
   }
 
   deleteUser(id: number) {
