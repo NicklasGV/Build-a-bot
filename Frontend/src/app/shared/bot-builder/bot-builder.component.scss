@@ -31,10 +31,62 @@
 
 .bot-config-card,
 .script-filter-card,
-.script-pick-list,
 .script-chosen-list {
   flex: 0 0 auto;
   width: 100%;
+}
+
+.script-pick-list .list-item {
+  padding: 0;
+  border: none;
+}
+
+.script-pick-list .list-item .checkbox {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    background-color: $BLURPLE;
+    color: $WHITE;
+    transition: all 0.1s ease-in-out;
+  }
+}
+
+.script-pick-list .checkbox-label {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid $LIGHT_BLURPLE;
+  border-bottom: none;
+  border-radius: 0;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+
+.script-pick-list .list-item:first-child .checkbox-label {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.script-pick-list .list-item:last-child .checkbox-label {
+  border-bottom: 1px solid $LIGHT_BLURPLE;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.script-pick-list .checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  margin: 0;
+}
+
+.script-pick-list .checkbox input[type="checkbox"]:checked + .checkbox-label {
+  background-color: $BLURPLE;
+  border-color:    $BLURPLE;
+  color:           $DARK;
+  transition: all 0.1s ease-in-out;
+  box-shadow: 0 2px 10px $BLURPLE;
 }
 
 .card-title {
@@ -122,7 +174,7 @@
 
 .monaco-wrapper {
   flex: 1 1 100%;
-  min-height: 400px;
+  min-height: 500px;
   border: 1px solid $DARK_BLURPLE;
   border-radius: 8px;
   overflow: hidden;
@@ -130,6 +182,9 @@
   .monaco-editor {
     width: 100%;
     height: 100%;
+  }
+  .monaco-editor-body {
+    height: 500px;
   }
 }
 
@@ -239,7 +294,7 @@
   z-index: 1000;
 }
 
-.close-modal-btn {
+.close-filter-btn {
   display: block;
   margin: 1rem auto 0;
   background: transparent;
@@ -284,4 +339,67 @@
     max-width: 40vw;
     font-size: 16px;
   }
+}
+
+.bot-builder-dialog {
+  width: 80vw;
+  max-height: 1000px;
+  max-width: 900px;
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  color: $BLURPLE;
+  @include mobileAndTabletV {
+    max-height: 800px;
+  }
+}
+
+.bot-builder-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.bot-builder-dialog[open] app-bot-builder,
+.bot-builder-dialog[open] .dialog-body {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.bot-builder-modal {
+  padding: 48px;
+  background-color: $DARK;
+}
+
+.bot-builder-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.close-modal-btn {
+  position: absolute;
+  color: $RED;
+  top: .5rem;
+  right: .5rem;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+  &:hover {
+    color: $FADED_RED;
+  }
+}
+
+.login-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: $LIGHT_BLURPLE;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  box-shadow: 0 2px 10px $DARK_BLURPLE;
+  border-radius: 16px;
+  border: solid 1px $LIGHT_BLURPLE;
+  padding: 8px;
+  color: #5865F2;
 }

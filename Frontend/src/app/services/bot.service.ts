@@ -24,17 +24,17 @@ export class BotService {
   }
 
   create(bot: Bot): Observable<Bot> {
-      const formData = new FormData();
-  
-      formData.append('UserId', bot.user.id.toString());
-      formData.append('Name', bot.name);
-  
-      if (bot.botScripts) {
-        bot.botScripts.forEach(scriptId => {
-          formData.append('scriptIds', scriptId.toString());
-        });
-      }
-  
-      return this.http.post<Bot>(this.apiUrl, formData);
+    const formData = new FormData();
+
+    formData.append('UserId', bot.user.id.toString());
+    formData.append('Name', bot.name);
+
+    if (bot.botScripts) {
+      bot.botScripts.forEach(script => {
+        formData.append('scriptIds', script.id.toString());
+      });
     }
+
+    return this.http.post<Bot>(this.apiUrl, formData);
+  }
 }

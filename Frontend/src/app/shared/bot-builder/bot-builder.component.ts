@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -6,12 +6,12 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 import { Script } from './../../models/script.model';
 import { Bot } from '../../models/bot.model';
-import { User } from '../../models/user.model';
+import { User, resetUser } from '../../models/user.model';
 
 import { ScriptService }    from '../../services/script.service';
-import { BotService }       from '../../services/bot.service';
 import { AuthService }      from '../../services/auth.service';
 import { SnackbarService }  from './../../services/snackbar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bot-builder',
@@ -33,7 +33,9 @@ export class BotBuilderComponent implements OnInit {
   searchTerm = '';
   showPreview   = false;
   scriptContent = '';
-  editorOptions = { theme: 'vs-dark', language: 'python', automaticLayout: true };
+  editorOptions = { theme: 'vs-dark', language: 'python' };
+  @ViewChild('botBuilderDialog', { static: false })
+  botBuilderDialogRef!: ElementRef<HTMLDialogElement>;
 
   isFilterOpen  = false;
   get isMobile(): boolean {
@@ -41,9 +43,8 @@ export class BotBuilderComponent implements OnInit {
       && window.matchMedia('(max-width: 767px)').matches;
   }
 
-  /** ======== services ======== */
   private scriptService = inject(ScriptService);
-  private botService    = inject(BotService);
+  private router    = inject(Router);
   private authService   = inject(AuthService);
   private snackBar      = inject(SnackbarService);
 
@@ -52,8 +53,6 @@ export class BotBuilderComponent implements OnInit {
     this.fetchScripts();
   }
 
-  /* ---------- ui helpers ---------- */
-
   togglePreview(): void {
     this.showPreview = !this.showPreview;
   }
@@ -61,8 +60,6 @@ export class BotBuilderComponent implements OnInit {
   handleBotFilterClick(): void {
     this.isFilterOpen = !this.isFilterOpen;
   }
-
-  /* ---------- data ---------- */
 
   fetchScripts(): void {
     this.scriptService.getAll().subscribe({
@@ -107,100 +104,91 @@ export class BotBuilderComponent implements OnInit {
     this.updateScriptPreview();
   }
 
-  /* ---------- script‐wrapping helpers ---------- */
-
-  /** Wrap raw script code into a Python module with a register(bot) function */
-  private wrapScriptAsModule(content: string): string {
-    const body = content
-      .split('\n')
-      .map(line => '    ' + line)
-      .join('\n');
-    return `# auto-generated module
-def register(bot):
-${body}
-`;
+  handleLoginClick(): void {
+    const fullScript = this.buildBotScript();
+    const bot: Bot = {
+      id: 0,
+      name: this.botName,
+      user: this.currentUser || resetUser(),
+      botScripts: this.selectedScripts,
+    };
+    localStorage.setItem('savedBot', JSON.stringify(bot));
+    this.router.navigate(['/login'], { queryParams: { redirect: this.router.url } });
   }
 
-  /** Turn a script title into a safe Python module name */
-  private sanitizeModuleName(title: string): string {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '_')
-      .replace(/^_|_$/g, '');
+  private buildBotScript(): string {
+    const baseImports = [
+      `import discord`,
+      `from discord.ext import commands`,
+      ``,
+      `bot = commands.Bot(command_prefix='!')`,
+      ``
+    ];
+  
+    const importSet = new Set<string>();
+    const bodies = this.selectedScripts.map(s => {
+      const lines = s.content.split('\n');
+      const bodyLines: string[] = [];
+  
+      for (let line of lines) {
+        const trimmed = line.trim();
+        if (/^(import\s+\w)|(from\s+\S+\s+import\s+)/.test(trimmed)) {
+          importSet.add(trimmed);
+        } else {
+          bodyLines.push(line);
+        }
+      }
+  
+      return [
+        `# ——— ${s.title} ———`,
+        bodyLines.join('\n').trim()
+      ].join('\n');
+    });
+  
+    const scriptImports = Array.from(importSet).sort();
+    const allImports = [
+      ...baseImports,
+      ...scriptImports,
+      ``
+    ];
+  
+    const footer = [
+      ``,
+      `if __name__ == "__main__":`,
+      `    bot.run("YOUR_BOT_TOKEN")`,
+      ``
+    ];
+  
+    return [
+      allImports.join('\n'),
+      bodies.join('\n\n'),
+      footer.join('\n')
+    ].join('\n');
   }
-
-  /** Build the main.py that imports & calls every register_XXX */
-  private buildMainPy(): string {
-    const imports = this.selectedScripts
-      .map(s => {
-        const mod = this.sanitizeModuleName(s.title);
-        return `from ${mod} import register as register_${mod}`;
-      })
-      .join('\n');
-
-    const calls = this.selectedScripts
-      .map(s => {
-        const mod = this.sanitizeModuleName(s.title);
-        return `    register_${mod}(bot)`;
-      })
-      .join('\n');
-
-    return `
-import discord
-from discord.ext import commands
-${imports}
-
-bot = commands.Bot(command_prefix='!')
-
-@bot.event
-async def on_ready():
-    print(f'Logged in as {bot.user}')
-
-
-def register_all():
-${calls}
-
-register_all()
-
-bot.run('YOUR_BOT_TOKEN')
-`.trim() + '\n';
-  }
-
-  /* ---------- preview ---------- */
 
   private updateScriptPreview(): void {
-    this.scriptContent = this.buildMainPy();
+    this.scriptContent = this.buildBotScript();
   }
 
-  /* ---------- generate & download ---------- */
-
   generateScript(): void {
-  //   if (!this.botName.trim()) {
-  //     this.snackBar.openSnackBar('Bot name cannot be empty', '', 'error');
-  //     return;
-  //   }
-  //   if (!this.currentUser) {
-  //     this.snackBar.openSnackBar('No user in session', '', 'error');
-  //     return;
-  //   }
-
-  //   const zip = new JSZip();
-
-  //   // 1) One module file per script
-  //   this.selectedScripts.forEach(ui => {
-  //     const modName = this.sanitizeModuleName(ui.title);
-  //     const moduleContent = this.wrapScriptAsModule(ui.content!);
-  //     zip.file(`${modName}.py`, moduleContent);
-  //   });
-
-  //   // 2) Add the main launcher
-  //   zip.file('main.py', this.buildMainPy());
-
-  //   // 3) Generate & trigger download
-  //   zip.generateAsync({ type: 'blob' })
-  //     .then((blob: any) => saveAs(blob, `${this.botName.replace(/\s+/g,'_')}.zip`))
-  //     .catch(() =>
-  //       this.snackBar.openSnackBar('Failed to bundle bot files', '', 'error')
-  //     );
+    const fullScript = this.buildBotScript();
+    const blob = new Blob([fullScript], { type: 'text/plain' });
+    const url  = window.URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    const fileName = this.botName
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '') || 'bot';
+    
+    a.href     = url;
+    a.download = `${fileName}.py`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    if (this.currentUser?.id == 0) {
+      this.botBuilderDialogRef.nativeElement.showModal();
+    }
   }
 }

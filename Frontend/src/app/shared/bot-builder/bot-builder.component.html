@@ -71,8 +71,10 @@
     </div>
     <div class="bot-builder-row" *ngIf="showPreview">
       <div class="monaco-wrapper">
-        <ngx-monaco-editor [options]="editorOptions"
-                           [(ngModel)]="scriptContent">
+        <ngx-monaco-editor 
+          class="monaco-editor-body"
+          [options]="editorOptions"
+          [(ngModel)]="scriptContent">
         </ngx-monaco-editor>
       </div>
     </div>
@@ -83,6 +85,23 @@
         <p>Generate &amp; download</p>
       </button>
     </div>
+    <dialog #botBuilderDialog class="bot-builder-dialog">
+      <div class="bot-builder-modal">
+        <div class="bot-builder-modal-header">
+          <h3 class="modal-title">Login required</h3>
+          <p class="modal-description">If you want to save this bot you need to login.</p>
+        </div>
+        <div class="login-button-container">
+          <button class="login-button" (click)="handleLoginClick()">Log in</button>
+        </div>
+      </div>
+      <button type="button"
+        class="close-modal-btn"
+        aria-label="Close"
+        (click)="botBuilderDialog.close()">
+          ×
+      </button>
+    </dialog>
     <div *ngIf="isFilterOpen" class="mobile-script-filter-modal">
       <div class="script-filter-card">
         <h3 class="card-title">Search modules</h3>
@@ -92,7 +111,7 @@
                [(ngModel)]="searchTerm"
                (input)="searchTerm = searchTerm.trim()">
       </div>
-      <button class="close-modal-btn" (click)="handleBotFilterClick()">Close</button>
+      <button class="close-filter-btn" (click)="handleBotFilterClick()">Close</button>
     </div>
     <button class="filter-toggle-button"
             (click)="handleBotFilterClick()">

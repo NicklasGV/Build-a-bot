@@ -1,5 +1,5 @@
 import { Script } from "./script.model";
-import { User } from "./user.model";
+import { resetUser, User } from "./user.model";
 
 export interface Bot {
     id: number;
@@ -12,7 +12,7 @@ export interface Bot {
     return { 
         id: 0, 
         name: '',
-        user: [],
+        user: resetUser(),
         botScripts: [],
   };
   }

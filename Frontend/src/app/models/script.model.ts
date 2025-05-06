@@ -15,7 +15,7 @@ export interface Script {
     userIds: number[];
     botIds: number[];
     selected?: boolean;
-    content?: string;
+    content: string | '';
   }
   
   export function resetScript() {
@@ -31,6 +31,7 @@ export interface Script {
         user: resetUser(),
         status: null,
         userIds: [],
-        botIds: []
+        botIds: [],
+        content: ''
   };
   }
