@@ -60,7 +60,7 @@
                 user.Password = updateUser.Password;
                 if (user.StatusId != updateUser.StatusId)
                 {
-                    await _statusRepository.DeleteByIdAsync(user.StatusId);
+                    await _statusRepository.DeleteByIdAsync((int)user.StatusId);
                     user.StatusId = updateUser.StatusId;
 
                 }
@@ -81,7 +81,7 @@
                 user.Email = updateUser.Email;
                 if (user.StatusId != updateUser.StatusId)
                 {
-                    await _statusRepository.DeleteByIdAsync(user.StatusId);
+                    await _statusRepository.DeleteByIdAsync((int)user.StatusId);
                     user.StatusId = updateUser.StatusId;
 
                 }

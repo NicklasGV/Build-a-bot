@@ -5,6 +5,5 @@
         Task<Status?> FindByIdAsync(int statusId);
         Task<Status> CreateAsync(Status newStatus);
         Task<Status?> DeleteByIdAsync(int statusId);
-        Task DeleteByIdAsync(int? statusId);
     }
 }

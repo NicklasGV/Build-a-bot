@@ -63,7 +63,7 @@ namespace BuildAbot.Repositories
                 script.FavoriteScripts = updateScript.FavoriteScripts;
                 if (script.StatusId != updateScript.StatusId)
                 {
-                    await _statusRepository.DeleteByIdAsync(script.StatusId);
+                    await _statusRepository.DeleteByIdAsync((int)script.StatusId);
                     script.StatusId = updateScript.StatusId;
 
                 }
