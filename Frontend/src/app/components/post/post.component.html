@@ -4,65 +4,114 @@
       <ul>
         <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
         <li [routerLink]="['/forum']">Forum</li>
-        <li class="active">{{post.title}}</li>
+        <li class="active">
+          {{ isCreateMode ? 'New Post' : post.title }}
+        </li>
       </ul>
     </nav>
   </div>
+
   <div class="post-section">
 
-
-<div class="post-detail" *ngIf="loading; else loaded">
-    <p>Loading…</p>
-  </div>
-  
-  <ng-template #loaded>
-    <ng-container *ngIf="post">
-      <article class="post-card">
+    <!-- CREATE MODE -->
+    <div *ngIf="isCreateMode; else viewMode" style="max-width: 80vw; width: 100%;
+">
+      <article class="post-card post-card--create">
         <header>
-          <h2>{{ post.title }}</h2>
-          <p class="author">by {{ post.user?.userName }}</p>
+          <h2>Create a New Post</h2>
         </header>
-  
-        <section class="content">
-          {{ post.content }}
-        </section>
-  
-        <section class="comments-section">
-          <h3>Comments</h3>
-          <ng-container *ngIf="post.comments.length; else noComments">
-            <ng-container
-              *ngTemplateOutlet="commentList; context: { $implicit: post.comments }">
-            </ng-container>
-          </ng-container>
-  
-          <ng-template #noComments>
-            <p class="no-comments">No comments yet. Be the first to chime in!</p>
-          </ng-template>
-        </section>
+        <form (ngSubmit)="createPost()" #postForm="ngForm">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              id="title"
+              name="title"
+              [(ngModel)]="post.title"
+              required
+            />
+          </div>
+    
+          <div class="form-group">
+            <label for="content">Content</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="6"
+              [(ngModel)]="post.content"
+              required
+            ></textarea>
+          </div>
+    
+          <button
+            type="submit"
+            class="btn"
+            [disabled]="postForm.invalid"
+          >
+            Publish
+          </button>
+        </form>
       </article>
-    </ng-container>
-  
-    <ng-template #notFound>
-      <p>Sorry, we couldn’t find that post.</p>
-    </ng-template>
-  </ng-template>
-  
-  <!-- recursive comment list -->
-  <ng-template #commentList let-comments>
-    <ul class="comment-list">
-      <li *ngFor="let c of comments;" class="comment-item">
-        <p *ngIf="c.isDeleted" class="comment-deleted">User deleted comment</p>
-        <p *ngIf="!c.isDeleted" class="comment-text"><strong>{{ c.user.userName }}:</strong> {{ c.text }}</p>
-  
-        <ng-container *ngIf="c.replies?.length">
-          <ul class="replies-list">
-            <ng-container
-              *ngTemplateOutlet="commentList; context: { $implicit: c.replies }">
-            </ng-container>
-          </ul>
+    </div>
+    
+
+    <!-- VIEW MODE -->
+    <ng-template #viewMode>
+      <div class="post-detail" *ngIf="loading; else loaded">
+        <p>Loading…</p>
+      </div>
+      
+      <ng-template #loaded>
+        <ng-container *ngIf="post; else notFound">
+          <article class="post-card">
+            <header>
+              <h2>{{ post.title }}</h2>
+              <p class="author">by {{ post.user?.userName }}</p>
+            </header>
+      
+            <section class="content">
+              {{ post.content }}
+            </section>
+      
+            <section class="comments-section">
+              <h3>Comments</h3>
+              <ng-container *ngIf="post.comments.length; else noComments">
+                <ng-container
+                  *ngTemplateOutlet="commentList; context: { $implicit: post.comments }">
+                </ng-container>
+              </ng-container>
+      
+              <ng-template #noComments>
+                <p class="no-comments">No comments yet. Be the first to chime in!</p>
+              </ng-template>
+            </section>
+          </article>
         </ng-container>
-      </li>
-    </ul>
-  </ng-template>
-</div>
+      
+        <ng-template #notFound>
+          <p>Sorry, we couldn’t find that post.</p>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <!-- recursive comment list -->
+    <ng-template #commentList let-comments>
+      <ul class="comment-list">
+        <li *ngFor="let c of comments;" class="comment-item">
+          <p *ngIf="c.isDeleted" class="comment-deleted">User deleted comment</p>
+          <p *ngIf="!c.isDeleted" class="comment-text">
+            <strong>{{ c.user.userName }}:</strong> {{ c.text }}
+          </p>
+    
+          <ng-container *ngIf="c.replies?.length">
+            <ul class="replies-list">
+              <ng-container
+                *ngTemplateOutlet="commentList; context: { $implicit: c.replies }">
+              </ng-container>
+            </ul>
+          </ng-container>
+        </li>
+      </ul>
+    </ng-template>
+    
+  </div>
 </div>

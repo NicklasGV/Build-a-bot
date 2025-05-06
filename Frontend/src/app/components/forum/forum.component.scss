@@ -15,6 +15,8 @@
 }
 
 .forum-header {
+  position: relative; 
+
   & h2 {
     display: flex;
     justify-content: center;
@@ -22,6 +24,12 @@
   & p {
     display: flex;
     justify-content: center;
+  }
+
+  .btn--new-post {
+    position: absolute;
+    top: 0.5rem;    // tweak as needed
+    right: 0.5rem;  // tweak as needed
   }
 }
 
@@ -83,5 +91,20 @@
         max-height: 400px;   
         overflow-y: auto;
       }
+    }
+  }
+  .btn--new-post {
+    background-color: $BLURPLE;
+    color: $WHITE;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: lighten($BLURPLE, 8%);
     }
   }
