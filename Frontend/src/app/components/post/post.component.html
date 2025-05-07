@@ -14,8 +14,7 @@
   <div class="post-section">
 
     <!-- CREATE MODE -->
-    <div *ngIf="isCreateMode; else viewMode" style="max-width: 80vw; width: 100%;
-">
+    <div *ngIf="isCreateMode; else viewMode" style="max-width: 80vw; width: 100%;">
       <article class="post-card post-card--create">
         <header>
           <h2>Create a New Post</h2>
@@ -74,6 +73,22 @@
       
             <section class="comments-section">
               <h3>Comments</h3>
+              <div class="new-comment-box">
+                <ng-container *ngIf="currentUser.id; else needLogin">
+                  <textarea
+                    [(ngModel)]="newCommentText"
+                    placeholder="Add a comment..."
+                    rows="3"
+                    class="comment-textarea"
+                  ></textarea>
+                  <button class="btn-post" (click)="postComment()"><p>Post Comment</p></button>
+                </ng-container>
+                <ng-template #needLogin>
+                  <p class="login-prompt">
+                    <a [routerLink]="['/login']">Log in</a> to leave a comment.
+                  </p>
+                </ng-template>
+              </div>
               <ng-container *ngIf="post.comments.length; else noComments">
                 <ng-container
                   *ngTemplateOutlet="commentList; context: { $implicit: post.comments }">
@@ -96,21 +111,45 @@
     <!-- recursive comment list -->
     <ng-template #commentList let-comments>
       <ul class="comment-list">
-        <li *ngFor="let c of comments;" class="comment-item">
-          <p *ngIf="c.isDeleted" class="comment-deleted">User deleted comment</p>
-          <p *ngIf="!c.isDeleted" class="comment-text">
-            <strong>{{ c.user.userName }}:</strong> {{ c.text }}
-          </p>
-    
+        <li *ngFor="let c of comments" class="comment-item" [class.replying]="activeReplyId === c.id" 
+            (mouseenter)="hoveredId = c.id" (mouseleave)="hoveredId == null">
+          <p 
+          class="comment-text" 
+          [class.replying]="activeReplyId === c.id"
+          (click)="currentUser.id && toggleReply(c.id)"
+        >
+          <strong>{{ c.user.userName }}:</strong> {{ c.text }}
+      
+          <button
+            *ngIf="currentUser.id"
+            class="reply-button"
+            (click)="toggleReply(c.id); $event.stopPropagation()"
+          >
+            {{ activeReplyId === c.id ? 'Cancel' : 'Reply' }}
+          </button>
+        </p>
+      
+          <!-- reply form -->
+          <div *ngIf="activeReplyId === c.id" class="reply-form">
+            <textarea
+              [(ngModel)]="replyTextMap[c.id]"
+              rows="2"
+              placeholder="Write a reply..."
+              class="comment-textarea"
+            ></textarea>
+            <button class="btn-reply" (click)="postReply(c.id)"><p>Send</p></button>
+            <button class="btn-reply btn-secondary" (click)="toggleReply(0)"><p>Cancel</p></button>
+          </div>
           <ng-container *ngIf="c.replies?.length">
             <ul class="replies-list">
               <ng-container
-                *ngTemplateOutlet="commentList; context: { $implicit: c.replies }">
-              </ng-container>
+                *ngTemplateOutlet="commentList; context: { $implicit: c.replies }"
+              ></ng-container>
             </ul>
           </ng-container>
         </li>
       </ul>
+      
     </ng-template>
     
   </div>
