@@ -1,9 +1,9 @@
 import { Comment } from './comment.model';
-import { User } from './user.model';
+import { resetUser, User } from './user.model';
 
 export interface Post {
     id: number;
-    user: User | null;
+    user: User;
     userId: number;
     title: string;
     content: string;
@@ -14,7 +14,7 @@ export interface Post {
 export function resetPost() {
     return { 
         id: 0, 
-        user: null,
+        user: resetUser(),
         userId: 0,
         title: '', 
         content: '', 

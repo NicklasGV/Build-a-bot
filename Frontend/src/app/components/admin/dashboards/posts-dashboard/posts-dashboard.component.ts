@@ -1,13 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { switchMap, map } from 'rxjs';
-import { Role, constRoles } from '../../../../models/role.model';
-import { User, resetUser } from '../../../../models/user.model';
+import { Role, constRoles } from '../../../../models/role.model';;
 import { ScriptService } from '../../../../services/script.service';
-import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SnackbarService } from '../../../../services/snackbar.service';
+import { PostService } from '../../../../services/post.service';
+import { Post, resetPost } from '../../../../models/post.model';
+import { UserService } from '../../../../services/user.service';
+import { Comment } from '../../../../models/comment.model';
 
 @Component({
   selector: 'app-posts-dashboard',
@@ -22,30 +24,34 @@ import { SnackbarService } from '../../../../services/snackbar.service';
 })
 export class PostsDashboardComponent {
   message: string = "";
-  users: User[] = [];
-  user: User = resetUser();
-  roles: Role[] = [];
+  posts: Post[] = [];
+  post: Post = resetPost();
+  users: { id: number; userName: string }[] = [];
   formData = new FormData();
 
-  sortField: 'id' | 'email' | 'userName' | 'role' = 'id';
+  sortField: 'id' | 'title' | 'userName' | 'text' | 'createdAt' | 'commentsCount' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
   
   constructor(
+      private postService: PostService,
       private userService: UserService,
-      private scriptService: ScriptService,
       private snackbar: SnackbarService
     ) {}
 
   ngOnInit() {
-    this.userService.getAll().subscribe(x => this.users = x);
-    this.roles = constRoles;
+    this.postService.getAll().subscribe(x => this.posts = x);
+    this.userService.getAll().subscribe({
+      next: users => this.users = users,
+      error: err =>
+        console.error('Failed to load users', err)
+    });
   }
 
-  sortBy(field: 'id' | 'email' | 'userName' | 'role') {
+  sortBy(field: 'id' | 'title' | 'userName' | 'text' | 'createdAt' | 'commentsCount') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-      this.users.reverse();
+      this.posts.reverse();
     } else {
       this.sortField = field;
       this.sortDir   = 'asc';
@@ -54,17 +60,17 @@ export class PostsDashboardComponent {
   }
 
   private applySort() {
-    this.users.sort((a, b) => {
+    this.posts.sort((a, b) => {
       let aVal: any, bVal: any;
 
       switch (this.sortField) {
         case 'userName':
-          aVal = a.userName;
-          bVal = b.userName;
+          aVal = a.user?.userName;
+          bVal = b.user?.userName;
           break;
-        case 'role':
-          aVal = a.scripts;
-          bVal = b.scripts;
+        case 'text':
+          aVal = a.content;
+          bVal = b.content;
           break;
         default:
           aVal = (a as any)[this.sortField];
@@ -83,28 +89,37 @@ export class PostsDashboardComponent {
     });
 
     if (this.sortDir === 'desc') {
-      this.users.reverse();
+      this.posts.reverse();
     }
   }
 
-  editUser(user: User) {
-    Object.assign(this.user, user);
+  getTotalComments(comments: Comment[] = []): number {
+    return comments.reduce(
+      (sum, comment) =>
+        sum + 1 + this.getTotalComments(comment.replies), // add 1 for this comment, then recurse
+      0
+    );
+  }
+
+  editPost(post: Post) {
+    Object.assign(this.post, post);
   }
 
   cancelEdit() {
-    this.user = resetUser();
+    this.post = resetPost();
       this.snackbar.openSnackBar('Post canceled.', '','warning');
   }
 
   onSubmit() {
     this.message = "";
-      if (this.user.id == 0) {
+    console.log(this.post);
+      if (this.post.id == 0) {
         //create
-        this.userService.create(this.user)
+        this.postService.create(this.post)
         .subscribe({
           next: (x) => {
-            this.users.push(x);
-            this.user = resetUser();
+            this.posts.push(x);
+            this.post = resetPost();
             this.snackbar.openSnackBar("Post created", '', 'success');
           },
           error: (err) => {
@@ -115,26 +130,27 @@ export class PostsDashboardComponent {
         });
       } else {
         //update
-        this.userService.update(this.user)
+        this.postService.update(this.post)
         .subscribe({
           error: (err) => {
             this.message = Object.values(err.error.errors).join(", ");
             this.snackbar.openSnackBar(this.message, '', 'error');
           },
           complete: () => {
-            this.userService.getAll().subscribe(x => this.users = x);
-            this.user = resetUser();
+            this.postService.getAll().subscribe(x => this.posts = x);
+            this.post = resetPost();
             this.snackbar.openSnackBar("Post updated", '', 'success');
           }
         });
       }
-      this.user = resetUser();
+      this.post = resetPost();
   }
 
-  deleteUser(id: number) {
-    this.userService.delete(id).subscribe({
-      next: () => this.users = this.users.filter(u => u.id !== id),
+  deletePost(id: number) {
+    this.postService.delete(id).subscribe({
+      next: () => this.posts = this.posts.filter(p => p.id !== id),
       error: err => console.error(err)
     });
   }
+  
 }

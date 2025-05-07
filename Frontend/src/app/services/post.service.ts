@@ -35,4 +35,15 @@ export class PostService {
 
         return this.http.post<Post>(this.apiUrl, formData);
       }
+
+  update(post: Post): Observable<Post> {
+    const formData = new FormData();
+    if (post.user?.id) {
+      formData.append('userId', post.user.id.toString())
+    }
+    formData.append('Title', post.title);
+    formData.append('Content', post.content);
+
+    return this.http.put<Post>(this.apiUrl + post.id, formData);
+  }
 }

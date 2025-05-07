@@ -1,84 +1,64 @@
-<div class="user-section">
+<div class="post-section">
   <div class="form-section card">
-    <h1>User Dashboard</h1>
+    <h1>Post Dashboard</h1>
     <form #f="ngForm"
           (ngSubmit)="onSubmit()"
-          class="user-form"
+          class="post-form"
           novalidate>
       <input
         type="hidden"
-        [(ngModel)]="user.id"
+        [(ngModel)]="post.id"
         name="id"
       />
       <div class="field">
-        <label for="email">Email</label>
+        <label for="title">Title</label>
         <input
-          id="email"
-          type="email"
-          placeholder="you@example.com"
+          id="title"
+          type="title"
+          placeholder="title"
           required
-          email
-          [(ngModel)]="user.email"
-          name="email"
-          #emailModel="ngModel"
+          title
+          [(ngModel)]="post.title"
+          name="title"
+          #titleModel="ngModel"
         />
-        <div class="error-message" *ngIf="emailModel.invalid && emailModel.touched">
-          <small *ngIf="emailModel.errors?.['required']">Email is required.</small>
-          <small *ngIf="emailModel.errors?.['email']">Invalid email.</small>
+        <div class="error-message" *ngIf="titleModel.invalid && titleModel.touched">
+          <small *ngIf="titleModel.errors?.['required']">Title is required.</small>
         </div>
       </div>
+
       <div class="field">
-        <label for="userName">Username</label>
-        <input
-          id="userName"
-          type="text"
-          placeholder="johndoe"
-          required
-          minlength="3"
-          [(ngModel)]="user.userName"
-          name="userName"
-          #userNameModel="ngModel"
-        />
-        <div class="error-message" *ngIf="userNameModel.invalid && userNameModel.touched">
-          <small *ngIf="userNameModel.errors?.['required']">Username is required.</small>
-          <small *ngIf="userNameModel.errors?.['minlength']">
-            Minimum 3 characters.
-          </small>
-        </div>
-      </div>
-      <div class="field">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          required
-          [(ngModel)]="user.password"
-          name="password"
-          #passwordModel="ngModel"
-        />
-        <div class="error-message" *ngIf="passwordModel.invalid && passwordModel.touched">
-          <small>Password is required.</small>
-        </div>
-      </div>
-      <div class="field">
-        <label for="role">Role</label>
+        <label for="userId">Owner</label>
         <select
-          id="role"
+          id="userId"
           required
-          [(ngModel)]="user.role"
-          name="role"
-          #roleModel="ngModel"
+          [(ngModel)]="post.user.id"
+          name="userId"
         >
-          <option [ngValue]="null" disabled>— select role —</option>
-          <option *ngFor="let r of roles" [ngValue]="r.id">{{ r.name }}</option>
+          <option [ngValue]="''" disabled>— select user —</option>
+          <option *ngFor="let u of users" [ngValue]="u.id">
+            {{ u.userName }}
+          </option>
         </select>
-        <div class="error-message" *ngIf="roleModel.invalid && roleModel.touched">
-          <small>Role is required.</small>
+      </div>
+
+      <div class="field">
+        <label for="content">Content</label>
+        <input
+          id="content"
+          type="content"
+          required
+          [(ngModel)]="post.content"
+          name="content"
+          #contentModel="ngModel"
+        />
+        <div class="error-message" *ngIf="contentModel.invalid && contentModel.touched">
+          <small>Content is required.</small>
         </div>
       </div>
       <div class="actions">
         <button type="submit" [disabled]="f.invalid">
-          {{ user.id ? 'Update User' : 'Create User' }}
+          {{ post.id ? 'Update Post' : 'Create Post' }}
         </button>
         <button
           *ngIf="f.dirty"
@@ -96,27 +76,35 @@
           <th class="sorting" (click)="sortBy('id')">
             ID <span *ngIf="sortField==='id'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
           </th>
-          <th class="sorting" (click)="sortBy('email')">
-            Email <span *ngIf="sortField==='email'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          <th class="sorting" (click)="sortBy('title')">
+            Title <span *ngIf="sortField==='title'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th class="sorting" (click)="sortBy('text')">
+            Content <span *ngIf="sortField==='text'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
           </th>
           <th class="sorting" (click)="sortBy('userName')">
             Username <span *ngIf="sortField==='userName'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
           </th>
-          <th class="sorting" (click)="sortBy('role')">
-            Role <span *ngIf="sortField==='role'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          <th class="sorting" (click)="sortBy('createdAt')">
+            Created At <span *ngIf="sortField==='createdAt'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
+          </th>
+          <th class="sorting" (click)="sortBy('commentsCount')">
+            Comments <span *ngIf="sortField==='commentsCount'">{{ sortDir==='asc' ? '▲':'▼' }}</span>
           </th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let u of users">
-          <td>{{ u.id }}</td>
-          <td>{{ u.email }}</td>
-          <td>{{ u.userName }}</td>
-          <td>{{ u.role ?? '—' }}</td>
+        <tr *ngFor="let p of posts">
+          <td>{{ p.id }}</td>
+          <td>{{ p.title}}</td>
+          <td>{{ p.content }}</td>
+          <td>{{ p.user.userName }}</td>
+          <td>{{ p.createdAt | date:'short' }}</td>
+          <td>{{ getTotalComments(p.comments) }}</td>
           <td class="table-actions">
-            <button class="edit-btn" (click)="editUser(u)">Edit</button>
-            <button class="delete-btn" (click)="deleteUser(u.id)">Delete</button>
+            <button class="edit-btn" (click)="editPost(p)">Edit</button>
+            <button class="delete-btn" (click)="deletePost(p.id)">Delete</button>
           </td>
         </tr>
       </tbody>
