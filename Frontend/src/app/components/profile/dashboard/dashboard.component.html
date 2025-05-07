@@ -43,9 +43,15 @@
         [class.active]="selectedTab === 'posts'">
         Posts
       </button>
+      <button
+        (click)="selectTab('edit')"
+        [class.active]="selectedTab === 'edit'">
+        Edit Profile
+      </button>
     </div>
     <div class="dashboard-section">
       <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
       <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
+      <app-edit-profile *ngIf="selectedTab === 'edit'"></app-edit-profile>
     </div>
 </div>

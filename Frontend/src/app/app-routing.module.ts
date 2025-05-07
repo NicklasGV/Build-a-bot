@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserBotsComponent } from './components/profile/user-bots/user-bots.component';
 import { UserPostsComponent } from './components/profile/user-posts/user-posts.component';
+import { AuthGuard } from './services/Guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -60,7 +61,7 @@ const routes: Routes = [
   },
   {
     path: 'admin/admin-dashboard', loadComponent: () =>
-    import('./components/admin/admin-dashboard/admin-dashboard.component').then(it => it.AdminDashboardComponent)
+    import('./components/admin/admin-dashboard/admin-dashboard.component').then(it => it.AdminDashboardComponent), canActivate: [AuthGuard]
   },
 ];
 

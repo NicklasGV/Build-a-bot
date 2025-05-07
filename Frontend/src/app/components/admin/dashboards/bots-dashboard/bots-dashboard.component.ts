@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { switchMap, map } from 'rxjs';
 import { Role, constRoles } from '../../../../models/role.model';
 import { User, resetUser } from '../../../../models/user.model';
@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BotService } from '../../../../services/bot.service';
 import { Bot, resetBot } from '../../../../models/bot.model';
-import { Script } from '../../../../models/script.model';
+import { resetScript, Script } from '../../../../models/script.model';
+import { SnackbarService } from '../../../../services/snackbar.service';
 
 @Component({
   selector: 'app-bots-dashboard',
@@ -17,40 +18,56 @@ import { Script } from '../../../../models/script.model';
   imports: [
       CommonModule,
       HttpClientModule,
-      ReactiveFormsModule
+      FormsModule
     ],
   templateUrl: './bots-dashboard.component.html',
   styleUrl: './bots-dashboard.component.scss'
 })
 export class BotsDashboardComponent implements OnInit{
+  message: string = '';
   bots: Bot[] = [];
-
+  bot: Bot = resetBot();
+  users: { id: number; userName: string }[] = [];
+  scripts: Script[] = [];
+  script: Script = resetScript();
+    
   sortField: 'id' | 'name' | 'userName' | 'scriptCount' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
-  private botService = inject(BotService);
-  private fb = inject(FormBuilder);
-
-  botForm = this.fb.group({
-    id: new FormControl<number>(0),
-    name: new FormControl<string>('', {
-                nonNullable: true,
-                validators: [Validators.required]
-             }),
-    user: new FormControl<User | null>(null, {
-                validators: [Validators.required]
-             }),
-    scripts: new FormControl<Script[]>([], {
-                nonNullable: true
-             })
-  });
+  constructor(
+      private botService: BotService,
+      private userService: UserService,
+      private snackBar: SnackbarService,
+      private scriptService: ScriptService,
+    ) {}
 
   ngOnInit() {
+    this.loadScripts();
+    this.loadUsers();
+    this.loadBots();
+  }
+
+  private loadScripts(): void {
+    this.scriptService.getAll().subscribe({
+      next: scripts => this.scripts = scripts,
+      error: err   => console.error('Failed to load scripts', err)
+    });
+  }
+
+  private loadUsers(): void {
+    this.userService.getAll().subscribe({
+      next: users => this.users = users,
+      error: err =>
+        console.error('Failed to load users', err)
+    });
+  }
+
+  private loadBots(): void {
     this.botService.getAll().subscribe({
       next: bots => this.bots = bots,
-      error: err   => console.error(err)
+      error: err =>
+        console.error('Failed to load users', err)
     });
-    console.log(this.bots)
   }
 
   sortBy(field: 'id' | 'name' | 'userName' | 'scriptCount') {
@@ -99,39 +116,49 @@ export class BotsDashboardComponent implements OnInit{
     }
   }
 
-  editBot(botId: number) {
-    
+  editBot(bot: Bot) {
+    Object.assign(this.bot, bot)
   }
 
   cancelEdit() {
-    this.botForm.reset({
-      id:      0,
-      name:    '',
-      user:    null,
-      scripts: []
-    });
+    this.bot = resetBot();
   }
 
-  onSubmit() {
-    if (this.botForm.invalid) return;
-
-    const raw = this.botForm.value;
-    const payload: Bot = {
-      ...resetBot(),
-      id: raw.id!,
-      name: raw.name!,
-      user: raw.user as User,
-      botScripts:  raw.scripts as Script[]
-    };
-
-    this.botService.create(payload).subscribe({
-      next: created => {
-        this.bots.push(created);
-        this.cancelEdit();
-      },
-      error: err => console.error(err)
-    });
-  }
+  async onSubmit() {
+      this.message = "";
+      if (this.bot.id == 0) {
+        //create
+        this.botService.create(this.bot)
+        .subscribe({
+          next: (x) => {
+            this.bots.push(x);
+            this.bot = resetBot();
+            this.snackBar.openSnackBar("Bot created", '', 'success');
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackBar.openSnackBar(this.message, '', 'error');
+          }
+        });
+      } else {
+        //update
+        this.botService.update(this.bot)
+        .subscribe({
+          error: (err) => {
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackBar.openSnackBar(this.message, '', 'error');
+          },
+          complete: () => {
+            this.userService.getAll().subscribe(x => this.users = x);
+            this.bot = resetBot();
+            this.snackBar.openSnackBar("Bot updated", '', 'success');
+          }
+        });
+      }
+      this.bot = resetBot();
+      this.script = resetScript();
+    }
 
   deleteBot(id: number) {
     this.botService.delete(id).subscribe({

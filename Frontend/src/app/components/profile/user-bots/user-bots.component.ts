@@ -24,7 +24,7 @@ import { BotBuilderComponent } from '../../../shared/bot-builder/bot-builder.com
   styleUrls: ['./user-bots.component.scss'],
   imports: [CommonModule, RouterModule, BotBuilderComponent],
 })
-export class UserBotsComponent implements OnInit, AfterViewInit {
+export class UserBotsComponent implements OnInit {
   bots: Bot[] = [];
   loading = false;
 
@@ -71,15 +71,5 @@ export class UserBotsComponent implements OnInit, AfterViewInit {
           this.loading = false;
         },
       });
-  }
-
-  ngAfterViewInit(): void {
-    this.dialogEl.addEventListener('cancel', () => this.dialogEl.close());
-  }
-
-  onBackdropClick(event: MouseEvent): void {
-    if (event.target === this.dialogEl) {
-      this.dialogEl.close();
-    }
   }
 }
