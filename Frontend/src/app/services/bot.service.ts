@@ -37,4 +37,19 @@ export class BotService {
 
     return this.http.post<Bot>(this.apiUrl, formData);
   }
+
+  update(bot: Bot): Observable<Bot> {
+    const formData = new FormData();
+
+    formData.append('UserId', bot.user.id.toString());
+    formData.append('Name', bot.name);
+
+    if (bot.botScripts) {
+      bot.botScripts.forEach(script => {
+        formData.append('scriptIds', script.id.toString());
+      });
+    }
+
+    return this.http.put<Bot>(this.apiUrl + bot.id, formData);
+  }
 }

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { UserBotsComponent } from "../user-bots/user-bots.component";
 import { UserPostsComponent } from "../user-posts/user-posts.component";
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { EditProfileComponent } from "../edit-profile/edit-profile.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,8 @@ import { filter, switchMap, tap } from 'rxjs/operators';
     CommonModule,
     RouterModule,
     UserBotsComponent,
-    UserPostsComponent
+    UserPostsComponent,
+    EditProfileComponent
 ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -26,9 +28,9 @@ export class DashboardComponent {
   message: string = "";
   user: User = resetUser();
   msg: string = '';
-  selectedTab: 'bots' | 'posts' = 'bots';
+  selectedTab: 'bots'|'posts'|'edit' = 'bots';
 
-  selectTab(tab: 'bots' | 'posts') {
+  selectTab(tab: 'bots'|'posts'|'edit') {
     this.selectedTab = tab;
   }
 

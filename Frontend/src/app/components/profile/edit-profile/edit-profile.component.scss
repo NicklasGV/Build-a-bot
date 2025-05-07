@@ -1,7 +1,7 @@
-@use '../../../../../styles/colors' as *;
-@use '../../../../../styles/media'  as *;
+@use '../../../../styles/colors' as *;
+@use '../../../../styles/media'  as *;
 
-.bot-section {
+.user-section {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -35,12 +35,13 @@
 }
 
 .form-section {
-  .bot-form {
+  .user-form {
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
 
     .field {
+      position: relative;
       display: flex;
       flex-direction: column;
       
@@ -65,16 +66,45 @@
           box-shadow: 0 0 0 2px rgba($BLURPLE, 0.2);
         }
       }
+      .error-message {
+        position: absolute;
+        bottom: 55%;               // sit right above the field
+        right: 2%;                    // align to the left edge
+        margin-bottom: 0.5rem;      // a little gap
+        background: $FADED_RED;
+        color: $RED;
+        border: 1px solid $FADED_RED;
+        border-radius: 8px;
+        padding: 8px;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 10;
+        width: auto;
+        max-width: 90%;
+        white-space: normal;
+        word-break: break-word;
+      
+        &::after {
+          content: '';
+          position: absolute;
+          top: 100%;                // arrow’s tip touches the bottom of the bubble
+          left: 12px;               // tweak to point at your input
+          border-width: 6px 6px 0 6px;
+          border-style: solid;
+          border-color: $FADED_RED transparent transparent transparent;
+        }
+      }
     }
 
     .actions {
       grid-column: 1 / -1;
       display: flex;
       justify-content: flex-end;
+      gap: 16px;
 
       button {
         background-color: $BLURPLE;
-        color: #fff;
+        color: $WHITE;
         padding: 0.6rem 1.2rem;
         border: none;
         border-radius: 4px;
@@ -95,22 +125,12 @@
   }
 }
 
-.field select[multiple] {
-  height: auto;   /* let size="5" take effect */
-}
-
-/* override the default so checked items look distinct */
-.field select[multiple] option:checked {
-  background-color: $BLURPLE !important;
-  color: #fff         !important;
-}
-
 .sorting,
 .sorting * {
   cursor: pointer;
 }
 
-.bots-table {
+.users-table {
   overflow-x: visible;
 
   @include mobileAndTabletV {
@@ -119,7 +139,7 @@
     padding-bottom: 0.5rem;
   }
 
-  .bot-table {
+  .user-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -132,13 +152,15 @@
       padding: 0.75rem 1rem;
       border-bottom: 1px solid $LIGHT_BLURPLE;
       text-align: center;
+      cursor: pointer;
     }
     thead {
       background-color: lighten($BLURPLE, 15%);
       th {
-        color: #fff;
+        color: $WHITE;
         font-weight: 600;
         align-items: center;
+        cursor: pointer !important;
       }
     }
 
@@ -174,7 +196,7 @@
 
       &:hover {
         background-color: $BLURPLE;
-        color: #fff;
+        color: $WHITE;
       }
     }
   }

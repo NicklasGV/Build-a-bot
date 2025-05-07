@@ -133,7 +133,7 @@ export class BotsDashboardComponent implements OnInit{
           next: (x) => {
             this.bots.push(x);
             this.bot = resetBot();
-            this.snackBar.openSnackBar("Script created", '', 'success');
+            this.snackBar.openSnackBar("Bot created", '', 'success');
           },
           error: (err) => {
             console.log(err);
@@ -142,20 +142,21 @@ export class BotsDashboardComponent implements OnInit{
           }
         });
       } else {
-        // //update
-        // this.botService.update(this.bot.id, this.bot)
-        // .subscribe({
-        //   error: (err) => {
-        //     this.message = Object.values(err.error.errors).join(", ");
-        //     this.snackBar.openSnackBar(this.message, '', 'error');
-        //   },
-        //   complete: () => {
-        //     this.userService.getAll().subscribe(x => this.users = x);
-        //     this.bot = resetScript();
-        //     this.snackBar.openSnackBar("Script updated", '', 'success');
-        //   }
-        // });
+        //update
+        this.botService.update(this.bot)
+        .subscribe({
+          error: (err) => {
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackBar.openSnackBar(this.message, '', 'error');
+          },
+          complete: () => {
+            this.userService.getAll().subscribe(x => this.users = x);
+            this.bot = resetBot();
+            this.snackBar.openSnackBar("Bot updated", '', 'success');
+          }
+        });
       }
+      this.bot = resetBot();
       this.script = resetScript();
     }
 

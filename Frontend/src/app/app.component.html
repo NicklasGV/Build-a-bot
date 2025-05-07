@@ -1,17 +1,19 @@
 <app-header />
-<router-outlet/>
-<button
-  *ngIf="showBackToTop"
-  class="back-to-top"
-  (click)="scrollToTop()"
-  title="Back to top"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 -61 130 61"
-    class="arrow-icon"
+<main class="content">
+  <router-outlet/>
+  <button
+    *ngIf="showBackToTop"
+    class="back-to-top"
+    (click)="scrollToTop()"
+    title="Back to top"
   >
-    <path d="M0,0 L65,-61 L130,0 Z" fill="currentColor"/>
-  </svg>
-</button>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -61 130 61"
+      class="arrow-icon"
+    >
+      <path d="M0,0 L65,-61 L130,0 Z" fill="currentColor"/>
+    </svg>
+  </button>
+</main>
 <app-footer/>

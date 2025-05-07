@@ -231,8 +231,20 @@
 
 .download-script-section {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 16px;
+}
+
+.download-checkbox-label {
+  display: flex;
+  justify-content: center;
+  color: $LIGHT_BLURPLE;
+  margin-bottom: 16px;
+  font-size: 18px;
+  @include mobileAndTabletV {
+    font-size: 16px;
+  }
 }
 
 .download-script-button {

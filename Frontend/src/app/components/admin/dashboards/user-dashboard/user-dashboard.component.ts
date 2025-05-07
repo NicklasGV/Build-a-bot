@@ -6,7 +6,6 @@ import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Role, constRoles } from '../../../../models/role.model';
-import { switchMap, map } from 'rxjs/operators';
 import { SnackbarService } from '../../../../services/snackbar.service';
 
 @Component({

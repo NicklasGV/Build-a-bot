@@ -79,9 +79,20 @@
       </div>
     </div>
     <div class="download-script-section">
-      <button class="download-script-button"
-              [disabled]="selectedScripts.length === 0 || !botName.trim()"
-              (click)="generateScript()">
+      <label class="checkbox download-checkbox-label">
+        <input
+          type="checkbox"
+          name="saveToLibrary"
+          [(ngModel)]="saveToLibrary"
+          checked
+        >
+        Save to bot library
+      </label>
+      <button
+        class="download-script-button"
+        [disabled]="selectedScripts.length === 0 || !botName.trim()"
+        (click)="generateScript()"
+      >
         <p>Generate &amp; download</p>
       </button>
     </div>

@@ -80,4 +80,9 @@ export class ScriptService {
       responseType: 'text'
     });
   }
+
+  getGuideContent(filename: string): Observable<string> {
+    const url = `${environment.devApiUrl}/${encodeURIComponent(filename)}`;
+    return this.http.get(url, { responseType: 'text' });
+  }
 }

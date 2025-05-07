@@ -1,0 +1,86 @@
+<div class="user-section">
+    <div class="form-section card">
+        <h1>User edit</h1>
+        <form #f="ngForm"
+                (ngSubmit)="onSubmit()"
+                class="user-form"
+                novalidate>
+            <input
+            type="hidden"
+            [(ngModel)]="user.id"
+            name="id"
+            />
+            <div class="field">
+            <label for="email">Email</label>
+            <input
+                id="email"
+                type="email"
+                required
+                email
+                [(ngModel)]="user.email"
+                name="email"
+                #emailModel="ngModel"
+            />
+            <div class="error-message" *ngIf="emailModel.invalid && emailModel.touched">
+                <small *ngIf="emailModel.errors?.['required']">Email is required.</small>
+                <small *ngIf="emailModel.errors?.['email']">Invalid email.</small>
+            </div>
+            </div>
+            <div class="field">
+            <label for="userName">Username</label>
+            <input
+                id="userName"
+                type="text"
+                required
+                userName
+                minlength="3"
+                [(ngModel)]="user.userName"
+                name="userName"
+                #userNameModel="ngModel"
+            />
+            <div class="error-message" *ngIf="userNameModel.invalid && userNameModel.touched">
+                <small *ngIf="userNameModel.errors?.['required']">Username is required.</small>
+                <small *ngIf="userNameModel.errors?.['minlength']">
+                Minimum 3 characters.
+                </small>
+            </div>
+            </div>
+            <div class="field">
+            <label for="password">Password</label>
+            <input
+                id="password"
+                type="password"
+                [(ngModel)]="user.password"
+                name="password"
+                #passwordModel="ngModel"
+            />
+            </div>
+            <div class="field">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  [(ngModel)]="confirmPassword"
+                  name="confirmPassword"
+                  #confirmModel="ngModel"
+                  (ngModelChange)="checkPasswords()"
+                />
+                <div class="error-message"
+                     *ngIf="!passwordsMatch && confirmModel.touched">
+                  <small>Passwords do not match.</small>
+                </div>
+              </div>
+            <div class="actions">
+            <button type="submit" [disabled]="f.invalid">
+                Update profile
+            </button>
+            <button
+                *ngIf="f.dirty"
+                type="button"
+                (click)="cancelEdit()"
+                class="cancel-btn"
+            >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

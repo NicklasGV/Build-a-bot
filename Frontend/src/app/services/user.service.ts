@@ -32,8 +32,8 @@ export class UserService {
     formData.append('userName', user.userName);
 
     if (user.scripts) {
-      user.scripts.forEach(scriptId => {
-        formData.append('scripts', scriptId.toString());
+      user.scripts.forEach(script => {
+        formData.append('scripts', script.id.toString());
       });
     }
 
@@ -55,8 +55,9 @@ export class UserService {
     }
 
     if (user.scripts) {
-      user.scripts.forEach(scriptId => {
-        formData.append('scriptIds', scriptId.toString());
+      console.log(user.scripts);
+      user.scripts.forEach(script => {
+        formData.append('scriptIds', script.id.toString());
       });
     }
 

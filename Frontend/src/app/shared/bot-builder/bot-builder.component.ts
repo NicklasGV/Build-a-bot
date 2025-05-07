@@ -1,17 +1,21 @@
+import { join } from 'node:path';
+import { Bot, resetBot } from './../../models/bot.model';
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-
-import { Script } from './../../models/script.model';
-import { Bot } from '../../models/bot.model';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { forkJoin, map, Observable, of } from 'rxjs';
+import {  Script } from './../../models/script.model';
 import { User, resetUser } from '../../models/user.model';
 
 import { ScriptService }    from '../../services/script.service';
 import { AuthService }      from '../../services/auth.service';
 import { SnackbarService }  from './../../services/snackbar.service';
 import { Router } from '@angular/router';
+import { BotService } from '../../services/bot.service';
 
 @Component({
   selector: 'app-bot-builder',
@@ -34,6 +38,10 @@ export class BotBuilderComponent implements OnInit {
   showPreview   = false;
   scriptContent = '';
   editorOptions = { theme: 'vs-dark', language: 'python' };
+  message: string = '';
+  bots: Bot[] = [];
+  bot: Bot = resetBot();
+  saveToLibrary = true;
   @ViewChild('botBuilderDialog', { static: false })
   botBuilderDialogRef!: ElementRef<HTMLDialogElement>;
 
@@ -47,6 +55,7 @@ export class BotBuilderComponent implements OnInit {
   private router    = inject(Router);
   private authService   = inject(AuthService);
   private snackBar      = inject(SnackbarService);
+  private botService = inject(BotService);
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -105,7 +114,6 @@ export class BotBuilderComponent implements OnInit {
   }
 
   handleLoginClick(): void {
-    const fullScript = this.buildBotScript();
     const bot: Bot = {
       id: 0,
       name: this.botName,
@@ -116,11 +124,31 @@ export class BotBuilderComponent implements OnInit {
     this.router.navigate(['/login'], { queryParams: { redirect: this.router.url } });
   }
 
+  private buildBotGuides(): Observable<string> {
+    if (this.selectedScripts.length === 0) {
+      return of('');
+    }
+  
+    const guideStreams = this.selectedScripts.map(s =>
+      this.scriptService.getGuideContent(s.guideLocationId).pipe(
+        map(content =>
+          `--- Guide: ${s.title} ---\n\n${content.trim()}\n`
+        )
+      )
+    );
+  
+    return forkJoin(guideStreams).pipe(
+      map(guides => guides.join('\n'))
+    );
+  }
+
   private buildBotScript(): string {
     const baseImports = [
       `import discord`,
       `from discord.ext import commands`,
-      ``,
+    ];
+
+    const botCommand = [
       `bot = commands.Bot(command_prefix='!')`,
       ``
     ];
@@ -161,6 +189,7 @@ export class BotBuilderComponent implements OnInit {
   
     return [
       allImports.join('\n'),
+      botCommand.join('\n'),
       bodies.join('\n\n'),
       footer.join('\n')
     ].join('\n');
@@ -170,25 +199,80 @@ export class BotBuilderComponent implements OnInit {
     this.scriptContent = this.buildBotScript();
   }
 
-  generateScript(): void {
-    const fullScript = this.buildBotScript();
-    const blob = new Blob([fullScript], { type: 'text/plain' });
-    const url  = window.URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    const fileName = this.botName
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_|_$/g, '') || 'bot';
-    
-    a.href     = url;
-    a.download = `${fileName}.py`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-    if (this.currentUser?.id == 0) {
-      this.botBuilderDialogRef.nativeElement.showModal();
+  saveBot(): void {
+    if (this.currentUser?.id == 0 && this.botName.trim() === '') {
+      this.message = "";
+      if (this.bot.id == 0) {
+        //create
+        this.botService.create(this.bot)
+        .subscribe({
+          next: (x) => {
+            this.bots.push(x);
+            this.bot = resetBot();
+            this.snackBar.openSnackBar("Script created", '', 'success');
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackBar.openSnackBar(this.message, '', 'error');
+          }
+        });
+      } else {
+        // //update
+        // this.botService.update(this.bot.id, this.bot)
+        // .subscribe({
+        //   error: (err) => {
+        //     this.message = Object.values(err.error.errors).join(", ");
+        //     this.snackBar.openSnackBar(this.message, '', 'error');
+        //   },
+        //   complete: () => {
+        //     this.userService.getAll().subscribe(x => this.users = x);
+        //     this.bot = resetScript();
+        //     this.snackBar.openSnackBar("Script updated", '', 'success');
+        //   }
+        // });
+      }
+      this.bot = resetBot();
     }
+  }
+
+  generateScript(): void {
+    const fileBaseName = this.botName
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '') || 'bot';
+  
+    // 1) build the Python code
+    const pythonCode = this.buildBotScript();
+  
+    // 2) build the combined Guide.txt
+    this.buildBotGuides().subscribe(guidesText => {
+      const zip = new JSZip();
+  
+      // add the .py file
+      zip.file(`${fileBaseName}.py`, pythonCode);
+  
+      // add the Guide.txt
+      zip.file(`Guide.txt`, guidesText);
+  
+      // generate the zip
+      zip.generateAsync({ type: 'blob' }).then(blob => {
+        // trigger download
+        saveAs(blob, `${fileBaseName}.zip`);
+  
+        // then — if you still want to save the bot to your library...
+        if (this.saveToLibrary) {
+          this.bot.name       = this.botName.trim();
+          this.bot.user       = this.currentUser || resetUser();
+          this.bot.botScripts = this.selectedScripts;
+          this.saveBot();
+        } else if (this.currentUser?.id === 0) {
+          this.botBuilderDialogRef.nativeElement.showModal();
+        }
+      });
+    }, err => {
+      this.snackBar.openSnackBar('Failed to load guides', '', 'error');
+    });
   }
 }

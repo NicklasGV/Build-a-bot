@@ -36,16 +36,19 @@
         </div>
 
         <div class="field">
-          <label for="userId">Scripts</label>
+          <label for="scriptIds">Scripts</label>
           <select
-            id="userId"
+            id="scriptIds"
+            name="scriptIds"
+            multiple
             required
             [(ngModel)]="bot.botScripts"
-            name="userId"
           >
-            <option [ngValue]="''" disabled>— select Scripts —</option>
-            <option *ngFor="let s of scripts" [ngValue]="s.id">
-              {{ s.title }}
+            <option
+              *ngFor="let s of scripts"
+              [ngValue]="s"
+            >
+              {{s.id}} - {{ s.title }}
             </option>
           </select>
         </div>
@@ -55,7 +58,7 @@
             type="submit"
             [disabled]="botForm.invalid"
           >
-            {{ bot.id ? 'Update Script' : 'Create Script' }}
+            {{ bot.id ? 'Update Bot' : 'Create Bot' }}
           </button>
           <button
             *ngIf="botForm.valid"

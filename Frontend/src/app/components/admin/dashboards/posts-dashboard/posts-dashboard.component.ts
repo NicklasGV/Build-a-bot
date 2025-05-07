@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { switchMap, map } from 'rxjs';
 import { Role, constRoles } from '../../../../models/role.model';
 import { User, resetUser } from '../../../../models/user.model';
@@ -7,6 +7,7 @@ import { ScriptService } from '../../../../services/script.service';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SnackbarService } from '../../../../services/snackbar.service';
 
 @Component({
   selector: 'app-posts-dashboard',
@@ -14,110 +15,120 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
       CommonModule,
       HttpClientModule,
-      ReactiveFormsModule
+      FormsModule
     ],
   templateUrl: './posts-dashboard.component.html',
   styleUrl: './posts-dashboard.component.scss'
 })
 export class PostsDashboardComponent {
-users: User[] = [];
+  message: string = "";
+  users: User[] = [];
+  user: User = resetUser();
   roles: Role[] = [];
-  private userService = inject(UserService);
-  private scriptService = inject(ScriptService)
-  private fb = inject(FormBuilder);
+  formData = new FormData();
 
-
-  userForm = this.fb.group({
-    id:       [0],
-    email:    ['', { nonNullable: true, validators: [] }],
-    userName: ['', { nonNullable: true, validators: [] }],
-    password: ['', { nonNullable: true, validators: [] }],
-    scripts:  [[] as number[]],
-    role:     [null as number | null]
-  });
+  sortField: 'id' | 'email' | 'userName' | 'role' = 'id';
+  sortDir: 'asc' | 'desc' = 'asc';
+  
+  constructor(
+      private userService: UserService,
+      private scriptService: ScriptService,
+      private snackbar: SnackbarService
+    ) {}
 
   ngOnInit() {
-    this.userService.getAll().subscribe({
-      next: users => this.users = users,
-      error: err   => console.error(err)
-    });
+    this.userService.getAll().subscribe(x => this.users = x);
     this.roles = constRoles;
   }
 
-  editUser(userId: number) {
-    this.userService.findById(userId).pipe(
-      switchMap(user =>
-        this.scriptService.getAll().pipe(
-          map(allScripts => ({ user, allScripts }))
-        )
-      )
-    )
-    .subscribe({
-      next: ({ user, allScripts }) => {
-        const scriptIds = allScripts
-          .filter(s => s.user.id === user.id)
-          .map(s => s.id);
+  sortBy(field: 'id' | 'email' | 'userName' | 'role') {
+    if (this.sortField === field) {
+      // same column → just flip direction
+      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      this.users.reverse();
+    } else {
+      this.sortField = field;
+      this.sortDir   = 'asc';
+      this.applySort();
+    }
+  }
 
-        this.userForm.patchValue({
-          id:       user.id,
-          email:    user.email,
-          userName: user.userName,
-          password: '',
-          scripts:  scriptIds,
-          role:     user.role ?? 0
-        });
-      },
-      error: err => console.error(err)
+  private applySort() {
+    this.users.sort((a, b) => {
+      let aVal: any, bVal: any;
+
+      switch (this.sortField) {
+        case 'userName':
+          aVal = a.userName;
+          bVal = b.userName;
+          break;
+        case 'role':
+          aVal = a.scripts;
+          bVal = b.scripts;
+          break;
+        default:
+          aVal = (a as any)[this.sortField];
+          bVal = (b as any)[this.sortField];
+      }
+
+      // null-safe compare
+      if (aVal == null) return -1;
+      if (bVal == null) return 1;
+
+      // string vs number
+      if (typeof aVal === 'string') {
+        return aVal.localeCompare(bVal);
+      }
+      return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
     });
+
+    if (this.sortDir === 'desc') {
+      this.users.reverse();
+    }
+  }
+
+  editUser(user: User) {
+    Object.assign(this.user, user);
   }
 
   cancelEdit() {
-    // reset the form back to “create” mode
-    this.userForm.reset({
-      id:       0,
-      email:    '',
-      userName: '',
-      password: '',
-      scripts:  [],
-      role:     null
-    });
+    this.user = resetUser();
+      this.snackbar.openSnackBar('Post canceled.', '','warning');
   }
 
   onSubmit() {
-    if (this.userForm.invalid) return;
-
-    const raw = this.userForm.value;
-    const payload: User = {
-      ...resetUser(),
-      id:       raw.id!,
-      email:    raw.email!,
-      userName: raw.userName!,
-      password: raw.password!,
-      scripts:  (raw.scripts || []).map(id => id.toString()),
-      role:     raw.role ?? undefined
-    };
-
-    if (payload.id && payload.id !== 0) {
-      // **Update** existing
-      this.userService.update(payload).subscribe({
-        next: updated => {
-          // swap it into our local list
-          const idx = this.users.findIndex(u => u.id === updated.id);
-          if (idx > -1) this.users[idx] = updated;
-          this.cancelEdit();
-        },
-        error: err => console.error(err)
-      });
-    } else {
-      // **Create** new
-      this.userService.create(payload).subscribe({
-        next: created => {
-          this.users.push(created);
-          this.cancelEdit();
-        },
-        error: err => console.error(err)
-      });
-    }
+    this.message = "";
+      if (this.user.id == 0) {
+        //create
+        this.userService.create(this.user)
+        .subscribe({
+          next: (x) => {
+            this.users.push(x);
+            this.user = resetUser();
+            this.snackbar.openSnackBar("Post created", '', 'success');
+          },
+          error: (err) => {
+            console.log(err);
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackbar.openSnackBar(this.message, '', 'error');
+          }
+        });
+      } else {
+        //update
+        this.userService.update(this.user)
+        .subscribe({
+          error: (err) => {
+            this.message = Object.values(err.error.errors).join(", ");
+            this.snackbar.openSnackBar(this.message, '', 'error');
+          },
+          complete: () => {
+            this.userService.getAll().subscribe(x => this.users = x);
+            this.user = resetUser();
+            this.snackbar.openSnackBar("Post updated", '', 'success');
+          }
+        });
+      }
+      this.user = resetUser();
   }
 
   deleteUser(id: number) {

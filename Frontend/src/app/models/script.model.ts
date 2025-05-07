@@ -18,7 +18,7 @@ export interface Script {
     content: string | '';
   }
   
-  export function resetScript() {
+  export function resetScript(): Script {
     return { 
         id: 0, 
         title: '', 

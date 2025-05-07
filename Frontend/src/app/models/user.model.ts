@@ -1,4 +1,5 @@
 import { Bot } from "./bot.model";
+import { Script, resetScript } from "./script.model";
 
 export interface User {
   id: number;
@@ -7,7 +8,7 @@ export interface User {
   email: string;
   password: string;
   role?: number;
-  scripts: string[];
+  scripts: Script[];
   bots: Bot[];
   favorites: string[];
   token?: string;
