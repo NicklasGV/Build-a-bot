@@ -44,6 +44,11 @@
         Posts
       </button>
       <button
+        (click)="selectTab('scripts')"
+        [class.active]="selectedTab === 'scripts'">
+        Scripts
+      </button>
+      <button
         (click)="selectTab('edit')"
         [class.active]="selectedTab === 'edit'">
         Edit Profile
@@ -52,6 +57,7 @@
     <div class="dashboard-section">
       <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
       <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
+      <app-user-scripts *ngIf="selectedTab === 'scripts'"></app-user-scripts>
       <app-edit-profile *ngIf="selectedTab === 'edit'"></app-edit-profile>
     </div>
 </div>

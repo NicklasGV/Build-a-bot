@@ -64,7 +64,7 @@
 
       <!-- File upload vs. inline editor -->
       <div *ngIf="!isWriting" class="field">
-        <label for="scriptFile">File</label>
+        <label for="scriptFile">Script File</label>
         <input
           id="scriptFile"
           class="file-field"
@@ -81,24 +81,23 @@
           Write Script
         </button>
       </div>
-
       <div *ngIf="isWriting" class="field">
         <label>Write Script</label>
-        <div class="manoca-card-body">
+        <div class="monaco-card-body">
           <ngx-monaco-editor
             class="monaco-editor-body"
             [options]="editorOptions"
             [(ngModel)]="scriptText"
             name="scriptText"
           ></ngx-monaco-editor>
-        </div>
-        <button
-          type="button"
-          class="script-writing-btn"
-          (click)="toggleEditor()"
-        >
-          Back to File Upload
-        </button>
+      </div>
+      <button
+        type="button"
+        class="script-writing-btn"
+        (click)="toggleEditor()"
+      >
+        Back to File Upload
+      </button>
       </div>
 
       <!-- Actions -->
@@ -107,7 +106,7 @@
           type="submit"
           [disabled]="scriptForm.invalid"
         >
-          {{ script.id ? 'Update Script' : 'Create Script' }}
+          Create script
         </button>
         <button
           *ngIf="scriptForm.valid"
