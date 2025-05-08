@@ -1,7 +1,7 @@
 @use '../../../../../styles/colors' as *;
 @use '../../../../../styles/media'  as *;
 
-.user-section {
+.post-section {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -95,7 +95,7 @@
   }
 }
 
-.users-table {
+.posts-table {
   overflow-x: visible;
 
   @include mobileAndTabletV {
@@ -104,7 +104,7 @@
     padding-bottom: 0.5rem;
   }
 
-  .user-table {
+  .post-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
