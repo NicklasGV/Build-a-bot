@@ -39,6 +39,7 @@
             {
                 comment.Text = updateComment.Text;
                 comment.CreatedAt = DateTime.Now;
+                comment.IsDeleted = updateComment.IsDeleted;
                 await _databaseContext.SaveChangesAsync();
                 comment = await FindByIdAsync(comment.Id);
             }

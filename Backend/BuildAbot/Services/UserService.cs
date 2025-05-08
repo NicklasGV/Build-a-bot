@@ -100,6 +100,7 @@ namespace BuildAbot.Services
                     Id = x.Id,
                     Title = x.Title,
                     Content = x.Content,
+                    CreatedAt = x.CreatedAt,
                 }).ToList();
             }
 
@@ -110,6 +111,8 @@ namespace BuildAbot.Services
                     Id = x.Id,
                     Text = x.Text,
                     PostId = x.PostId,
+                    CreatedAt = x.CreatedAt,
+                    IsDeleted = x.IsDeleted,
                 }).ToList();
             }
 
