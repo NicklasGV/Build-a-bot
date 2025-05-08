@@ -1,0 +1,73 @@
+@use '../../../../styles/colors' as *;
+@use '../../../../styles/media'  as *;
+
+.posts-table {
+    overflow-x: visible;
+  
+    @include mobileAndTabletV {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+    }
+  
+    .post-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      color: $BLURPLE;
+      @include mobileAndTabletV {
+        min-width: 600px;
+        width: max-content;
+      }
+      th, td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid $LIGHT_BLURPLE;
+        text-align: center;
+      }
+      thead {
+        background-color: lighten($BLURPLE, 15%);
+        th {
+          color: #fff;
+          font-weight: 600;
+          align-items: center;
+        }
+      }
+  
+      tbody {
+        tr {
+          transition: background-color 0.2s;
+  
+          &:nth-child(odd) {
+            background-color: lighten($DARK, 2%);
+          }
+          &:hover {
+            background-color: lighten($DARK, 4%);
+          }
+        }
+      }
+  
+      .table-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+  
+      .delete-btn,
+      .view-btn {
+        background: transparent;
+        color: $BLURPLE;
+        border: 1px solid $BLURPLE;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+  
+        &:hover {
+          background-color: $BLURPLE;
+          color: #fff;
+        }
+      }
+    }
+  }
+  

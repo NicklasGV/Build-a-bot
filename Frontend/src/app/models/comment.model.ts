@@ -1,10 +1,11 @@
-import { Post } from "./post.model";
-import { User } from "./user.model";
+import { Post, resetPost } from "./post.model";
+import { resetUser, User } from "./user.model";
 
 export interface Comment {
     id: number;
     user: User;
     post: Post;
+    postId: number;
     text: string;
     createdAt: Date;
     isDeleted: boolean | null; 
@@ -15,14 +16,14 @@ export interface Comment {
   
   export function resetComment() {
     return { 
-        id: 0, 
-        user: [],
-        post: [],
-        content: '', 
-        createdAt: new Date(), 
-        updatedAt: new Date(),
-        isDeleted: false,
-        parentCommentId: null,
-        replies: [],
+      id: 0,
+      user: resetUser(),
+      post: resetPost(),
+      postId: 0,
+      text: '',
+      createdAt: new Date(),
+      isDeleted: false,
+      parentCommentId: null,
+      replies: []
     };
   }
