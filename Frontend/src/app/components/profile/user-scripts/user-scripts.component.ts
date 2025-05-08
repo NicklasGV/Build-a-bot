@@ -195,7 +195,7 @@ export class UserScriptsComponent {
   }
 
   deleteScript(scriptId: number): void {
-    this.scriptService.delete(scriptId).subscribe({
+    this.scriptService.softDelete(scriptId).subscribe({
       next: () => {
         this.scripts = this.scripts.filter(s => s.id !== scriptId);
       },

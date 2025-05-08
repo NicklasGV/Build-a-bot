@@ -1,6 +1,7 @@
 @use "../../../styles/colors.scss" as *;
 @use "../../../styles/media.scss" as *;
 
+// HERO SECTION STYLING
 .hero-buttons {
     display: flex;
     flex-direction: row;
@@ -58,6 +59,7 @@
     }
 }
 
+// BOT SECTION STYLING
 .bot-section h3,
 .bot-section p {
     margin: 16px;
@@ -84,7 +86,7 @@
     }
 }
 
-.reverse {
+.bot-info-container.reverse {
     flex-direction: row-reverse;
 }
 
@@ -150,4 +152,201 @@
     @include mobileAndTabletV {
         font-size: 14px;
     }
+}
+
+// GUIDE SECTION STYLING
+.guide-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px 0;
+    counter-reset: step;                                 // reset on the parent
+    background-color: lighten($color: $DARK, $amount: 5);
+}
+
+.guide-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 20px;
+    margin-bottom: 16px;
+    counter-increment: step;
+    @include desktop {
+        width: 1000px;
+        max-width: 90vw;
+    }
+    @include mobileAndTabletV {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 32px;
+    }
+}
+
+.guide-info-container.reverse {
+    flex-direction: row-reverse;
+    @include mobileAndTabletV {
+        flex-direction: column-reverse;
+    }
+}
+
+.guide-image {
+    width: 500px;
+    height: 250px;
+    border-radius: 8px;
+    object-fit: contain;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        transform: translateY(-2px);
+    }
+    @include mobileAndTabletV {
+        width: 260px;
+        height: 140px;
+    }
+}
+
+.guide-text {
+    position: relative;                                  // make this the badge’s containing block
+    padding: 24px;
+    border-radius: 8px;
+    font-size: 24px;
+    width: 50vw;
+    max-width: 400px;
+    color: $LIGHT_BLURPLE;
+    text-align: center;
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    &::before {
+      content: counter(step);
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 32px;
+      height: 32px;
+      background: $BLURPLE;
+      color: $WHITE;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+    }
+    & strong {
+        font-weight: bold;
+        color: $BLURPLE;
+    }
+    & ul li {
+        margin: 8px 0;
+    }
+    @include mobileAndTabletV {
+      font-size: 18px;
+    }
+  }
+
+.guide-header h3 {
+    margin: 8px 0;
+}
+
+.guide-description {
+    font-size: 14px;
+    color: $LIGHT_BLURPLE;
+    text-align: left;
+    margin-top: 16px;
+    & a {
+        color: $BLURPLE;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    @include mobileAndTabletV {
+        font-size: 14px;
+    }
+}
+
+.image-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: zoom-out;
+}
+
+.image-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  cursor: default;
+}
+
+// FAQ SECTION STYLING
+.faq-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px 0;
+}
+
+.faq-header {
+    color: $BLURPLE;
+    text-align: center;
+    margin-bottom: 16px;
+
+    @include mobileAndTabletV {
+        font-size: 24px;
+    }
+}
+
+.faq-content {
+    width: 100%;
+    max-width: 70vw;
+    @include mobileAndTabletV {
+        max-width: 90vw;
+    }
+}
+  
+.faq-item {
+  border-bottom: 1px solid $BLURPLE;
+  color: $BLURPLE;
+}
+  
+.faq-item summary {
+  font-weight: bold;
+  padding: 16px;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+}
+
+.faq-item summary::marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '▸';
+  position: absolute;
+  right: 16px;
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.faq-item p {
+  padding: 0 16px 16px;
+  margin: 0;
+  line-height: 1.5;
+  color: $LIGHT_BLURPLE;
+  font-size: 16px;
 }

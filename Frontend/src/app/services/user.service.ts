@@ -20,6 +20,10 @@ export class UserService {
     return this.http.delete<User>(this.apiUrl + userId);
   }
 
+  softDelete(userId: number): Observable<User> {
+    return this.http.delete<User>(this.apiUrl + 'Status/' + userId);
+  }
+
   findById(userId: number): Observable<User> {
     return this.http.get<User>(this.apiUrl + userId);
   }

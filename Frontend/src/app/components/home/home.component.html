@@ -91,5 +91,144 @@
             </div>
       </div>
     </div>
+
+    <div class="guide-section">
+        <div class="guide-info-container">
+              <div class="guide-image-wrapper">
+                  <img
+                  #imgEl1
+                  src="../../../assets/images/Applications.webp" 
+                  alt="Chat bot" 
+                  class="guide-image" 
+                  height="240px" 
+                  width="240px"
+                  (click)="openImage(imgEl1.src, imgEl1.alt)"
+                  >
+              </div>
+              <div class="guide-text">
+                  <div class="guide-header">
+                      <h3>Set up your discord bot application</h3>
+                  </div>
+                  <div class="guide-description">
+                      <p>To Start you need to navigate to <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a> from here you need to find the "New Application" button marked on the image to the left. <br><br> From here you pick a name for your bot &#40;This can be changed later on&#41;</p>
+                  </div>
+              </div>
+        </div>
+        <div class="guide-info-container reverse">
+              <div class="guide-image-wrapper">
+                  <img 
+                  #imgEl2
+                  src="../../../assets/images/Bot-section-token.webp" 
+                  alt="Cool bot" 
+                  class="guide-image" 
+                  height="240px" 
+                  width="240px"
+                  (click)="openImage(imgEl2.src, imgEl2.alt)"
+                  >
+              </div>
+              <div class="guide-text">
+                  <div class="guide-header">
+                      <h3>Create your bot user</h3>
+                  </div>
+                  <div class="guide-description">
+                      <p>Navigate to the "Bot" section located on the left navigations menu. <br><br> If a popup appears select "Add bot" to confirm your choice <br><br> From here you can personalize your bot however much you want. <br><br> You can also generate a bot token used to start your bot <strong>Keep this token private and secure</strong></p>
+                  </div>
+              </div>
+        </div>
+        <div class="guide-info-container">
+              <div class="guide-image-wrapper">
+                  <img 
+                  #imgEl3
+                  src="../../../assets/images/Permissions needed.gif" 
+                  alt="Nerd bot" 
+                  class="guide-image" 
+                  height="240px" 
+                  width="240px"
+                  (click)="openImage(imgEl3.src, imgEl3.alt)"
+                  >
+              </div>
+              <div class="guide-text">
+                  <div class="guide-header">
+                      <h3>Configure the bot permissions</h3>
+                  </div>
+                  <div class="guide-description">
+                      <p>
+                        Keeping on the bot page, locate the "Privileged Gateway Intents" section a bit further down, here you'll need to activate these three intents: 
+                    </p>
+                    <ul>
+                        <li>
+                            PRESENCE INTENT
+                        </li>
+                        <li>
+                            SERVER MEMBERS INTENT
+                        </li>
+                        <li>
+                            MESSAGE CONTENT INTENT
+                        </li>
+                    </ul>
+                    <p>
+                        Don't forget to save the changes made.
+                    </p>
+                  </div>
+              </div>
+        </div>
+        <div class="guide-info-container reverse">
+            <div class="guide-image-wrapper">
+                <img 
+                #imgEl4
+                src="../../../assets/images/Installation.webp" 
+                alt="Cool bot" 
+                class="guide-image" 
+                height="240px" 
+                width="240px"
+                (click)="openImage(imgEl4.src, imgEl4.alt)"
+                >
+            </div>
+            <div class="guide-text">
+                <div class="guide-header">
+                    <h3>Start your bot up</h3>
+                </div>
+                <div class="guide-description">
+                    <p>Now that you have everything set, you can start making your invitation link for the bot, to be able to add it to a server.</p>
+                    <p>When created the link doesnt contain everything needed for it to work, you'll need to add atleast <strong>&scope=bot</strong> this is to show the invitation that its for a bot.</p>
+                    <p>And for permissions &#40;Can be added in the Bot section in the bottom&#41; a line like this is added at the back of the url. <strong>&permissions=8 </strong> &#40;This permission is for Administrator&#41;</p>
+                </div>
+            </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="faq-header">
+          <h2>FAQ</h2>
+        </div>
+        <div class="faq-content">
+          <details class="faq-item">
+            <summary>How do I create a bot?</summary>
+            <p>To create a bot, you need to sign up for an account and then follow the instructions in the bot creation section.</p>
+          </details>
+      
+          <details class="faq-item">
+            <summary>What is the cost of using this service?</summary>
+            <p>The service is free to use, but some features may require a subscription.</p>
+          </details>
+      
+          <details class="faq-item">
+            <summary>Can I customize my bot?</summary>
+            <p>Yes, you can customize your bot with different features and settings.</p>
+          </details>
+        </div>
+    </div>
+    <div
+    class="image-modal-backdrop"
+    *ngIf="selectedImage"
+    (click)="closeImage()"
+    >
+    <img
+        class="image-modal-content"
+        [src]="selectedImage.src"
+        [alt]="selectedImage.alt"
+        (click)="$event.stopPropagation()"
+    />
+    </div>
 </div>
   

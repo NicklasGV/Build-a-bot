@@ -115,12 +115,6 @@
         <table class="script-table">
           <thead>
             <tr>
-              <th class="sorting" (click)="sortBy('id')">
-                ID
-                <span *ngIf="sortField==='id'">
-                  {{ sortDir==='asc' ? '▲' : '▼' }}
-                </span>
-              </th>
               <th class="sorting" (click)="sortBy('title')">
                 Title
                 <span *ngIf="sortField==='title'">
@@ -139,7 +133,6 @@
           </thead>
           <tbody>
             <tr *ngFor="let s of scripts">
-              <td>{{ s.id }}</td>
               <td>{{ s.title }}</td>
               <td>{{ s.description }}</td>
               <td>
