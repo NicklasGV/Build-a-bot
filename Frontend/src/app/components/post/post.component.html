@@ -63,13 +63,32 @@
         <ng-container *ngIf="post; else notFound">
           <article class="post-card">
             <header>
-              <h2>{{ post.title }}</h2>
-              <p class="author">by {{ post.user.userName }}</p>
+              <h2 *ngIf="!postEditMode">{{ post.title }}</h2>
+              <input *ngIf="postEditMode" [(ngModel)]="post.title" />
+            
+              <p class="author">
+                by {{ post.user.userName }}
+                <!-- only show the cog if I own it -->
+                <i
+                  class="bi bi-gear-fill edit-icon"
+                  *ngIf="currentUser.id === post.user.id"
+                  (click)="enablePostEdit()"
+                  title="Edit post"
+                ></i>
+              </p>
             </header>
-      
             <section class="content">
-              {{ post.content }}
+              <p *ngIf="!postEditMode">{{ post.content }}</p>
+              <textarea
+                *ngIf="postEditMode"
+                rows="6"
+                [(ngModel)]="post.content"
+              ></textarea>
             </section>
+            <footer *ngIf="postEditMode" class="edit-actions">
+              <button (click)="savePostEdit()" class="btn">Save</button>
+              <button (click)="cancelPostEdit()" class="btn btn-secondary">Cancel</button>
+            </footer>
       
             <section class="comments-section">
               <h3>Comments</h3>

@@ -23,6 +23,9 @@ export class PostComponent implements OnInit {
   loading = true;
   isCreateMode = false;
 
+  postEditMode = false;
+  private originalPost: Post | undefined;
+
   newCommentText = '';
   activeReplyId = 0;
   hoveredId?: number;
@@ -137,5 +140,22 @@ export class PostComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  enablePostEdit() {
+    this.originalPost = { ...this.post };
+    this.postEditMode = true;
+  }
+  
+  savePostEdit() {
+    this.postService.update(this.post).subscribe(updated => {
+      this.post = updated;
+      this.postEditMode = false;
+    });
+  }
+  
+  cancelPostEdit() {
+    this.post = this.originalPost!;
+    this.postEditMode = false;
   }
 }
