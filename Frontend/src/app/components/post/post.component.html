@@ -111,24 +111,33 @@
     <!-- recursive comment list -->
     <ng-template #commentList let-comments>
       <ul class="comment-list">
-        <li *ngFor="let c of comments" class="comment-item" [class.replying]="activeReplyId === c.id" 
-            (mouseenter)="hoveredId = c.id" (mouseleave)="hoveredId == null">
-          <p 
-          class="comment-text" 
-          [class.replying]="activeReplyId === c.id"
-          (click)="currentUser.id && toggleReply(c.id)"
-        >
-          <strong>{{ c.user.userName }}:</strong> {{ c.text }}
-      
-          <button
-            *ngIf="currentUser.id"
-            class="reply-button"
-            (click)="toggleReply(c.id); $event.stopPropagation()"
+        <li *ngFor="let c of comments" class="comment-item">
+    
+          <!-- unified comment line -->
+          <p
+            class="comment-text"
+            [class.comment-deleted]="c.isDeleted"
+            [class.replying]="activeReplyId === c.id"
+            (click)="currentUser.id && toggleReply(c.id)"
           >
-            {{ activeReplyId === c.id ? 'Cancel' : 'Reply' }}
-          </button>
-        </p>
-      
+            <!-- either username+text, or generic deleted message -->
+            <ng-container *ngIf="!c.isDeleted; else deletedLabel">
+              <strong>{{ c.user.userName }}:</strong> {{ c.text }}
+            </ng-container>
+            <ng-template #deletedLabel>
+              <em>User deleted comment</em>
+            </ng-template>
+    
+            <!-- reply / cancel button, only on hover or when open -->
+            <button
+              *ngIf="currentUser.id"
+              class="reply-button"
+              (click)="toggleReply(c.id); $event.stopPropagation()"
+            >
+              {{ activeReplyId === c.id ? 'Cancel' : 'Reply' }}
+            </button>
+          </p>
+    
           <!-- reply form -->
           <div *ngIf="activeReplyId === c.id" class="reply-form">
             <textarea
@@ -138,8 +147,9 @@
               class="comment-textarea"
             ></textarea>
             <button class="btn-reply" (click)="postReply(c.id)"><p>Send</p></button>
-            <button class="btn-reply btn-secondary" (click)="toggleReply(0)"><p>Cancel</p></button>
           </div>
+    
+          <!-- nested replies -->
           <ng-container *ngIf="c.replies?.length">
             <ul class="replies-list">
               <ng-container
@@ -149,8 +159,8 @@
           </ng-container>
         </li>
       </ul>
-      
     </ng-template>
+    
     
   </div>
 </div>

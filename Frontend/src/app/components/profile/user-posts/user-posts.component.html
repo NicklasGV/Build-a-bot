@@ -1,1 +1,34 @@
-<p>user-posts works!</p>
+<div class="posts-table card">
+    <table class="post-table">
+        <thead>
+            <tr>
+
+                <th (click)="sortBy('type')" class="sorting">
+                    Type <span *ngIf="sortField==='type'">{{ sortDir==='asc'?'▲':'▼' }}</span>
+                </th>
+                <th (click)="sortBy('title')" class="sorting">
+                    Title <span *ngIf="sortField==='title'">{{ sortDir==='asc'?'▲':'▼' }}</span>
+                </th>
+                <th (click)="sortBy('text')" class="sorting">
+                    Content <span *ngIf="sortField==='text'">{{ sortDir==='asc'?'▲':'▼' }}</span>
+                </th>
+                <th (click)="sortBy('createdAt')" class="sorting">
+                    Created At <span *ngIf="sortField==='createdAt'">{{ sortDir==='asc'?'▲':'▼' }}</span>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of feedItems">
+                <td>{{ item.type }}</td>
+                <td>{{ item.title || '' }}</td>
+                <td>{{ item.text }}</td>
+                <td>{{ item.createdAt | date:'short' }}</td>
+                <td class="table-actions">
+                    <button class="view-btn" [routerLink]="['/post' , item.postId]">View</button>
+                    <button class="delete-btn" (click)="deleteItem(item)">Delete</button>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

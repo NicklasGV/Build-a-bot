@@ -16,6 +16,10 @@ export class CommentService {
     return this.http.delete<Comment>(this.apiUrl + commentId);
   }
 
+  userdelete(commentId: number): Observable<Comment> {
+    return this.http.delete<Comment>(this.apiUrl + 'Status/' + commentId);
+  }
+
   findById(commentId: number): Observable<Comment> {
     return this.http.get<Comment>(this.apiUrl + commentId);
   }

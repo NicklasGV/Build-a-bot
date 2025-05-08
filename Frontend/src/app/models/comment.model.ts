@@ -5,6 +5,7 @@ export interface Comment {
     id: number;
     user: User;
     post: Post;
+    postId: number;
     text: string;
     createdAt: Date;
     isDeleted: boolean | null; 
@@ -18,6 +19,7 @@ export interface Comment {
       id: 0,
       user: resetUser(),
       post: resetPost(),
+      postId: 0,
       text: '',
       createdAt: new Date(),
       isDeleted: false,

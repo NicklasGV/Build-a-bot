@@ -1,4 +1,6 @@
 import { Bot } from "./bot.model";
+import { Comment } from "./comment.model";
+import { Post } from "./post.model";
 import { Script, resetScript } from "./script.model";
 
 export interface User {
@@ -12,6 +14,8 @@ export interface User {
   bots: Bot[];
   favorites: string[];
   token?: string;
+  posts: Post[];
+  comments: Comment[];
 }
 
 export function resetUser() {
@@ -22,6 +26,8 @@ export function resetUser() {
     password: '',
     scripts: [],
     bots: [],
-    favorites: []
+    favorites: [],
+    posts: [],
+    comments: [],
 };
 }

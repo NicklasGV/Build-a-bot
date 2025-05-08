@@ -127,7 +127,9 @@ export class AuthService {
             password: '',
             scripts: [],
             bots: [],
-            favorites: []
+            favorites: [],
+            posts: [],
+            comments: [],
           };
           this.storage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
