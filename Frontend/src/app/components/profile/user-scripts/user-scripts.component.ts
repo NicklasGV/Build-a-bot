@@ -33,6 +33,7 @@ export class UserScriptsComponent {
   selectedGuideFile: File | null = null;
   selectedScriptFile: File | null = null;
   scriptText = '';
+  showCreator = false;
   editorOptions = {
     theme: 'vs-dark', language: 'python'
   };
@@ -52,6 +53,10 @@ export class UserScriptsComponent {
       this.user = user;
     });
     this.loadScripts();
+  }
+
+  toggleCreator() {
+    this.showCreator = !this.showCreator;
   }
 
   private loadScripts(): void {

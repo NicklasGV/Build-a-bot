@@ -1,7 +1,10 @@
 <div class="script-section">
-    <div class="form-section card">
+    <button class="creation-toggler" (click)="toggleCreator()">
+      {{ showCreator ? 'Hide Script Creator' : 'Add New Script' }}
+    </button>
+    <div *ngIf="showCreator" class="form-section card">
       <h1>Scripts Creator</h1>
-      <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="script-form">
+      <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="admin-creator-form">
         <!-- Hidden ID -->
         <input
           type="hidden"
@@ -111,8 +114,8 @@
         </div>
       </form>
     </div>
-    <div class="scripts-table card">
-        <table class="script-table">
+    <div class="items-table card">
+        <table class="item-table">
           <thead>
             <tr>
               <th class="sorting" (click)="sortBy('title')">

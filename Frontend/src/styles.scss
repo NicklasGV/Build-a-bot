@@ -265,3 +265,186 @@ $info-color:    #17a2b8;
 .mat-snack-bar-container {
   z-index: 2000 !important;
 }
+
+.creation-toggler {
+  background-color: $BLURPLE;
+  color: $WHITE;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: lighten($BLURPLE, 8%);
+  }
+}
+
+.sorting,
+.sorting * {
+  cursor: pointer;
+}
+
+.card {
+  background-color: lighten($DARK, 5%);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 90vw;
+
+  @include mobileAndTabletV {
+    max-width: 70vw;
+  }
+
+  h1 {
+    text-align: center;
+    color: $BLURPLE;
+  }
+}
+
+.form-section {
+  .admin-creator-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      
+      label {
+        margin-bottom: 12px;
+        font-weight: 500;
+        color: $BLURPLE;
+      }
+
+      input,
+      select {
+        padding: 8px 12px;
+        border: 1px solid $LIGHT_BLURPLE;
+        border-radius: 4px;
+        background-color: $DARK;
+        color: $BLURPLE;
+        font-size: 16px;
+
+        &:focus {
+          outline: none;
+          border-color: $BLURPLE;
+          box-shadow: 0 0 0 2px rgba($BLURPLE, 0.2);
+        }
+      }
+    }
+
+    .actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+
+      button {
+        background-color: $BLURPLE;
+        color: $WHITE;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        &:not(:disabled):hover {
+          background-color: darken($BLURPLE, 5%);
+        }
+      }
+    }
+  }
+}
+
+.items-table {
+  overflow-x: visible;
+
+  @include mobileAndTabletV {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .item-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: $BLURPLE;
+    @include mobileAndTabletV {
+      min-width: 600px;
+      width: max-content;
+    }
+    th, td {
+      padding: 8px 12px;
+      border-bottom: 1px solid $LIGHT_BLURPLE;
+      text-align: center;
+    }
+    thead {
+      background-color: lighten($BLURPLE, 15%);
+      th {
+        color: $WHITE;
+        font-weight: 600;
+        align-items: center;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background-color 0.2s;
+
+        &:nth-child(odd) {
+          background-color: lighten($DARK, 2%);
+        }
+        &:hover {
+          background-color: lighten($DARK, 4%);
+        }
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .delete-btn,
+    .edit-btn,
+    .view-btn {
+      background: transparent;
+      color: $BLURPLE;
+      border: 1px solid $BLURPLE;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+
+      &:hover {
+        background-color: $BLURPLE;
+        color: $WHITE;
+      }
+    }
+
+    .delete-btn {
+      background-color: $RED;
+      color: $FADED_RED;
+      border: 1px solid $RED;
+
+      &:hover {
+        background-color: darken($color: $RED, $amount: 10);
+        color: $WHITE;
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ export class ScriptsDashboardComponent {
     theme: 'vs-dark', language: 'python'
   };
 
-  sortField: 'id'|'title'|'description'|'user'|'filePath' = 'id';
+  sortField: 'id'|'title'|'description'|'user'|'codeFilePath'|'guideFilePath' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
   constructor(
@@ -82,7 +82,7 @@ export class ScriptsDashboardComponent {
     }
   }
 
-  sortBy(field: 'id'|'title'|'description'|'user'|'filePath') {
+  sortBy(field: 'id'|'title'|'description'|'user'|'codeFilePath'|'guideFilePath') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';

@@ -3,7 +3,7 @@
     <h1>User Dashboard</h1>
     <form #f="ngForm"
           (ngSubmit)="onSubmit()"
-          class="user-form"
+          class="admin-creator-form"
           novalidate>
       <input
         type="hidden"
@@ -89,8 +89,8 @@
       </div>
     </form>
   </div>
-  <div class="users-table card">
-    <table class="user-table">
+  <div class="items-table card">
+    <table class="item-table">
       <thead>
         <tr>
           <th class="sorting" (click)="sortBy('id')">
