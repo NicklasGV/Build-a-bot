@@ -26,9 +26,14 @@ export class PostComponent implements OnInit {
   postEditMode = false;
   private originalPost: Post | undefined;
 
+  
+
   newCommentText = '';
   activeReplyId = 0;
   hoveredId?: number;
+  editCommentId: number|null = null;
+editCommentText = '';
+
   replyTextMap: { [parentId: number]: string } = {};
 
   constructor(
@@ -157,5 +162,29 @@ export class PostComponent implements OnInit {
   cancelPostEdit() {
     this.post = this.originalPost!;
     this.postEditMode = false;
+  }
+
+  startEditComment(c: Comment) {
+    this.editCommentId = c.id;
+    this.editCommentText = c.text;
+  }
+  
+  saveCommentEdit(c: Comment) {
+    c.text = this.editCommentText.trim();
+    this.commentService.update(c).subscribe(_ => {
+      this.editCommentId = null;
+    });
+  }
+  
+  cancelCommentEdit() {
+    this.editCommentId = null;
+    this.editCommentText = '';
+  }
+  
+  deleteComment(c: Comment) {
+    if (!confirm('Delete this comment?')) { return; }
+    this.commentService.userdelete(c.id).subscribe(_ => {
+      c.isDeleted = true;
+    });
   }
 }

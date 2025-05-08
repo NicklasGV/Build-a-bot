@@ -42,4 +42,23 @@ export class CommentService {
 
         return this.http.post<Comment>(this.apiUrl, formData);
       }
+
+      update(comment: Comment): Observable<Comment> {
+        const formData = new FormData();
+    
+        if (comment.post?.id) {
+          formData.append('postId', comment.post.id.toString())
+        }
+        if (comment.user?.id) {
+          formData.append('userId', comment.user.id.toString())
+        }
+        if (comment.parentCommentId) {
+          formData.append('parentCommentId', comment.parentCommentId.toString())
+        }
+        formData.append('IsDeleted', 'false');
+        formData.append('Text', comment.text);
+        
+
+        return this.http.put<Comment>(this.apiUrl + comment.id, formData);
+      }
 }

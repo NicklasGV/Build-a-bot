@@ -320,3 +320,19 @@
   border-top: 1px solid lighten($DARK, 50%);
 }
 
+.comment-item {
+  position: relative;
+  .comment-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .comment-controls {
+      display: flex;
+      gap: 0.5rem;
+      visibility: hidden;
+    }
+    &:hover .comment-controls {
+      visibility: visible;
+    }
+  }
+}
