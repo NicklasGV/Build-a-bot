@@ -60,6 +60,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] BotRequest botRequest)
         {
@@ -78,6 +79,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPut]
         [Route("{botId}")]
         public async Task<IActionResult> UpdateAsync([FromRoute] int botId, [FromForm] BotRequest botRequest)
@@ -101,6 +103,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpDelete]
         [Route("{botId}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int botId)

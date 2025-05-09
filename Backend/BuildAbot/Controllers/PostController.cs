@@ -57,6 +57,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] PostRequest postRequest)
         {
@@ -75,6 +76,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateByIdAsync(int id, [FromForm] PostRequest postRequest)
         {
@@ -93,6 +95,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteByIdAsync(int id)
         {
