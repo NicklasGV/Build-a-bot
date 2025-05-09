@@ -45,6 +45,20 @@
                 <div class="script-card" *ngFor="let script of scripts" [class.active]="scriptStates[script.id].expanded">
                     <!-- Card Header -->
                     <div class="card-header">
+                        <button
+                        class="like-button"
+                        [class.liked]="isIdInArray(script, user.id)"
+                        (click)="toggleFavorite(script); $event.stopPropagation()"
+                        >
+                            <i
+                                class="bi"
+                                [ngClass]="
+                                isIdInArray(script, user.id)
+                                    ? 'bi-hand-thumbs-up-fill'
+                                    : 'bi-hand-thumbs-up'
+                                "
+                            ></i>
+                        </button>
                         <h3 class="card-title">{{ script.title }}</h3>
                         <span class="card-user">Made by {{ script.user.userName }}</span>
                     </div>

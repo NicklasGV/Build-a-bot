@@ -1,6 +1,6 @@
 import { DiscordCallbackComponent } from './components/discord-callback/discord-callback.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { UserBotsComponent } from './components/profile/user-bots/user-bots.component';
 import { UserPostsComponent } from './components/profile/user-posts/user-posts.component';
 import { AuthGuard } from './services/Guard/auth.guard';
@@ -65,8 +65,14 @@ const routes: Routes = [
   },
 ];
 
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 0],
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
