@@ -26,7 +26,8 @@ export class ScriptLibraryComponent {
   script: Script = resetScript();
   user: User = resetUser();
   expanded?: boolean = false;
-  activeTab?: 'about' | 'source';
+  activeTab?: 'tab1' | 'tab2';
+  hasGuide: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -47,10 +48,19 @@ export class ScriptLibraryComponent {
     this.scriptService.getAll().subscribe({
       next: (result) => {
         this.scripts = result.filter(s => s.status == null);
-
-        result.forEach(script => {
+        this.scripts.forEach(script => {
           if (!this.scriptStates[script.id]) {
-            this.scriptStates[script.id] = { expanded: false, activeTab: 'about' };
+            const hasGuide = !!script.guideLocationId?.trim();
+            this.scriptStates[script.id] = {
+              expanded: false,
+              activeTab: hasGuide ? 'tab1' : 'tab2',
+              loadingGuide: false,
+              loadingCode: false,
+              guideContent: undefined,
+              codeContent: undefined,
+              guideError: false,
+              codeError: false
+            };
           }
         });
       },
@@ -58,17 +68,69 @@ export class ScriptLibraryComponent {
   }
 
   toggleExpanded(scriptId: number): void {
-    if (!this.scriptStates[scriptId]) {
-      this.scriptStates[scriptId] = { expanded: false, activeTab: 'about' };
+    const state = this.scriptStates[scriptId];
+    state.expanded = !state.expanded;
+    // Optionally pre-load whichever tab is default:
+    if (state.expanded && state.activeTab === 'tab1') {
+      this.loadGuideContent(scriptId, this.getScript(scriptId).guideLocationId);
+    } else if (state.expanded && state.activeTab === 'tab2') {
+      this.loadCodeContent(scriptId, this.getScript(scriptId).codeLocationId);
     }
-    this.scriptStates[scriptId].expanded = !this.scriptStates[scriptId].expanded;
   }
 
-  setActiveTab(scriptId: number, tab: 'about' | 'source'): void {
-    if (!this.scriptStates[scriptId]) {
-      this.scriptStates[scriptId] = { expanded: false, activeTab: 'about' };
+  setActiveTab( scriptId: number, tab: 'tab1' | 'tab2', script: Script): void {
+    const state = this.scriptStates[scriptId];
+    if (tab === 'tab1' && !(script.guideLocationId?.trim())) {
+      return;
     }
-    this.scriptStates[scriptId].activeTab = tab;
+    state.activeTab = tab;
+
+    if (tab === 'tab1' && !state.guideContent && !state.loadingGuide) {
+      this.loadGuideContent(scriptId, script.guideLocationId);
+    }
+    if (tab === 'tab2' && !state.codeContent && !state.loadingCode) {
+      this.loadCodeContent(scriptId, script.codeLocationId);
+    }
+  }
+
+  private loadGuideContent(scriptId: number, filename: string) {
+    const state = this.scriptStates[scriptId];
+    state.loadingGuide = true;
+    state.guideError = false;
+
+    this.scriptService.getGuideContent(filename).subscribe({
+      next: content => {
+        state.guideContent = content;
+      },
+      error: () => {
+        state.guideError = true;
+      },
+      complete: () => {
+        state.loadingGuide = false;
+      }
+    });
+  }
+
+  private loadCodeContent(scriptId: number, filename: string) {
+    const state = this.scriptStates[scriptId];
+    state.loadingCode = true;
+    state.codeError = false;
+
+    this.scriptService.getScriptContent(filename).subscribe({
+      next: content => {
+        state.codeContent = content;
+      },
+      error: () => {
+        state.codeError = true;
+      },
+      complete: () => {
+        state.loadingCode = false;
+      }
+    });
+  }
+
+  private getScript(id: number): Script {
+    return this.scripts.find(s => s.id === id)!;
   }
 
   isIdInArray(script: any, targetId: any): boolean {

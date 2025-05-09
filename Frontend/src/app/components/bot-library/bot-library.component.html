@@ -58,22 +58,22 @@
                     <div class="tabs">
                         <button 
                             class="tab-button" 
-                            [class.active]="botStates[bot.id].activeTab === 'about'" 
-                            (click)="setActiveTab(bot.id, 'about')">
+                            [class.active]="botStates[bot.id].activeTab === 'tab1'" 
+                            (click)="setActiveTab(bot.id, 'tab1')">
                             Guide
                         </button>
                         <button 
                             class="tab-button" 
-                            [class.active]="botStates[bot.id].activeTab === 'source'" 
-                            (click)="setActiveTab(bot.id, 'source')">
+                            [class.active]="botStates[bot.id].activeTab === 'tab2'" 
+                            (click)="setActiveTab(bot.id, 'tab2')">
                             Source Code
                         </button>
                     </div>
                     <div class="tab-content">
-                        <div *ngIf="botStates[bot.id]?.activeTab === 'about'">
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'tab1'">
                             <p>{{ bot.name }}</p>
                         </div>
-                        <div *ngIf="botStates[bot.id]?.activeTab === 'source'">
+                        <div *ngIf="botStates[bot.id]?.activeTab === 'tab2'">
                             <p>Code ID: {{ bot.name }}</p>
                         </div>
                     </div>

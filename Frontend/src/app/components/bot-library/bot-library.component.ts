@@ -18,7 +18,7 @@ import { UIState } from '../../interfaces/IUiState';
 export class BotLibraryComponent {
   bots: Bot[] = [];
   expanded?: boolean = false;
-  activeTab?: 'about' | 'source';
+  activeTab?: 'tab1' | 'tab2';
 
   constructor(private botService: BotService, private router: Router) {}
   
@@ -31,7 +31,7 @@ export class BotLibraryComponent {
 
         result.forEach(bot => {
           if (!this.botStates[bot.id]) {
-            this.botStates[bot.id] = { expanded: false, activeTab: 'about' };
+            this.botStates[bot.id] = { expanded: false, activeTab: 'tab1' };
           }
         });
       },
@@ -41,14 +41,14 @@ export class BotLibraryComponent {
 
   toggleExpanded(botId: number): void {
     if (!this.botStates[botId]) {
-      this.botStates[botId] = { expanded: false, activeTab: 'about' };
+      this.botStates[botId] = { expanded: false, activeTab: 'tab1' };
     }
     this.botStates[botId].expanded = !this.botStates[botId].expanded;
   }
 
-  setActiveTab(botId: number, tab: 'about' | 'source'): void {
+  setActiveTab(botId: number, tab: 'tab1' | 'tab2'): void {
     if (!this.botStates[botId]) {
-      this.botStates[botId] = { expanded: false, activeTab: 'about' };
+      this.botStates[botId] = { expanded: false, activeTab: 'tab1' };
     }
     this.botStates[botId].activeTab = tab;
   }

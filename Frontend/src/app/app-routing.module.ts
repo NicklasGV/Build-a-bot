@@ -19,6 +19,10 @@ const routes: Routes = [
     import('./components/script-library/script-library.component').then(it => it.ScriptLibraryComponent)
   },
   {
+    path: 'script-library/:id', loadComponent: () =>
+    import('./components/script-detail/script-detail.component').then(it => it.ScriptDetailComponent)
+  },
+  {
     path: 'bot-library', loadComponent: () =>
     import('./components/bot-library/bot-library.component').then(it => it.BotLibraryComponent)
   },
