@@ -58,6 +58,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CommentRequest commentRequest)
         {
@@ -76,6 +77,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateByIdAsync(int id, [FromForm] CommentRequest commentRequest)
         {
@@ -94,6 +96,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteByIdAsync(int id)
         {
@@ -112,6 +115,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpDelete("Status/{id}")]
         public async Task<IActionResult> SoftDeleteByIdAsync(int id)
         {

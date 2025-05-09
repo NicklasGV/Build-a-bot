@@ -60,6 +60,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer)]
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateAsync([FromForm] ScriptRequest newScript)
@@ -98,6 +99,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer)]
         [HttpPut]
         [Route("{scriptId}")]
         public async Task<IActionResult> UpdateByIdAsync([FromRoute] int scriptId, [FromForm] ScriptRequest updateScript)
@@ -141,6 +143,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpDelete]
         [Route("{scriptId}")]
         public async Task<IActionResult> DeleteByIdAsync([FromRoute] int scriptId)
@@ -161,6 +164,7 @@ namespace BuildAbot.Controllers
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer)]
         [HttpDelete]
         [Route("Status/{scriptId}")]
         public async Task<IActionResult> SoftDeleteByIdAsync([FromRoute] int scriptId)

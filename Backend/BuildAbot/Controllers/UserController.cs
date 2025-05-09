@@ -115,6 +115,7 @@
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpDelete]
         [Route("{userId}")]
         public async Task<IActionResult> DeleteByIdAsync([FromRoute] int userId)
@@ -135,6 +136,7 @@
             }
         }
 
+        [Authorize(Role.Admin, Role.Developer, Role.User)]
         [HttpDelete]
         [Route("Status/{userId}")]
         public async Task<IActionResult> SoftDeleteByIdAsync([FromRoute] int userId)
