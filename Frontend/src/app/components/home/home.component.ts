@@ -19,6 +19,7 @@ export class HomeComponent {
   currentUser: User = resetUser();
   isLoggedIn: boolean = false;
   public RoleId = RoleId;
+  selectedImage: { src: string; alt: string } | null = null;
 
   constructor(
       private authService: AuthService
@@ -31,5 +32,14 @@ export class HomeComponent {
       this.currentUser = user;
       this.isLoggedIn = !!user?.token;
     });
+  }
+
+  openImage(src: string, alt: string) {
+    console.log(src, alt);
+    this.selectedImage = { src, alt };
+  }
+
+  closeImage() {
+    this.selectedImage = null;
   }
 }

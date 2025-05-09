@@ -1,33 +1,47 @@
 <div class="user-bots-section">
-    <div class="bot-grid">
-      <button
-        class="user-bot-item"
-        (click)="botBuilderDialog.showModal()"
-      >
-        <p class="bi-plus" style="font-size: 2.5rem"></p>
-      </button>
-  
-      <ng-container *ngFor="let bot of bots">
-        <button
-          class="user-bot-item"
-          [routerLink]="['/bot', bot.id]"
-        >
-          <p>{{ bot.name }}</p>
-        </button>
-      </ng-container>
-    </div>
-  </div>
-
-<dialog #botBuilderDialog
-  class="bot-builder-dialog">
-  <div class="bot-builder-modal">
+  <button class="creation-toggler" (click)="toggleBuilder()">
+    {{ showBuilder ? 'Hide Bot Creator' : 'Add New Bot' }}
+  </button>
+  <div *ngIf="showBuilder" class="bot-builder-section card">
     <app-bot-builder></app-bot-builder>
   </div>
-
-  <button type="button"
-      class="close-modal-btn"
-      aria-label="Close"
-      (click)="botBuilderDialog.close()">×</button>
-</dialog>
-  
-  <div *ngIf="loading">Loading your bots…</div>
+  <div class="items-table card">
+    <table class="item-table">
+      <thead>
+        <tr>
+          <th class="sorting" (click)="sortBy('name')">
+            name
+            <span *ngIf="sortField==='name'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="sorting" (click)="sortBy('botScripts')">
+            Bot Scripts
+            <span *ngIf="sortField==='botScripts'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of bots">
+          <td>{{ b.name }}</td>
+          <td>
+            <ng-container *ngIf="b.botScripts?.length; else none">
+              <span *ngFor="let s of b.botScripts; let i = index">
+                {{ s.id }}<span *ngIf="i < b.botScripts.length - 1">, </span>
+              </span>
+            </ng-container>
+            <ng-template #none>—</ng-template>
+          </td>
+          <td class="table-actions">
+            <button class="delete-btn" (click)="deleteBot(b.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

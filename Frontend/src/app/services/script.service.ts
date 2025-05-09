@@ -20,6 +20,10 @@ export class ScriptService {
     return this.http.delete<Script>(this.apiUrl + scriptId);
   }
 
+  softDelete(scriptId: number): Observable<Script> {
+    return this.http.delete<Script>(this.apiUrl + 'Status/' + scriptId);
+  }
+
   findById(scriptId: number): Observable<Script> {
     return this.http.get<Script>(this.apiUrl + scriptId);
   }

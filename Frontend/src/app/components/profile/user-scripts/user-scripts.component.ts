@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ScriptService } from '../../../../services/script.service';
-import { UserService } from '../../../../services/user.service';
+import { ScriptService } from '../../../services/script.service';
+import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { resetScript, Script } from '../../../../models/script.model';
+import { resetScript, Script } from '../../../models/script.model';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { SnackbarService } from '../../../../services/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { map } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
+import { resetUser, User } from '../../../models/user.model';
 
 @Component({
-  selector: 'app-scripts-dashboard',
+  selector: 'app-user-scripts',
   standalone: true,
   imports: [
       CommonModule,
@@ -17,48 +20,58 @@ import { SnackbarService } from '../../../../services/snackbar.service';
       FormsModule,
       MonacoEditorModule
     ],
-  templateUrl: './scripts-dashboard.component.html',
-  styleUrl: './scripts-dashboard.component.scss'
+  templateUrl: './user-scripts.component.html',
+  styleUrl: './user-scripts.component.scss'
 })
-export class ScriptsDashboardComponent {
+export class UserScriptsComponent {
   scripts: Script[] = [];
   script: Script = resetScript();
+  user: User = resetUser();
   users: { id: number; userName: string }[] = [];
   message = '';
   isWriting = false;
-  selectedFile: File | null = null;
+  selectedGuideFile: File | null = null;
+  selectedScriptFile: File | null = null;
   scriptText = '';
+  showCreator = false;
   editorOptions = {
     theme: 'vs-dark', language: 'python'
   };
 
-  sortField: 'id'|'title'|'description'|'user'|'codeFilePath'|'guideFilePath' = 'id';
+  sortField: 'id'|'title'|'description'|'user'|'filePath' = 'id';
   sortDir: 'asc' | 'desc' = 'asc';
 
   constructor(
     private scriptService: ScriptService,
     private userService: UserService,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe(user => {
+      this.user = user;
+    });
     this.loadScripts();
-    this.loadUsers();
+  }
+
+  toggleCreator() {
+    this.showCreator = !this.showCreator;
   }
 
   private loadScripts(): void {
-    this.scriptService.getAll().subscribe({
-      next: scripts => this.scripts = scripts,
-      error: err   => console.error('Failed to load scripts', err)
-    });
-  }
-
-  private loadUsers(): void {
-    this.userService.getAll().subscribe({
-      next: users => this.users = users,
-      error: err =>
-        console.error('Failed to load users', err)
-    });
+    this.scriptService.getAll()
+      .pipe(
+        map(scripts =>
+          this.user.id == null
+            ? []
+            : scripts.filter(s => s.user?.id === this.user.id)
+        )
+      )
+      .subscribe({
+        next: filtered => this.scripts = filtered,
+        error: err   => console.error('Failed to load scripts', err)
+      });
   }
 
   toggleEditor() {
@@ -68,21 +81,35 @@ export class ScriptsDashboardComponent {
     }
   }
 
-  onFileSelected(evt: Event) {
+  onGuideFileSelected(evt: Event) {
     const input = evt.target as HTMLInputElement;
     if (input.files?.length) {
       const f = input.files[0];
       const ext = f.name.split('.').pop()?.toLowerCase();
       if (ext === 'py' || ext === 'txt') {
-        this.selectedFile = f;
+        this.selectedGuideFile = f;
       } else {
         input.value = '';
-        this.selectedFile = null;
+        this.selectedGuideFile = null;
       }
     }
   }
 
-  sortBy(field: 'id'|'title'|'description'|'user'|'codeFilePath'|'guideFilePath') {
+  onScriptFileSelected(evt: Event) {
+    const input = evt.target as HTMLInputElement;
+    if (input.files?.length) {
+      const f = input.files[0];
+      const ext = f.name.split('.').pop()?.toLowerCase();
+      if (ext === 'py' || ext === 'txt') {
+        this.selectedScriptFile = f;
+      } else {
+        input.value = '';
+        this.selectedScriptFile = null;
+      }
+    }
+  }
+
+  sortBy(field: 'id'|'title'|'description'|'user'|'filePath') {
     if (this.sortField === field) {
       // same column → just flip direction
       this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
@@ -123,11 +150,17 @@ export class ScriptsDashboardComponent {
   async onSubmit() {
     if (this.isWriting && this.scriptText.trim()) {
       const blob = new Blob([this.scriptText], { type: 'text/plain' });
-      this.selectedFile = new File([blob], `${this.script.title}.txt`, { type: 'text/plain' });
+      this.selectedScriptFile = new File([blob], `${this.script.title}.txt`, { type: 'text/plain' });
     }
     this.message = "";
-    if (this.selectedFile) {
-      this.script.scriptFile = this.selectedFile
+    if (this.selectedScriptFile) {
+      this.script.scriptFile = this.selectedScriptFile
+    }
+    if (this.selectedGuideFile) {
+      this.script.guideFile = this.selectedGuideFile
+    }
+    if (this.user.id) {
+      this.script.user = this.user;
     }
     if (this.script.id == 0) {
       //create
@@ -167,7 +200,7 @@ export class ScriptsDashboardComponent {
   }
 
   deleteScript(scriptId: number): void {
-    this.scriptService.delete(scriptId).subscribe({
+    this.scriptService.softDelete(scriptId).subscribe({
       next: () => {
         this.scripts = this.scripts.filter(s => s.id !== scriptId);
       },

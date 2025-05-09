@@ -1,0 +1,162 @@
+<div class="script-section">
+    <button class="creation-toggler" (click)="toggleCreator()">
+      {{ showCreator ? 'Hide Script Creator' : 'Add New Script' }}
+    </button>
+    <div *ngIf="showCreator" class="form-section card">
+      <h1>Scripts Creator</h1>
+      <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="admin-creator-form">
+        <!-- Hidden ID -->
+        <input
+          type="hidden"
+          [(ngModel)]="script.id"
+          name="id"
+        />
+  
+        <!-- Title -->
+        <div class="field">
+          <label for="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            placeholder="Script Title"
+            required
+            [(ngModel)]="script.title"
+            name="title"
+          />
+        </div>
+  
+        <!-- Description -->
+        <div class="field">
+          <label for="description">Description</label>
+          <input
+            id="description"
+            type="text"
+            placeholder="Brief description of the script"
+            required
+            [(ngModel)]="script.description"
+            name="description"
+          />
+        </div>
+  
+        <!-- Owner -->
+        <input
+          type="hidden"
+          [(ngModel)]="user.id"
+          name="userId"
+        />
+
+        <!-- Guide File -->
+        <div *ngIf="!isWriting" class="field">
+            <label for="guideFile">GuideFile</label>
+            <input
+              id="guideFile"
+              class="file-field"
+              type="file"
+              accept=".txt,.docx"
+              (change)="onGuideFileSelected($event)"
+            />
+          </div>
+
+        <!-- Script File -->
+        <div *ngIf="!isWriting" class="field">
+          <label for="scriptFile">Script File</label>
+          <input
+            id="scriptFile"
+            class="file-field"
+            type="file"
+            accept=".txt,.py"
+            (change)="onScriptFileSelected($event)"
+          />
+          <button
+            type="button"
+            class="script-writing-btn"
+            (click)="toggleEditor()"
+            title="Prefer uploading a file over writing inline"
+          >
+            Write Script
+          </button>
+        </div>
+  
+        <div *ngIf="isWriting" class="field">
+          <label>Write Script</label>
+          <div class="monaco-card-body">
+            <ngx-monaco-editor
+              class="monaco-editor-body"
+              [options]="editorOptions"
+              [(ngModel)]="scriptText"
+              name="scriptText"
+            ></ngx-monaco-editor>
+          </div>
+          <button
+            type="button"
+            class="script-writing-btn"
+            (click)="toggleEditor()"
+          >
+            Back to File Upload
+          </button>
+        </div>
+  
+        <!-- Actions -->
+        <div class="actions">
+          <button
+            type="submit"
+            [disabled]="scriptForm.invalid"
+          >
+            {{ script.id ? 'Update Script' : 'Create Script' }}
+          </button>
+          <button
+            *ngIf="scriptForm.valid"
+            type="button"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="items-table card">
+        <table class="item-table">
+          <thead>
+            <tr>
+              <th class="sorting" (click)="sortBy('title')">
+                Title
+                <span *ngIf="sortField==='title'">
+                  {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+              </th>
+              <th class="sorting" (click)="sortBy('description')">
+                Description
+                <span *ngIf="sortField==='description'">
+                  {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+              </th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of scripts">
+              <td>{{ s.title }}</td>
+              <td>{{ s.description }}</td>
+              <td>
+                {{ s.status?.title || 'Not expired' }}
+                <time
+                  *ngIf="expiryDate(s.status?.dateTime) as exp"
+                  [attr.datetime]="exp | date:'dd-MM-yyyyTHH:mm:ss'"
+                >
+                  at {{ exp | date:'mediumDate' }}
+                </time>
+              </td>
+              <td class="table-actions">
+                <button class="edit-btn" (click)="editScript(s)">
+                  Edit
+                </button>
+                <button class="delete-btn" (click)="deleteScript(s.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

@@ -38,13 +38,13 @@
           <p>Welcome to our community discussion board.</p>
 
           <button
-    *ngIf="currentUser.id !== 0"
-    class="btn--new-post"
-    [routerLink]="['/post', '0']"
-    aria-label="Create new post"
-  >
-    + New Post
-  </button>
+            *ngIf="currentUser.id !== 0"
+            class="btn--new-post"
+            [routerLink]="['/post', '0']"
+            aria-label="Create new post"
+          >
+            + New Post
+          </button>
         </header>
     
         <div class="posts-grid">
@@ -55,7 +55,7 @@
           >
             <div class="card-header">
               <h3 class="post-title">{{ post.title }}</h3>
-              <span class="post-author">by {{ post.user?.userName }}</span>
+              <span class="post-author">by {{ post.user.userName }}</span>
             </div>
     
             <div class="card-body">

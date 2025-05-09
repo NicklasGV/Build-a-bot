@@ -1,7 +1,7 @@
 <div class="script-section">
   <div class="form-section card">
     <h1>Scripts Dashboard</h1>
-    <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="script-form">
+    <form #scriptForm="ngForm" (ngSubmit)="onSubmit()" class="admin-creator-form">
       <!-- Hidden ID -->
       <input
         type="hidden"
@@ -64,7 +64,7 @@
 
       <!-- File upload vs. inline editor -->
       <div *ngIf="!isWriting" class="field">
-        <label for="scriptFile">File</label>
+        <label for="scriptFile">Script File</label>
         <input
           id="scriptFile"
           class="file-field"
@@ -81,24 +81,23 @@
           Write Script
         </button>
       </div>
-
       <div *ngIf="isWriting" class="field">
         <label>Write Script</label>
-        <div class="manoca-card-body">
+        <div class="monaco-card-body">
           <ngx-monaco-editor
             class="monaco-editor-body"
             [options]="editorOptions"
             [(ngModel)]="scriptText"
             name="scriptText"
           ></ngx-monaco-editor>
-        </div>
-        <button
-          type="button"
-          class="script-writing-btn"
-          (click)="toggleEditor()"
-        >
-          Back to File Upload
-        </button>
+      </div>
+      <button
+        type="button"
+        class="script-writing-btn"
+        (click)="toggleEditor()"
+      >
+        Back to File Upload
+      </button>
       </div>
 
       <!-- Actions -->
@@ -107,7 +106,7 @@
           type="submit"
           [disabled]="scriptForm.invalid"
         >
-          {{ script.id ? 'Update Script' : 'Create Script' }}
+          Create script
         </button>
         <button
           *ngIf="scriptForm.valid"
@@ -120,8 +119,8 @@
     </form>
   </div>
 
-  <div class="scripts-table card">
-    <table class="script-table">
+  <div class="items-table card">
+    <table class="item-table">
       <thead>
         <tr>
           <th class="sorting" (click)="sortBy('id')">
@@ -148,9 +147,15 @@
               {{ sortDir==='asc' ? '▲' : '▼' }}
             </span>
           </th>
-          <th class="sorting" (click)="sortBy('filePath')">
-            File path
-            <span *ngIf="sortField==='filePath'">
+          <th class="sorting" (click)="sortBy('codeFilePath')">
+            Code path
+            <span *ngIf="sortField==='codeFilePath'">
+              {{ sortDir==='asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="sorting" (click)="sortBy('guideFilePath')">
+            Guide path
+            <span *ngIf="sortField==='guideFilePath'">
               {{ sortDir==='asc' ? '▲' : '▼' }}
             </span>
           </th>
@@ -164,7 +169,8 @@
           <td>{{ s.title }}</td>
           <td>{{ s.description }}</td>
           <td>{{ s.user.userName }}</td>
-          <td>{{ s.codeLocationId }}</td>
+          <td class="truncate">{{ s.codeLocationId }}</td>
+          <td class="truncate">{{ s.guideLocationId }}</td>
           <td>
             {{ s.status?.title || 'Not expired' }}
             <time

@@ -3,7 +3,7 @@
         <h1>User edit</h1>
         <form #f="ngForm"
                 (ngSubmit)="onSubmit()"
-                class="user-form"
+                class="admin-creator-form"
                 novalidate>
             <input
             type="hidden"
@@ -79,7 +79,9 @@
                 type="button"
                 (click)="cancelEdit()"
                 class="cancel-btn"
-            >Cancel</button>
+            >
+                Cancel
+            </button>
             </div>
         </form>
     </div>

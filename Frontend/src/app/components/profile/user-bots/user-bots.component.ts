@@ -1,21 +1,13 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID,
-  ViewChild,
-} from '@angular/core';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { forkJoin, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
-import { Bot } from '../../../models/bot.model';
-import { User } from '../../../models/user.model';
-import { UserService } from '../../../services/user.service';
+import { Bot } from './../../../models/bot.model';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { resetUser, User } from '../../../models/user.model';
 import { BotService } from '../../../services/bot.service';
-import { BotBuilderComponent } from '../../../shared/bot-builder/bot-builder.component';
+import { AuthService } from '../../../services/auth.service';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { BotBuilderComponent } from "../../../shared/bot-builder/bot-builder.component";
 
 @Component({
   selector: 'app-user-bots',
@@ -25,51 +17,104 @@ import { BotBuilderComponent } from '../../../shared/bot-builder/bot-builder.com
   imports: [CommonModule, RouterModule, BotBuilderComponent],
 })
 export class UserBotsComponent implements OnInit {
+  message = '';
   bots: Bot[] = [];
+  user: User = resetUser();
   loading = false;
-
-  @ViewChild('botBuilderDialog', { static: true })
-  dialogEl!: HTMLDialogElement;
+  sortField: 'id'|'name'|'botScripts' = 'id';
+  sortDir: 'asc' | 'desc' = 'asc';
+  showBuilder = false;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private userService: UserService,
-    private botService: BotService,
-    private router: Router
-  ) {}
+      private botService: BotService,
+      private snackBar: SnackbarService,
+      private authService: AuthService
+    ) {}
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
-    const raw = sessionStorage.getItem('currentUser');
-    if (!raw) return;
-
-    const { id: userId } = JSON.parse(raw) as Pick<User, 'id'>;
-    this.loading = true;
-
-    this.userService
-      .findById(userId)
+    this.authService.currentUser
       .pipe(
-        switchMap((user) => {
-          const botRefs = user.bots;
-          if (!botRefs?.length) {
-            return of([] as Bot[]);
-          }
-          const calls = botRefs.map((b) => this.botService.findById(b.id));
-          return forkJoin(calls);
-        })
+        filter((u): u is User => u != null),
+        tap(u => this.user = u),
+        switchMap(u => this.botService.getAll()), 
+        map(bots => bots.filter(b => b.user?.id === this.user.id))
       )
       .subscribe({
-        next: (bots) => {
-          this.bots = bots;
-          this.loading = false;
-        },
-        error: (err) => {
-          console.error('Could not load bots', err);
-          this.loading = false;
-        },
+        next: userBots => this.bots = userBots,
+        error: err    => console.error('Failed to load User bots', err)
       });
+  }
+
+  toggleBuilder() {
+    this.showBuilder = !this.showBuilder;
+  }
+
+  private loadBots(): void {
+      this.botService.getAll()
+        .pipe(
+          map(bots =>
+            this.user.id == null
+              ? []
+              : bots.filter(b => b.user?.id === this.user.id)
+          )
+        )
+        .subscribe({
+          next: userBots => this.bots = userBots,
+          error: err   => {
+            this.message = 'Failed to load in user bots' + err;
+            this.snackBar.openSnackBar(this.message, '', 'error')
+          }
+        });
+  }
+
+  sortBy(field: 'id'|'name'|'botScripts') {
+    if (this.sortField === field) {
+      // same column → just flip direction
+      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      this.bots.reverse();
+    } else {
+      this.sortField = field;
+      this.sortDir   = 'asc';
+      this.applySort();
+    }
+  }
+
+  private applySort() {
+    this.bots.sort((a, b) => {
+      let aVal: any, bVal: any;
+
+      switch (this.sortField) {
+        case 'name':
+          aVal = a.user?.id;
+          bVal = b.user?.id;
+          break;
+        default:
+          aVal = (a as any)[this.sortField];
+          bVal = (b as any)[this.sortField];
+      }
+      if (aVal == null) return -1;
+      if (bVal == null) return 1;
+      if (typeof aVal === 'string') {
+        return aVal.localeCompare(bVal);
+      }
+      return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+    });
+
+    if (this.sortDir === 'desc') {
+      this.bots.reverse();
+    }
+  }
+
+  deleteBot(botId: number): void {
+    this.botService.delete(botId).subscribe({
+      next: () => {
+        this.snackBar.openSnackBar('Bot deleted successfully', '', 'success');
+        this.bots = this.bots.filter(b => b.id !== botId);
+      },
+      error: err => {
+        this.message = 'Bot deletion resulted in an error' + err;
+        this.snackBar.openSnackBar(this.message, '', 'error')
+      }
+    });
   }
 }

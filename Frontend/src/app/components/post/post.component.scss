@@ -303,6 +303,27 @@
   }
 }
 
+.btn-post-edit {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 20px;
+  width: 80px;
+  background: #E0E3FF;
+  cursor: pointer;
+  box-shadow: 0 2px 10px #19175c;
+  border-radius: 16px;
+  border: 1px solid #E0E3FF;
+  margin-right: 8px;
+  & p {
+    font-family: "Discord Nord";
+  font-size: 14px;
+  line-height: 90%;
+  color: #19175c;
+  margin: auto;
+  }
+}
+
 .edit-icon {
   margin-left: 0.5rem;
   cursor: pointer;

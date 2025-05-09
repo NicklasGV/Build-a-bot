@@ -1,7 +1,7 @@
 <div class="bot-section">
     <div class="form-section card">
       <h1>Bots Dashboard</h1>
-      <form #botForm="ngForm" (ngSubmit)="onSubmit()" class="bot-form">
+      <form #botForm="ngForm" (ngSubmit)="onSubmit()" class="admin-creator-form">
         <input
           type="hidden"
           [(ngModel)]="bot.id"
@@ -71,8 +71,8 @@
       </form>
     </div>
   
-    <div class="bots-table card">
-        <table class="bot-table">
+    <div class="items-table card">
+        <table class="item-table">
             <thead>
                 <tr>
                     <th class="sorting" (click)="sortBy('id')">

@@ -1,5 +1,5 @@
-@use '../../../../../styles/colors' as *;
-@use '../../../../../styles/media'  as *;
+@use '../../../../styles/colors' as *;
+@use '../../../../styles/media'  as *;
 
 .script-section {
   display: flex;
@@ -8,17 +8,6 @@
   padding: 16px;
   background-color: $DARK;
   align-items: center;
-}
-
-.truncate {
-  max-width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.truncate:hover {
-  background: lighten($DARK, 10%);
 }
 
 .file-field {
@@ -30,10 +19,10 @@
 .script-writing-btn {
   background-color: $BLURPLE;
   color: #fff;
-  padding: 8px 12px;
+  padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
   &:hover {

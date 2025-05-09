@@ -149,7 +149,7 @@ export class BotBuilderComponent implements OnInit {
     ];
 
     const botCommand = [
-      `bot = commands.Bot(command_prefix='!')`,
+      `bot = commands.Bot(command_prefix='!', intents=discord.Intents.default())`,
       ``
     ];
   
