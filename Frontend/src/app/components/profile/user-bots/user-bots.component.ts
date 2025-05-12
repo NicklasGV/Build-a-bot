@@ -41,30 +41,15 @@ export class UserBotsComponent implements OnInit {
       )
       .subscribe({
         next: userBots => this.bots = userBots,
-        error: err    => console.error('Failed to load User bots', err)
+        error: err    => {
+            this.message = 'Failed to load in user bots';
+            this.snackBar.openSnackBar(this.message, '', 'error')
+          }
       });
   }
 
   toggleBuilder() {
     this.showBuilder = !this.showBuilder;
-  }
-
-  private loadBots(): void {
-      this.botService.getAll()
-        .pipe(
-          map(bots =>
-            this.user.id == null
-              ? []
-              : bots.filter(b => b.user?.id === this.user.id)
-          )
-        )
-        .subscribe({
-          next: userBots => this.bots = userBots,
-          error: err   => {
-            this.message = 'Failed to load in user bots' + err;
-            this.snackBar.openSnackBar(this.message, '', 'error')
-          }
-        });
   }
 
   sortBy(field: 'id'|'name'|'botScripts') {

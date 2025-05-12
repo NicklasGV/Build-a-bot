@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { User, resetUser } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { SnackbarService } from '../../../services/snackbar.service';
@@ -12,7 +12,6 @@ import { AuthService } from '../../../services/auth.service';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     FormsModule
   ],
   templateUrl: './edit-profile.component.html',
@@ -28,7 +27,8 @@ export class EditProfileComponent {
   constructor(
     private userService: UserService,
     private snackbar: SnackbarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -63,6 +63,15 @@ export class EditProfileComponent {
       });
     }
     this.user = resetUser();
+  }
+
+  deleteUser(): void {
+    const ok = window.confirm('Are you sure you want to delete your user?');
+    if (!ok) {
+      return;
+    }
+    this.userService.softDelete(this.user.id!)
+      .subscribe(() => this.router.navigate(['/users']));
   }
 
   cancelEdit() {

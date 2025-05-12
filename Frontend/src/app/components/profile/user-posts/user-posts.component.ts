@@ -8,6 +8,7 @@ import { resetUser, User } from '../../../models/user.model';
 import { RouterModule } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 interface FeedItem {
   id: number;
@@ -41,11 +42,12 @@ export class UserPostsComponent {
     sortDir: 'asc' | 'desc' = 'desc';
     
     constructor(
-        private userService: UserService,
-        private postService: PostService,
-        private commentService: CommentService,
-        private authService: AuthService,
-      ) {this.authService.currentUser.subscribe((x) => (this.currentUser = x)); }
+      private userService: UserService,
+      private postService: PostService,
+      private commentService: CommentService,
+      private authService: AuthService,
+      private snackBar: SnackbarService
+    ) {this.authService.currentUser.subscribe((x) => (this.currentUser = x)); }
   
     ngOnInit() {
       this.userService.findById(this.currentUser.id).subscribe({
@@ -54,11 +56,15 @@ export class UserPostsComponent {
             result.posts,
             result.comments 
           );
-
-          this.applySort();
+          if (this.feedItems.length === 0) {
+            this.snackBar.openSnackBar('No posts or comments found', '', 'error');
+          } else {
+            this.applySort();
+          }
         },
-        error: err =>
-          console.error('Failed to load users', err)
+        error: () => {
+          this.snackBar.openSnackBar('Failed to load in user Posts', '', 'error');
+        }
       });
     }
 

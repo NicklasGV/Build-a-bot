@@ -1,6 +1,14 @@
 <div class="user-section">
     <div class="form-section card">
-        <h1>User edit</h1>
+        <div class="form-header">
+            <h1>User edit</h1>
+            <button
+                *ngIf="user.id"
+                class="delete-btn"
+                (click)="deleteUser()">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+        </div>  
         <form #f="ngForm"
                 (ngSubmit)="onSubmit()"
                 class="admin-creator-form"

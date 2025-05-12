@@ -61,8 +61,7 @@ export class UserFavoritesComponent {
       )
       .subscribe({
         next: filtered => this.scripts = filtered,
-        error: err   => {
-          console.error('Failed to load scripts', err);
+        error: () => {
           this.snackBar.openSnackBar('Could not load favorites', '', 'error');
         }
       });

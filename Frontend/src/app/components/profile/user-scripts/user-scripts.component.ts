@@ -70,7 +70,9 @@ export class UserScriptsComponent {
       )
       .subscribe({
         next: filtered => this.scripts = filtered,
-        error: err   => console.error('Failed to load scripts', err)
+        error: ()   => {
+          this.snackBar.openSnackBar('Failed to load in user scripts', '', 'error');
+        }
       });
   }
 
