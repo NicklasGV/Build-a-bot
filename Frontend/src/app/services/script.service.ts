@@ -75,6 +75,11 @@ export class ScriptService {
         formData.append('botIds', id.toString())
       );
     }
+    if (script.favorites && script.favorites.length) {
+      script.favorites.forEach(favorite =>
+        formData.append('favorites', favorite.id.toString())
+      );
+    }
     return this.http.put<Script>(this.apiUrl + scriptId, formData);
   }
 

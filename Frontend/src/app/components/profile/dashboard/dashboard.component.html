@@ -49,6 +49,11 @@
         Scripts
       </button>
       <button
+        (click)="selectTab('favorites')"
+        [class.active]="selectedTab === 'favorites'">
+        Favorites
+      </button>
+      <button
         (click)="selectTab('edit')"
         [class.active]="selectedTab === 'edit'">
         Edit Profile
@@ -58,6 +63,7 @@
       <app-user-bots   *ngIf="selectedTab === 'bots'"></app-user-bots>
       <app-user-posts  *ngIf="selectedTab === 'posts'"></app-user-posts>
       <app-user-scripts *ngIf="selectedTab === 'scripts'"></app-user-scripts>
+      <app-user-favorites *ngIf="selectedTab === 'favorites'"></app-user-favorites>
       <app-edit-profile *ngIf="selectedTab === 'edit'"></app-edit-profile>
     </div>
 </div>

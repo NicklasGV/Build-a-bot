@@ -1,0 +1,39 @@
+<div class="favorites-section">
+    <div class="items-table card">
+        <table class="item-table">
+          <thead>
+            <tr>
+              <th class="sorting" (click)="sortBy('title')">
+                Title
+                <span *ngIf="sortField==='title'">
+                  {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+              </th>
+              <th class="sorting" (click)="sortBy('description')">
+                Description
+                <span *ngIf="sortField==='description'">
+                  {{ sortDir==='asc' ? '▲' : '▼' }}
+                </span>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of scripts">
+              <td>{{ s.title }}</td>
+              <td>{{ s.description }}</td>
+              <td class="table-actions">
+                <button class="delete-btn" (click)="toggleFavorite(s)">
+                  Remove like
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="scripts.length === 0">
+                <td colspan="4" class="no-favorites">
+                  You currently don’t have any favorites.
+                </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>

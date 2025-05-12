@@ -1,0 +1,61 @@
+<div class="bab-container">
+    <div class="breadcrumb">
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <ul>
+                <li><a [routerLink]="['/']" class="bi bi-house-fill"></a></li>
+                <li [routerLink]="['/libraries']">Libraries</li>
+                <li [routerLink]="['/script-library']">Script Library</li>
+                <li class="active">{{this.script.title}}</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="script-detail-section">
+        <div class="script-detail card">
+            <div class="script-detail-header">
+                <h2>{{ script.title }}</h2>
+                <p>{{ script.description }}</p>
+            </div>
+            <div class="meta">
+              <p><strong>Author:</strong> {{ script.user.userName }}</p>
+            </div>
+        
+            <div class="tabs">
+              <button
+                class="tab-button"
+                [class.active]="activeTab==='guide'"
+                (click)="setTab('guide')"
+                [disabled]="!script.guideLocationId"
+              >
+                Guide
+              </button>
+              <button
+                class="tab-button"
+                [class.active]="activeTab==='code'"
+                (click)="setTab('code')"
+              >
+                Source Code
+              </button>
+            </div>
+        
+            <div class="tab-content">
+              <!-- GUIDE -->
+              <div *ngIf="activeTab==='guide'">
+                <div *ngIf="loadingGuide">Loading guide…</div>
+                <div *ngIf="guideError"><p class="error">Couldn’t load guide.</p></div>
+                <pre *ngIf="guideContent"><code [innerText]="guideContent"></code></pre>
+              </div>
+        
+              <!-- CODE -->
+              <div *ngIf="activeTab==='code'">
+                <div *ngIf="loadingCode">Loading code…</div>
+                <div *ngIf="codeError"><p class="error">Couldn’t load code.</p></div>
+                <pre *ngIf="codeContent"><code [innerText]="codeContent"></code></pre>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+<ng-template #loadTpl>
+    <div *ngIf="loading">Loading script…</div>
+    <div *ngIf="error"><p class="error">Script not found or an error occurred.</p></div>
+</ng-template>

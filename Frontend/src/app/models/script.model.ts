@@ -14,6 +14,7 @@ export interface Script {
     status: Status | null;
     userIds: number[];
     botIds: number[];
+    favorites: User[];
     selected?: boolean;
     content: string | '';
   }
@@ -31,6 +32,7 @@ export interface Script {
         user: resetUser(),
         status: null,
         userIds: [],
+        favorites: [],
         botIds: [],
         content: ''
   };

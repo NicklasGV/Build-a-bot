@@ -1,0 +1,17 @@
+@use '../../../../styles/colors' as *;
+@use '../../../../styles/media'  as *;
+
+.favorites-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    background-color: $DARK;
+    align-items: center;
+}
+
+.no-favorites,
+.no-favorites-text {
+  color: lighten($color: $DARK, $amount: 30);
+  font-style: italic;
+}

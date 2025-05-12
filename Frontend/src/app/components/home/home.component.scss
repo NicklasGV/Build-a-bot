@@ -317,8 +317,22 @@
 }
   
 .faq-item {
-  border-bottom: 1px solid $BLURPLE;
-  color: $BLURPLE;
+    border-bottom: 1px solid $BLURPLE;
+    color: $BLURPLE;
+    & a {
+    color: $BLURPLE;
+    text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    & p {
+        padding: 0 16px 16px;
+        margin: 0;
+        line-height: 1.5;
+        color: $LIGHT_BLURPLE;
+        font-size: 16px;
+    }
 }
   
 .faq-item summary {
@@ -341,12 +355,4 @@
 }
 .faq-item[open] summary::after {
   transform: rotate(90deg);
-}
-
-.faq-item p {
-  padding: 0 16px 16px;
-  margin: 0;
-  line-height: 1.5;
-  color: $LIGHT_BLURPLE;
-  font-size: 16px;
 }

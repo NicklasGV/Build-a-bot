@@ -11,6 +11,7 @@ import { UserPostsComponent } from "../user-posts/user-posts.component";
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { EditProfileComponent } from "../edit-profile/edit-profile.component";
 import { UserScriptsComponent } from "../user-scripts/user-scripts.component";
+import { UserFavoritesComponent } from "../user-favorites/user-favorites.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +22,8 @@ import { UserScriptsComponent } from "../user-scripts/user-scripts.component";
     UserBotsComponent,
     UserPostsComponent,
     EditProfileComponent,
-    UserScriptsComponent
+    UserScriptsComponent,
+    UserFavoritesComponent
 ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -30,9 +32,9 @@ export class DashboardComponent {
   message: string = "";
   user: User = resetUser();
   msg: string = '';
-  selectedTab: 'bots'|'posts'|'edit'|'scripts' = 'bots';
+  selectedTab: 'bots'|'posts'|'edit'|'scripts'|'favorites' = 'bots';
 
-  selectTab(tab: 'bots'|'posts'|'edit'|'scripts') {
+  selectTab(tab: 'bots'|'posts'|'edit'|'scripts'|'favorites') {
     this.selectedTab = tab;
   }
 
