@@ -5,7 +5,7 @@
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAt92FlDgcg0azZmurR6F1fQAAAAACAAAAAAAQZgAAAAEAACAAAACSA1UnBQAoG+L2zjRuiH0NPue3bvW7LYZfB7Cv6bzMtAAAAAAOgAAAAAIAACAAAAC6DMvOJgC+ENDs7RLdIfbUHlTPzzLddVTjcMyqZlW9JDAAAABt8IXPJWU9qu56h4Ofy+B+CvLAEis350EGXSrq8vJxbkQV/wu9Qz/Bam40zHas6IlAAAAADNjyvZJxb8o4sViJSGM2X8ybl5s5w49C6ZzhZYxwEoravOGzYi4onDoQxIR8eCwjqbJMfMm/h3u3KrQ3jYp4yA==</EncryptedPassword>
     <_PublishTargetUrl>ftp://nt36.unoeuro.com/api</_PublishTargetUrl>
-    <History>True|2025-05-02T08:54:22.7477614Z||;False|2025-05-02T10:53:28.6449759+02:00||;False|2025-05-02T10:50:45.0308749+02:00||;False|2025-05-02T10:49:54.5261990+02:00||;True|2025-04-30T11:51:33.9528238+02:00||;True|2025-04-29T10:58:50.3727717+02:00||;True|2025-04-29T10:28:44.3716986+02:00||;True|2025-04-25T10:52:17.9690895+02:00||;False|2025-04-25T10:51:12.0079397+02:00||;True|2025-04-18T19:13:55.8579433+02:00||;False|2025-04-18T19:12:16.7299242+02:00||;</History>
+    <History>False|2025-05-12T07:58:23.4611188Z||;False|2025-05-12T09:54:59.5814967+02:00||;False|2025-05-12T09:50:51.3404026+02:00||;False|2025-05-12T09:50:10.5237917+02:00||;True|2025-05-02T10:54:22.7477614+02:00||;False|2025-05-02T10:53:28.6449759+02:00||;False|2025-05-02T10:50:45.0308749+02:00||;False|2025-05-02T10:49:54.5261990+02:00||;True|2025-04-30T11:51:33.9528238+02:00||;True|2025-04-29T10:58:50.3727717+02:00||;True|2025-04-29T10:28:44.3716986+02:00||;True|2025-04-25T10:52:17.9690895+02:00||;False|2025-04-25T10:51:12.0079397+02:00||;True|2025-04-18T19:13:55.8579433+02:00||;False|2025-04-18T19:12:16.7299242+02:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -16,7 +16,7 @@
       <publishTime>04/29/2025 10:58:02</publishTime>
     </File>
     <File Include="aspnetcorev2_inprocess.dll">
-      <publishTime>02/13/2025 06:05:20</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Azure.Core.dll">
       <publishTime>02/26/2024 16:24:40</publishTime>
@@ -28,16 +28,16 @@
       <publishTime>12/20/2018 16:32:44</publishTime>
     </File>
     <File Include="BuildAbot.deps.json">
-      <publishTime>05/02/2025 10:53:39</publishTime>
+      <publishTime>05/12/2025 10:14:41</publishTime>
     </File>
     <File Include="BuildAbot.dll">
-      <publishTime>05/02/2025 10:53:38</publishTime>
+      <publishTime>05/12/2025 09:50:14</publishTime>
     </File>
     <File Include="BuildAbot.exe">
-      <publishTime>05/02/2025 10:53:38</publishTime>
+      <publishTime>05/12/2025 10:14:40</publishTime>
     </File>
     <File Include="BuildAbot.pdb">
-      <publishTime>05/02/2025 10:53:38</publishTime>
+      <publishTime>05/12/2025 10:14:39</publishTime>
     </File>
     <File Include="BuildAbot.runtimeconfig.json">
       <publishTime>04/18/2025 19:10:47</publishTime>
@@ -70,7 +70,7 @@
       <publishTime>02/13/2025 06:28:48</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:48</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.BearerToken.dll">
       <publishTime>02/13/2025 06:28:48</publishTime>
@@ -79,19 +79,19 @@
       <publishTime>02/13/2025 06:28:48</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.Core.dll">
-      <publishTime>02/13/2025 06:28:48</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.dll">
-      <publishTime>02/13/2025 06:28:48</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.OAuth.dll">
       <publishTime>02/13/2025 06:28:48</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authorization.dll">
-      <publishTime>02/13/2025 06:28:48</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authorization.Policy.dll">
-      <publishTime>02/13/2025 06:28:48</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Components.Authorization.dll">
       <publishTime>02/13/2025 06:28:48</publishTime>
@@ -112,13 +112,13 @@
       <publishTime>02/13/2025 06:28:50</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Connections.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:50</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.CookiePolicy.dll">
       <publishTime>02/13/2025 06:28:52</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Cors.dll">
-      <publishTime>02/13/2025 06:28:52</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Cryptography.Internal.dll">
       <publishTime>02/13/2025 06:28:52</publishTime>
@@ -145,25 +145,25 @@
       <publishTime>02/13/2025 06:28:54</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.HostFiltering.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Hosting.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Hosting.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Hosting.Server.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Html.Abstractions.dll">
       <publishTime>02/13/2025 06:28:54</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Connections.Common.dll">
       <publishTime>02/13/2025 06:28:54</publishTime>
@@ -172,13 +172,13 @@
       <publishTime>02/13/2025 06:28:54</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.dll">
-      <publishTime>02/13/2025 06:28:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Extensions.dll">
-      <publishTime>02/13/2025 06:28:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Features.dll">
-      <publishTime>02/13/2025 06:28:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Results.dll">
       <publishTime>02/13/2025 06:28:56</publishTime>
@@ -187,10 +187,10 @@
       <publishTime>02/13/2025 06:28:56</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.HttpOverrides.dll">
-      <publishTime>02/13/2025 06:28:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.HttpsPolicy.dll">
-      <publishTime>02/13/2025 06:28:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Identity.dll">
       <publishTime>02/13/2025 06:28:56</publishTime>
@@ -202,19 +202,19 @@
       <publishTime>02/13/2025 06:28:58</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Metadata.dll">
-      <publishTime>02/13/2025 06:28:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.ApiExplorer.dll">
-      <publishTime>02/13/2025 06:28:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.Core.dll">
-      <publishTime>02/13/2025 06:28:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.Cors.dll">
-      <publishTime>02/13/2025 06:28:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.DataAnnotations.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -271,34 +271,34 @@
       <publishTime>02/13/2025 06:29:02</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Routing.Abstractions.dll">
-      <publishTime>02/13/2025 06:29:02</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Routing.dll">
-      <publishTime>02/13/2025 06:29:04</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.HttpSys.dll">
-      <publishTime>02/13/2025 06:29:04</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.IIS.dll">
-      <publishTime>02/13/2025 06:29:04</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.IISIntegration.dll">
-      <publishTime>02/13/2025 06:29:04</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.Kestrel.Core.dll">
-      <publishTime>02/13/2025 06:29:06</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.Kestrel.dll">
-      <publishTime>02/13/2025 06:29:06</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.dll">
-      <publishTime>02/13/2025 06:29:06</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll">
-      <publishTime>02/13/2025 06:29:06</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll">
-      <publishTime>02/13/2025 06:29:06</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Session.dll">
       <publishTime>02/13/2025 06:29:06</publishTime>
@@ -316,13 +316,13 @@
       <publishTime>02/13/2025 06:29:06</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.StaticFiles.dll">
-      <publishTime>02/13/2025 06:29:08</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.WebSockets.dll">
       <publishTime>02/13/2025 06:29:08</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.WebUtilities.dll">
-      <publishTime>02/13/2025 06:29:08</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Bcl.AsyncInterfaces.dll">
       <publishTime>10/18/2022 18:14:58</publishTime>
@@ -361,25 +361,25 @@
       <publishTime>12/02/2025 00:18:06</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.Binder.dll">
-      <publishTime>02/13/2025 06:28:40</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.CommandLine.dll">
       <publishTime>02/13/2025 06:28:40</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.dll">
-      <publishTime>02/13/2025 06:28:38</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.EnvironmentVariables.dll">
-      <publishTime>02/13/2025 06:28:40</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.FileExtensions.dll">
-      <publishTime>02/13/2025 06:28:40</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.Ini.dll">
       <publishTime>02/13/2025 06:28:40</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.Json.dll">
-      <publishTime>02/13/2025 06:28:40</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.KeyPerFile.dll">
       <publishTime>02/13/2025 06:29:08</publishTime>
@@ -397,10 +397,10 @@
       <publishTime>12/02/2025 00:18:02</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Diagnostics.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Diagnostics.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll">
       <publishTime>02/13/2025 06:29:08</publishTime>
@@ -409,10 +409,10 @@
       <publishTime>02/13/2025 06:29:08</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Features.dll">
-      <publishTime>02/13/2025 06:29:08</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.FileProviders.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.FileProviders.Composite.dll">
       <publishTime>02/13/2025 06:28:42</publishTime>
@@ -421,16 +421,16 @@
       <publishTime>02/13/2025 06:29:08</publishTime>
     </File>
     <File Include="Microsoft.Extensions.FileProviders.Physical.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.FileSystemGlobbing.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Hosting.Abstractions.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Hosting.dll">
-      <publishTime>02/13/2025 06:28:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Http.dll">
       <publishTime>02/13/2025 06:28:44</publishTime>
@@ -442,7 +442,7 @@
       <publishTime>02/13/2025 06:29:08</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Localization.Abstractions.dll">
-      <publishTime>02/13/2025 06:29:08</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Localization.dll">
       <publishTime>02/13/2025 06:29:10</publishTime>
@@ -451,31 +451,31 @@
       <publishTime>12/02/2025 00:18:04</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.Configuration.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.Console.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.Debug.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.dll">
       <publishTime>12/02/2025 00:18:22</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.EventLog.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.EventSource.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.TraceSource.dll">
       <publishTime>02/13/2025 06:28:44</publishTime>
     </File>
     <File Include="Microsoft.Extensions.ObjectPool.dll">
-      <publishTime>02/13/2025 06:29:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Options.ConfigurationExtensions.dll">
-      <publishTime>02/13/2025 06:28:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Options.DataAnnotations.dll">
       <publishTime>02/13/2025 06:28:46</publishTime>
@@ -517,13 +517,13 @@
       <publishTime>02/13/2025 06:29:10</publishTime>
     </File>
     <File Include="Microsoft.Net.Http.Headers.dll">
-      <publishTime>02/13/2025 06:29:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.OpenApi.dll">
       <publishTime>06/03/2024 17:00:56</publishTime>
     </File>
     <File Include="Microsoft.SqlServer.Server.dll">
-      <publishTime>01/27/2022 18:19:08</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Microsoft.VisualBasic.Core.dll">
       <publishTime>02/12/2025 05:51:52</publishTime>
@@ -562,13 +562,13 @@
       <publishTime>12/02/2025 05:47:12</publishTime>
     </File>
     <File Include="Swashbuckle.AspNetCore.Swagger.dll">
-      <publishTime>05/21/2024 18:42:50</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Swashbuckle.AspNetCore.SwaggerGen.dll">
-      <publishTime>05/21/2024 18:42:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Swashbuckle.AspNetCore.SwaggerUI.dll">
-      <publishTime>05/21/2024 18:42:50</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="System.AppContext.dll">
       <publishTime>02/12/2025 05:46:36</publishTime>
@@ -613,7 +613,7 @@
       <publishTime>12/02/2025 05:52:18</publishTime>
     </File>
     <File Include="System.Configuration.ConfigurationManager.dll">
-      <publishTime>08/19/2022 21:58:02</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="System.Configuration.dll">
       <publishTime>02/12/2025 05:46:34</publishTime>
@@ -643,7 +643,7 @@
       <publishTime>12/02/2025 00:12:34</publishTime>
     </File>
     <File Include="System.Diagnostics.EventLog.dll">
-      <publishTime>02/13/2025 06:28:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="System.Diagnostics.EventLog.Messages.dll">
       <publishTime>02/13/2025 06:28:46</publishTime>
@@ -1099,7 +1099,7 @@
       <publishTime>02/12/2025 05:55:18</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>05/02/2025 10:53:40</publishTime>
+      <publishTime>05/12/2025 10:14:41</publishTime>
     </File>
     <File Include="WindowsBase.dll">
       <publishTime>02/12/2025 05:46:34</publishTime>
