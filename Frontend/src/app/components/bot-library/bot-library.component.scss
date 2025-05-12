@@ -123,4 +123,24 @@
         }
       }
     }
+}
+ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    a {
+      text-decoration: none;
+      color: $BLURPLE;
+      &:hover {
+        text-decoration: underline;
+        color: $DARK_BLURPLE;
+      }
+    }
   }
+}
