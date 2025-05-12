@@ -47,17 +47,16 @@
                     <div class="card-header">
                         <button
                         class="like-button"
-                        [class.liked]="isIdInArray(script, user.id)"
+                        [class.liked]="isIdInArray(script, user?.id)"
                         (click)="toggleFavorite(script); $event.stopPropagation()"
                         >
-                            <i
-                                class="bi"
+                            <i class="bi"
                                 [ngClass]="
-                                isIdInArray(script, user.id)
+                                isIdInArray(script, user?.id)
                                     ? 'bi-hand-thumbs-up-fill'
                                     : 'bi-hand-thumbs-up'
-                                "
-                            ></i>
+                                ">
+                            </i>
                         </button>
                         <h3 class="card-title">{{ script.title }}</h3>
                         <span class="card-user">Made by {{ script.user.userName }}</span>

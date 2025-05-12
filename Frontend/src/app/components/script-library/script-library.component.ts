@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import e from 'express';
   templateUrl: './script-library.component.html',
   styleUrl: './script-library.component.scss'
 })
-export class ScriptLibraryComponent {
+export class ScriptLibraryComponent implements OnInit {
   scripts: Script[] = [];
   script: Script = resetScript();
   user: User = resetUser();
