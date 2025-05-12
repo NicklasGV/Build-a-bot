@@ -1,7 +1,6 @@
 @use "../../../styles/colors.scss" as *;
 @use "../../../styles/media.scss" as *;
 
-// HERO SECTION STYLING
 .hero-buttons {
     display: flex;
     flex-direction: row;
@@ -18,7 +17,6 @@
         align-items: center;
     }
 }
-
 .hero-button {
     display: flex;
     justify-content: center;
@@ -37,7 +35,6 @@
         width: 250px;
     }
 }
-
 .hero-button p {
     font-family: "Discord Nord";
     font-size: 20px;
@@ -45,7 +42,6 @@
     color: $DARK_BLURPLE;
     margin: auto;
 }
-
 .hero-button:hover {
     background: $DARK_BLURPLE_GRADIENT_REVERSE;
     box-shadow: 0 2px 10px $BLURPLE;
@@ -58,13 +54,10 @@
         color: $LIGHT_BLURPLE;
     }
 }
-
-// BOT SECTION STYLING
 .bot-section h3,
 .bot-section p {
     margin: 16px;
 }
-
 .bot-section {
     display: flex;
     align-items: center;
@@ -72,7 +65,6 @@
     padding: 24px 0;
     background: $DARK;
 }
-
 .bot-info-container {
     display: flex;
     justify-content: space-between;
@@ -85,11 +77,9 @@
         max-width: 90vw;
     }
 }
-
 .bot-info-container.reverse {
     flex-direction: row-reverse;
 }
-
 .bot-image {
     width: 240px;
     height: 240px;
@@ -106,7 +96,6 @@
         transition: all 0.2s ease-in-out;
     }
 }
-
 .bot-text {
     margin-top: 10px;
     font-size: 24px;
@@ -119,7 +108,6 @@
         font-size: 18px;
     }
 }
-
 .bot-tag {
     font-style: italic;
     font-size: 16px;
@@ -130,7 +118,6 @@
         font-size: 14px;
     }
 }
-
 .bot-tag span {
     background-color: $LIGHT_BLURPLE;
     color: $DARK_BLURPLE;
@@ -142,7 +129,6 @@
         color: $LIGHT_BLURPLE;
     }
 }
-
 .bot-description {
     font-size: 16px;
     color: $LIGHT_BLURPLE;
@@ -154,16 +140,14 @@
     }
 }
 
-// GUIDE SECTION STYLING
 .guide-section {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 24px 0;
-    counter-reset: step;                                 // reset on the parent
+    counter-reset: step;
     background-color: lighten($color: $DARK, $amount: 5);
 }
-
 .guide-info-container {
     display: flex;
     justify-content: space-between;
@@ -182,14 +166,12 @@
         gap: 32px;
     }
 }
-
 .guide-info-container.reverse {
     flex-direction: row-reverse;
     @include mobileAndTabletV {
         flex-direction: column-reverse;
     }
 }
-
 .guide-image {
     width: 500px;
     height: 250px;
@@ -205,9 +187,8 @@
         height: 140px;
     }
 }
-
 .guide-text {
-    position: relative;                                  // make this the badge’s containing block
+    position: relative;
     padding: 24px;
     border-radius: 8px;
     font-size: 24px;
@@ -245,12 +226,10 @@
     @include mobileAndTabletV {
       font-size: 18px;
     }
-  }
-
+}
 .guide-header h3 {
     margin: 8px 0;
 }
-
 .guide-description {
     font-size: 14px;
     color: $LIGHT_BLURPLE;
@@ -267,7 +246,6 @@
         font-size: 14px;
     }
 }
-
 .image-modal-backdrop {
   position: fixed;
   top: 0;
@@ -281,7 +259,6 @@
   z-index: 10000;
   cursor: zoom-out;
 }
-
 .image-modal-content {
   max-width: 90vw;
   max-height: 90vh;
@@ -289,15 +266,12 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   cursor: default;
 }
-
-// FAQ SECTION STYLING
 .faq-section {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 24px 0;
 }
-
 .faq-header {
     color: $BLURPLE;
     text-align: center;
@@ -307,7 +281,6 @@
         font-size: 24px;
     }
 }
-
 .faq-content {
     width: 100%;
     max-width: 70vw;
@@ -334,7 +307,6 @@
         font-size: 16px;
     }
 }
-  
 .faq-item summary {
   font-weight: bold;
   padding: 16px;
@@ -342,11 +314,9 @@
   list-style: none;
   position: relative;
 }
-
 .faq-item summary::marker {
   display: none;
 }
-
 .faq-item summary::after {
   content: '▸';
   position: absolute;
