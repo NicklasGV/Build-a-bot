@@ -105,9 +105,10 @@ namespace BuildAbot.Database
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Comments)
-                .WithOne(c => c.User)
-                .OnDelete(DeleteBehavior.Cascade);
+     .HasMany(u => u.Comments)
+     .WithOne(c => c.User)
+     .HasForeignKey(c => c.UserId)
+     .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Status)
@@ -128,137 +129,137 @@ namespace BuildAbot.Database
 
 
             // Dummy data for testing
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = 1,
-                    UserName = "TesterMand",
-                    Email = "testmail1",
-                    Password = "Passw0rd",
-                    Role = Role.Admin,
-                },
-                new User
-                {
-                    Id = 2,
-                    UserName = "Supporten",
-                    Email = "testmail2",
-                    Password = "Password",
-                    Role = Role.Developer,
-                },
-                new User
-                {
-                    Id = 3,
-                    UserName = "Delete Tester",
-                    Email = "testmail3",
-                    Password = "Password",
-                    Role = Role.Developer,
-                    StatusId = 1,
-                }
-                );
+            //modelBuilder.Entity<User>().HasData(
+            //    new User
+            //    {
+            //        Id = 1,
+            //        UserName = "TesterMand",
+            //        Email = "testmail1",
+            //        Password = "Passw0rd",
+            //        Role = Role.Admin,
+            //    },
+            //    new User
+            //    {
+            //        Id = 2,
+            //        UserName = "Supporten",
+            //        Email = "testmail2",
+            //        Password = "Password",
+            //        Role = Role.Developer,
+            //    },
+            //    new User
+            //    {
+            //        Id = 3,
+            //        UserName = "Delete Tester",
+            //        Email = "testmail3",
+            //        Password = "Password",
+            //        Role = Role.Developer,
+            //        StatusId = 1,
+            //    }
+            //    );
 
-            modelBuilder.Entity<Script>().HasData(
-                new Script
-                {
-                    Id = 1,
-                    UserId = 1,
-                    Title = "TestScript",
-                    Description = "TestDescription",
-                    CodeLocationId = "CodeLocation",
-                    GuideLocationId = "GuideLocation",
-                },
-                new Script
-                {
-                    Id = 2,
-                    UserId = 3,
-                    Title = "TestScriptDeleted",
-                    Description = "TestDescription",
-                    StatusId = 2,
-                    CodeLocationId = "CodeLocation",
-                    GuideLocationId = "GuideLocation",
-                }
-                );
+            //modelBuilder.Entity<Script>().HasData(
+            //    new Script
+            //    {
+            //        Id = 1,
+            //        UserId = 1,
+            //        Title = "TestScript",
+            //        Description = "TestDescription",
+            //        CodeLocationId = "CodeLocation",
+            //        GuideLocationId = "GuideLocation",
+            //    },
+            //    new Script
+            //    {
+            //        Id = 2,
+            //        UserId = 3,
+            //        Title = "TestScriptDeleted",
+            //        Description = "TestDescription",
+            //        StatusId = 2,
+            //        CodeLocationId = "CodeLocation",
+            //        GuideLocationId = "GuideLocation",
+            //    }
+            //    );
 
-            modelBuilder.Entity<FavoriteScript>().HasData(
-                new FavoriteScript
-                {
-                    Id = 1,
-                    UserId = 2,
-                    ScriptId = 1,
-                }
-                );
+            //modelBuilder.Entity<FavoriteScript>().HasData(
+            //    new FavoriteScript
+            //    {
+            //        Id = 1,
+            //        UserId = 2,
+            //        ScriptId = 1,
+            //    }
+            //    );
 
-            modelBuilder.Entity<Bot>().HasData(
-                new Bot
-                {
-                    Id = 1,
-                    Name = "TestBot",
-                    UserId = 1
-                }
-                );
+            //modelBuilder.Entity<Bot>().HasData(
+            //    new Bot
+            //    {
+            //        Id = 1,
+            //        Name = "TestBot",
+            //        UserId = 1
+            //    }
+            //    );
 
-            modelBuilder.Entity<BotScript>().HasData(
-                new BotScript
-                {
-                    Id = 1,
-                    BotId = 1,
-                    ScriptId = 1
-                }
-                );
+            //modelBuilder.Entity<BotScript>().HasData(
+            //    new BotScript
+            //    {
+            //        Id = 1,
+            //        BotId = 1,
+            //        ScriptId = 1
+            //    }
+            //    );
 
-            modelBuilder.Entity<Post>().HasData(
-                new Post
-                {
-                    Id = 1,
-                    Title = "TestPost",
-                    Content = "TestContent",
-                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
-                    UserId = 1
-                }
-            );
+            //modelBuilder.Entity<Post>().HasData(
+            //    new Post
+            //    {
+            //        Id = 1,
+            //        Title = "TestPost",
+            //        Content = "TestContent",
+            //        CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+            //        UserId = 1
+            //    }
+            //);
 
-            modelBuilder.Entity<Comment>().HasData(
-                new Comment
-                {
-                    Id = 1,
-                    Text = "TestTopComment",
-                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
-                    UserId = 1,
-                    PostId = 1
-                },
-                new Comment
-                {
-                    Id = 2,
-                    Text = "TestChildCommentDeleted",
-                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
-                    UserId = 2,
-                    PostId = 1,
-                    IsDeleted = true,
-                    ParentCommentId = 1
-                },
-                new Comment
-                {
-                    Id = 3,
-                    Text = "TestChildComment",
-                    CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
-                    UserId = 2,
-                    PostId = 1,
-                    ParentCommentId = 2
-                }
-            );
-            modelBuilder.Entity<Status>().HasData(
-                new Status
-                {
-                    Id = 1,
-                    Title = "Deleted",
-                    DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
-                },
-                new Status
-                {
-                    Id = 2,
-                    Title = "Expired",
-                    DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
-                }
-            );
+            //modelBuilder.Entity<Comment>().HasData(
+            //    new Comment
+            //    {
+            //        Id = 1,
+            //        Text = "TestTopComment",
+            //        CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+            //        UserId = 1,
+            //        PostId = 1
+            //    },
+            //    new Comment
+            //    {
+            //        Id = 2,
+            //        Text = "TestChildCommentDeleted",
+            //        CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+            //        UserId = 2,
+            //        PostId = 1,
+            //        IsDeleted = true,
+            //        ParentCommentId = 1
+            //    },
+            //    new Comment
+            //    {
+            //        Id = 3,
+            //        Text = "TestChildComment",
+            //        CreatedAt = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772),
+            //        UserId = 2,
+            //        PostId = 1,
+            //        ParentCommentId = 2
+            //    }
+            //);
+            //modelBuilder.Entity<Status>().HasData(
+            //    new Status
+            //    {
+            //        Id = 1,
+            //        Title = "Deleted",
+            //        DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
+            //    },
+            //    new Status
+            //    {
+            //        Id = 2,
+            //        Title = "Expired",
+            //        DateTime = new DateTime(2025, 4, 11, 8, 42, 46, 281, DateTimeKind.Local).AddTicks(6772)
+            //    }
+            //);
         }
     }
 }
