@@ -239,14 +239,13 @@ export class BotBuilderComponent implements OnInit {
   
       zip.generateAsync({ type: 'blob' }).then(blob => {
         saveAs(blob, `${fileBaseName}.zip`);
-  
-        if (this.saveToLibrary) {
+        if (this.currentUser?.id == 0) {
+          this.botBuilderDialogRef.nativeElement.showModal();
+        } else if (this.saveToLibrary) {
           this.bot.name       = this.botName.trim();
           this.bot.user       = this.currentUser || resetUser();
           this.bot.botScripts = this.selectedScripts;
           this.saveBot();
-        } else if (this.currentUser?.id === 0) {
-          this.botBuilderDialogRef.nativeElement.showModal();
         }
       });
     }, err => {
