@@ -217,20 +217,6 @@ export class BotBuilderComponent implements OnInit {
             this.snackBar.openSnackBar(this.message, '', 'error');
           }
         });
-      } else {
-        // //update
-        // this.botService.update(this.bot.id, this.bot)
-        // .subscribe({
-        //   error: (err) => {
-        //     this.message = Object.values(err.error.errors).join(", ");
-        //     this.snackBar.openSnackBar(this.message, '', 'error');
-        //   },
-        //   complete: () => {
-        //     this.userService.getAll().subscribe(x => this.users = x);
-        //     this.bot = resetScript();
-        //     this.snackBar.openSnackBar("Script updated", '', 'success');
-        //   }
-        // });
       }
       this.bot = resetBot();
     }
@@ -238,30 +224,22 @@ export class BotBuilderComponent implements OnInit {
 
   generateScript(): void {
     const fileBaseName = this.botName
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '_')
-      .replace(/^_|_$/g, '') || 'bot';
-  
-    // 1) build the Python code
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '') || 'bot';
     const pythonCode = this.buildBotScript();
   
-    // 2) build the combined Guide.txt
     this.buildBotGuides().subscribe(guidesText => {
       const zip = new JSZip();
   
-      // add the .py file
       zip.file(`${fileBaseName}.py`, pythonCode);
   
-      // add the Guide.txt
       zip.file(`Guide.txt`, guidesText);
   
-      // generate the zip
       zip.generateAsync({ type: 'blob' }).then(blob => {
-        // trigger download
         saveAs(blob, `${fileBaseName}.zip`);
   
-        // then — if you still want to save the bot to your library...
         if (this.saveToLibrary) {
           this.bot.name       = this.botName.trim();
           this.bot.user       = this.currentUser || resetUser();
