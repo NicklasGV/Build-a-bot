@@ -38,10 +38,10 @@ export class ScriptLibraryComponent implements OnInit {
   scriptStates: Record<number, UIState> = {};
 
   async ngOnInit(): Promise<void> {
+    this.loadScripts();
     this.authService.currentUser.subscribe(user => {
       this.user = user;
     });
-    this.loadScripts();
   }
 
   private loadScripts(): void {
