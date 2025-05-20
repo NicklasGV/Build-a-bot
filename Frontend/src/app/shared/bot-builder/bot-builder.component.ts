@@ -207,26 +207,24 @@ export class BotBuilderComponent implements OnInit {
   }
 
   saveBot(): void {
-    if (this.currentUser?.id == 0 && this.botName.trim() === '') {
-      this.message = "";
-      if (this.bot.id == 0) {
-        //create
-        this.botService.create(this.bot)
-        .subscribe({
-          next: (x) => {
-            this.bots.push(x);
-            this.bot = resetBot();
-            this.snackBar.openSnackBar("Script created", '', 'success');
-          },
-          error: (err) => {
-            console.log(err);
-            this.message = Object.values(err.error.errors).join(", ");
-            this.snackBar.openSnackBar(this.message, '', 'error');
-          }
-        });
-      }
-      this.bot = resetBot();
+    this.message = "";
+    if (this.bot.id == 0) {
+      //create
+      this.botService.create(this.bot)
+      .subscribe({
+        next: (x) => {
+          this.bots.push(x);
+          this.bot = resetBot();
+          this.snackBar.openSnackBar("Script created", '', 'success');
+        },
+        error: (err) => {
+          console.log(err);
+          this.message = Object.values(err.error.errors).join(", ");
+          this.snackBar.openSnackBar(this.message, '', 'error');
+        }
+      });
     }
+    this.bot = resetBot();
   }
 
   generateScript(): void {
