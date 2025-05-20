@@ -241,7 +241,9 @@ export class BotBuilderComponent implements OnInit {
         saveAs(blob, `${fileBaseName}.zip`);
         if (this.currentUser?.id == 0) {
           this.botBuilderDialogRef.nativeElement.showModal();
-        } else if (this.saveToLibrary) {
+          return;
+        } 
+        if (this.saveToLibrary) {
           this.bot.name       = this.botName.trim();
           this.bot.user       = this.currentUser || resetUser();
           this.bot.botScripts = this.selectedScripts;
