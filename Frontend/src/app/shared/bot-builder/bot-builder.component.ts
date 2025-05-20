@@ -250,8 +250,8 @@ export class BotBuilderComponent implements OnInit {
     }
 
     zip.generateAsync({ type: 'blob' }).then(blob => {
-      saveAs(blob, `${fileBaseName}.zip`);
       if (this.currentUser?.id == 0) {
+        saveAs(blob, `${fileBaseName}.zip`);
         this.botBuilderDialogRef.nativeElement.showModal();
         return;
       } 
@@ -261,6 +261,7 @@ export class BotBuilderComponent implements OnInit {
         this.bot.botScripts = this.selectedScripts;
         this.saveBot();
       }
+      saveAs(blob, `${fileBaseName}.zip`);
     });
   }
 }
