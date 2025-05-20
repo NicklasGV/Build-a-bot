@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import { forkJoin, map, Observable, of } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of } from 'rxjs';
 import {  Script } from './../../models/script.model';
 import { User, resetUser } from '../../models/user.model';
 
@@ -37,6 +37,7 @@ export class BotBuilderComponent implements OnInit {
   searchTerm = '';
   showPreview   = false;
   scriptContent = '';
+  guidesText = '';
   editorOptions = { theme: 'vs-dark', language: 'python' };
   message: string = '';
   bots: Bot[] = [];
@@ -125,20 +126,26 @@ export class BotBuilderComponent implements OnInit {
   }
 
   private buildBotGuides(): Observable<string> {
-    if (this.selectedScripts.length === 0) {
+    const withGuides = this.selectedScripts
+      .filter(s => !!s.guideLocationId);
+    if (withGuides.length === 0) {
       return of('');
     }
-  
-    const guideStreams = this.selectedScripts.map(s =>
-      this.scriptService.getGuideContent(s.guideLocationId).pipe(
+    const guideStreams = withGuides.map(s =>
+      this.scriptService.getGuideContent(s.guideLocationId!).pipe(
         map(content =>
           `--- Guide: ${s.title} ---\n\n${content.trim()}\n`
-        )
+        ),
+        catchError(() => of(''))
       )
     );
-  
     return forkJoin(guideStreams).pipe(
-      map(guides => guides.join('\n'))
+      map(guides =>
+        guides
+          .map(g => g.trim())
+          .filter(g => g.length > 0)
+          .join('\n')
+      )
     );
   }
 
@@ -229,29 +236,31 @@ export class BotBuilderComponent implements OnInit {
     .replace(/[^a-z0-9]+/g, '_')
     .replace(/^_|_$/g, '') || 'bot';
     const pythonCode = this.buildBotScript();
-  
+
     this.buildBotGuides().subscribe(guidesText => {
-      const zip = new JSZip();
+      this.guidesText = guidesText;
+    });
+    
+    const zip = new JSZip();
   
-      zip.file(`${fileBaseName}.py`, pythonCode);
-  
-      zip.file(`Guide.txt`, guidesText);
-  
-      zip.generateAsync({ type: 'blob' }).then(blob => {
-        saveAs(blob, `${fileBaseName}.zip`);
-        if (this.currentUser?.id == 0) {
-          this.botBuilderDialogRef.nativeElement.showModal();
-          return;
-        } 
-        if (this.saveToLibrary) {
-          this.bot.name       = this.botName.trim();
-          this.bot.user       = this.currentUser || resetUser();
-          this.bot.botScripts = this.selectedScripts;
-          this.saveBot();
-        }
-      });
-    }, err => {
-      this.snackBar.openSnackBar('Failed to load guides', '', 'error');
+    zip.file(`${fileBaseName}.py`, pythonCode);
+
+    if (this.guidesText.trim().length > 0) {
+      zip.file(`Guide.txt`, this.guidesText);
+    }
+
+    zip.generateAsync({ type: 'blob' }).then(blob => {
+      saveAs(blob, `${fileBaseName}.zip`);
+      if (this.currentUser?.id == 0) {
+        this.botBuilderDialogRef.nativeElement.showModal();
+        return;
+      } 
+      if (this.saveToLibrary) {
+        this.bot.name       = this.botName.trim();
+        this.bot.user       = this.currentUser || resetUser();
+        this.bot.botScripts = this.selectedScripts;
+        this.saveBot();
+      }
     });
   }
 }
