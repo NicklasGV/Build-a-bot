@@ -230,6 +230,12 @@ export class BotBuilderComponent implements OnInit {
   }
 
   generateScript(): void {
+    if (this.saveToLibrary) {
+      this.bot.name       = this.botName.trim();
+      this.bot.user       = this.currentUser || resetUser();
+      this.bot.botScripts = this.selectedScripts;
+      this.saveBot();
+    }
     const fileBaseName = this.botName
     .trim()
     .toLowerCase()
@@ -250,18 +256,11 @@ export class BotBuilderComponent implements OnInit {
     }
 
     zip.generateAsync({ type: 'blob' }).then(blob => {
-      if (this.currentUser?.id == 0) {
-        saveAs(blob, `${fileBaseName}.zip`);
-        this.botBuilderDialogRef.nativeElement.showModal();
-        return;
-      } 
-      if (this.saveToLibrary) {
-        this.bot.name       = this.botName.trim();
-        this.bot.user       = this.currentUser || resetUser();
-        this.bot.botScripts = this.selectedScripts;
-        this.saveBot();
-      }
       saveAs(blob, `${fileBaseName}.zip`);
     });
+    if (this.currentUser?.id == 0) {
+      this.botBuilderDialogRef.nativeElement.showModal();
+      return;
+    }
   }
 }
