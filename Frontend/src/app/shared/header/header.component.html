@@ -1,6 +1,5 @@
 <nav class="navbar">
   <div class="logo">
-    <!-- You can add collapseNavbar() on the logo as well if desired -->
     <a href="#" (click)="collapseNavbar()">
       <img src="../../../assets/images/Build-a-bot-wide.svg" alt="Build-a-Bot Logo" width="150px" height="50px"/>
     </a>
@@ -15,29 +14,29 @@
   </button>
   <ul class="nav-links" [class.mobile-active]="isMobileMenuActive">
     <li>
-      <a href="#" class="bi bi-house" (click)="collapseNavbar()"> Home</a>
+      <button [routerLink]="['/']" class="bi bi-house" (click)="collapseNavbar()"> Home</button>
     </li>
     <li>
-      <a href="/forum" class="bi bi-journals" (click)="collapseNavbar()"> Forum</a>
+      <button [routerLink]="['/forum']" class="bi bi-journals" (click)="collapseNavbar()"> Forum</button>
     </li>
     <li class="dropdown" [class.active]="isDropdownOpen" (click)="toggleDropdown($event)">
       <span class="bi bi-book dropbtn"> Libraries</span>
       <ul class="dropdown-content">
         <li>
-          <a href="/script-library" (click)="collapseNavbar()"> Script Library</a>
+          <button [routerLink]="['/script-library']" (click)="collapseNavbar()"> Script Library</button>
         </li>
         <li>
-          <a href="/bot-library" (click)="collapseNavbar()"> Bot Library</a>
+          <button [routerLink]="['/bot-library']" (click)="collapseNavbar()"> Bot Library</button>
         </li>
       </ul>
     </li>
     <li>
-      <a href="/bot-compiler" class="bi bi-robot" (click)="collapseNavbar()"> Bot Compiler</a>
+      <button [routerLink]="['/bot-compiler']" class="bi bi-robot" (click)="collapseNavbar()"> Bot Compiler</button>
     </li>
     <li *ngIf="currentUser?.role == RoleId.Admin">
-      <a class="bi-person-fill-gear" [routerLink]="['/admin/admin-dashboard']" (click)="collapseNavbar()"> 
+      <button class="bi-person-fill-gear" [routerLink]="['/admin/admin-dashboard']" (click)="collapseNavbar()"> 
         Admin panels
-      </a>
+      </button>
     <li>
       <button *ngIf="!isLoggedIn" [routerLink]="['/login']" class="login-button-mobile" (click)="collapseNavbar()">Login</button>
       <div class="dropdown" [class.active]="isProfileDropdownOpenMobile" (click)="toggleProfileDropdownMobile($event)">
